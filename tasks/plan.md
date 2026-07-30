@@ -62,7 +62,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 
 ### Phase 2: Content Slices
 
-- [ ] Task 4: 建立内容契约与安全加载器
+- [x] Task 4: 建立内容契约与安全加载器
 - [ ] Task 5: 交付博客列表到详情的完整切片
 - [ ] Task 6: 补齐博客样例、RSS 与文章元数据
 - [ ] Task 7: 交付作品列表到详情的完整切片

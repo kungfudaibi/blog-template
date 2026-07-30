@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–3 已完成，准备执行 Task 4
+> 状态：已批准，Tasks 1–4 已完成，准备执行 Task 5
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -98,14 +98,14 @@
 **Description:** 定义文章、作品和个人资料的元数据契约，安全读取仓库内 MDX，统一草稿过滤、排序、Slug 校验与错误报告。
 
 **Acceptance criteria:**
-- [ ] 非法 frontmatter、重复 Slug 和目录穿越输入被拒绝
-- [ ] 生产环境过滤草稿，文章和作品排序稳定
-- [ ] 加载器只读取允许的 `content/` 子目录
+- [x] 非法 frontmatter、重复 Slug 和目录穿越输入被拒绝
+- [x] 生产环境过滤草稿，文章和作品排序稳定
+- [x] 加载器只读取允许的 `content/` 子目录
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/content-loader.test.ts`
-- [ ] 类型检查：`npm run typecheck`
-- [ ] 人工检查：错误包含文件位置但不泄露系统绝对路径给访客
+- [x] 聚焦测试：`npm run test -- --run tests/content-loader.test.ts`
+- [x] 类型检查：`npm run typecheck`
+- [x] 检查：错误包含相对文件位置且不含系统绝对路径
 
 **Dependencies:** Task 1
 
