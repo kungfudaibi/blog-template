@@ -30,3 +30,11 @@ test("a missing article returns an HTTP 404", async ({ page }) => {
 
   expect(response?.status()).toBe(404);
 });
+
+test("the RSS feed is directly accessible", async ({ page }) => {
+  const response = await page.goto("/rss.xml");
+
+  expect(response?.status()).toBe(200);
+  expect(response?.headers()["content-type"]).toContain("application/rss+xml");
+  expect(await response?.text()).toContain("<rss version=\"2.0\">");
+});

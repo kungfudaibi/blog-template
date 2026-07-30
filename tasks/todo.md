@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–5 已完成，准备执行 Task 6
+> 状态：已批准，Tasks 1–6 已完成，准备执行 Task 7
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -147,14 +147,14 @@
 **Description:** 增加两篇示例文章，生成 RSS，并让文章详情输出可分享的标题、描述与规范 URL 元数据。
 
 **Acceptance criteria:**
-- [ ] 共 3 篇示例文章均来自 MDX 且无需改页面代码即可替换
-- [ ] `/rss.xml` 只包含已发布文章并输出有效 XML
-- [ ] 每篇文章具有独立 title、description 和 canonical 路径
+- [x] 共 3 篇示例文章均来自 MDX 且无需改页面代码即可替换
+- [x] `/rss.xml` 只包含已发布文章并输出有效 XML
+- [x] 每篇文章具有独立 title、description 和 canonical 路径
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/rss.test.ts`
-- [ ] 构建成功：`npm run build`
-- [ ] 人工检查：浏览器可打开 RSS 且文章元数据与内容一致
+- [x] 聚焦测试：`npm run test -- --run tests/rss.test.ts`
+- [x] 构建成功：`npm run build`
+- [x] Chrome 检查：浏览器可打开 RSS，文章元数据与内容一致
 
 **Dependencies:** Task 5
 

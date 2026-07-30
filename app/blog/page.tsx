@@ -6,6 +6,7 @@ import { loadPosts, type LoadedPost } from "@/lib/content";
 export const metadata: Metadata = {
   title: "文章 | zhujiechong",
   description: "zhujiechong 的技术文章与实践记录。",
+  alternates: { canonical: "/blog" },
 };
 
 type BlogIndexProps = {

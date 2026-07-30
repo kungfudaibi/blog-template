@@ -32,6 +32,7 @@ export async function generateMetadata({
   return {
     title: `${post.metadata.title} | zhujiechong`,
     description: post.metadata.summary,
+    alternates: { canonical: `/blog/${post.slug}` },
   };
 }
 
