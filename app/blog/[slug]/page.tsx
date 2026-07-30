@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
 
 import { BlogArticle } from "@/components/BlogArticle";
+import { MdxContent } from "@/components/MdxContent";
 import {
   ContentSecurityError,
   getPostBySlug,
@@ -58,13 +57,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <BlogArticle post={post}>
-      <MDXRemote
-        source={post.content}
-        options={{
-          blockJS: true,
-          mdxOptions: { remarkPlugins: [remarkGfm] },
-        }}
-      />
+      <MdxContent source={post.content} />
     </BlogArticle>
   );
 }

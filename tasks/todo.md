@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–6 已完成，准备执行 Task 7
+> 状态：已批准，Tasks 1–7 已完成，准备执行 Task 8
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -172,14 +172,14 @@
 **Description:** 使用作品内容契约交付作品集列表、详情、作品卡片和第一个显著标为示例的作品。
 
 **Acceptance criteria:**
-- [ ] `/projects` 展示作品摘要、角色、技术栈和精选状态
-- [ ] `/projects/[slug]` 展示职责、成果和经过校验的外部链接
-- [ ] 无效或缺失作品返回稳定 404
+- [x] `/projects` 展示作品摘要、角色、技术栈和精选状态
+- [x] `/projects/[slug]` 展示职责、成果和经过校验的外部链接
+- [x] 无效或缺失作品返回稳定 404
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/projects.test.tsx`
-- [ ] 构建成功：`npm run build`
-- [ ] 人工检查：外部链接具有清晰标识与安全属性
+- [x] 聚焦测试：`npm run test -- --run tests/projects.test.tsx`
+- [x] 构建成功：`npm run build`
+- [x] Chrome 检查：外部链接具有清晰标识、`_blank` 与 `noopener noreferrer`
 
 **Dependencies:** Tasks 3, 4
 
