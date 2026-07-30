@@ -51,7 +51,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 ### Phase 1: Foundation
 
 - [x] Task 1: 初始化 Next.js 与工程命令
-- [ ] Task 2: 建立自动化测试基线
+- [x] Task 2: 建立自动化测试基线
 - [ ] Task 3: 实现 D 视觉方向与响应式全站外壳
 
 ### Checkpoint: Foundation

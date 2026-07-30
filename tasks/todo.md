@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Task 1 已完成，准备执行 Task 2
+> 状态：已批准，Tasks 1–2 已完成，准备执行 Task 3
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -38,14 +38,14 @@
 **Description:** 添加可启动的最小 App Router 页面、全局样式入口、Vitest 环境和一个运行时烟雾测试，使后续切片都有稳定基线。
 
 **Acceptance criteria:**
-- [ ] 根页面可由 Next.js 开发服务器和生产构建渲染
-- [ ] Vitest + Testing Library 能渲染根页面并执行断言
-- [ ] 测试失败时命令返回非零退出码
+- [x] 根页面可由 Next.js 开发服务器和生产构建渲染
+- [x] Vitest + Testing Library 能渲染根页面并执行断言
+- [x] 测试失败时命令返回非零退出码
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/smoke.test.tsx`
-- [ ] 构建成功：`npm run build`
-- [ ] 手工检查：`npm run dev` 后根页面无运行时错误
+- [x] 聚焦测试：`npm run test -- --run tests/smoke.test.tsx`
+- [x] 构建成功：`npm run build`
+- [x] 手工检查：`npm run dev` 后根页面无运行时错误
 
 **Dependencies:** Task 1
 
