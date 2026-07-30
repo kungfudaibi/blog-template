@@ -52,13 +52,13 @@ Cloudflare Provider 接口与模拟实现 ───┤
 
 - [x] Task 1: 初始化 Next.js 与工程命令
 - [x] Task 2: 建立自动化测试基线
-- [ ] Task 3: 实现 D 视觉方向与响应式全站外壳
+- [x] Task 3: 实现 D 视觉方向与响应式全站外壳
 
 ### Checkpoint: Foundation
 
-- [ ] `npm run typecheck`、`npm run lint`、`npm run test -- --run` 和 `npm run build` 通过
-- [ ] 首页外壳在桌面与手机视口可用
-- [ ] 依赖与精确版本锁定在 lockfile
+- [x] `npm run typecheck`、`npm run lint`、`npm run test -- --run` 和 `npm run build` 通过
+- [x] 首页外壳在桌面与手机视口可用
+- [x] 依赖与精确版本锁定在 lockfile
 
 ### Phase 2: Content Slices
 

@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–2 已完成，准备执行 Task 3
+> 状态：已批准，Tasks 1–3 已完成，准备执行 Task 4
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -63,14 +63,14 @@
 **Description:** 落地已确认的 D 视觉方向，提供导航、页脚、设计令牌、跳转链接和响应式页面容器，不提前实现内容或 Agent 功能。
 
 **Acceptance criteria:**
-- [ ] 暖白纸张、蓝色/珊瑚点缀和终端细节由统一 CSS 令牌控制
-- [ ] 导航在手机与桌面均可用，当前页面、焦点和跳过导航状态清晰
-- [ ] 页面外壳尊重 `prefers-reduced-motion` 和系统字体回退
+- [x] 暖白纸张、蓝色/珊瑚点缀和终端细节由统一 CSS 令牌控制
+- [x] 导航在手机与桌面均可用，当前页面、焦点和跳过导航状态清晰
+- [x] 页面外壳尊重 `prefers-reduced-motion` 和系统字体回退
 
 **Verification:**
-- [ ] 组件测试：`npm run test -- --run tests/site-shell.test.tsx`
-- [ ] 检查通过：`npm run typecheck && npm run lint`
-- [ ] 人工检查：375px 与 1440px 视口无横向溢出
+- [x] 组件测试：`npm run test -- --run tests/site-shell.test.tsx`
+- [x] 检查通过：`npm run typecheck && npm run lint`
+- [x] 浏览器检查：Chrome 的 375px 与 1440px 视口无横向溢出或控制台错误
 
 **Dependencies:** Task 2
 
@@ -85,10 +85,10 @@
 
 ## Checkpoint: Foundation
 
-- [ ] `npm run typecheck`
-- [ ] `npm run lint`
-- [ ] `npm run test -- --run`
-- [ ] `npm run build`
+- [x] `npm run typecheck`
+- [x] `npm run lint`
+- [x] `npm run test -- --run`
+- [x] `npm run build`
 - [ ] 用户可审阅首页外壳
 
 ## Phase 2: Content Slices
