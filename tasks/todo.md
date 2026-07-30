@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–9 已完成，准备执行 Task 10
+> 状态：已批准，Tasks 1–10 已完成，准备执行 Task 11
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -257,14 +257,14 @@
 **Description:** 将公开资料、文章和作品转换为可检索来源，用标题/标签/词项/中文字符片段评分，返回有限上下文与站内引用。
 
 **Acceptance criteria:**
-- [ ] 已知个人问题召回正确资料并附站内引用
-- [ ] 未知个人问题返回“资料不足”信号而非拼凑答案
-- [ ] 选择的上下文具有文档数和字符数硬上限
+- [x] 已知个人问题召回正确资料并附站内引用
+- [x] 未知个人问题返回“资料不足”信号而非拼凑答案
+- [x] 选择的上下文具有文档数和字符数硬上限
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/retrieval.test.ts`
-- [ ] 类型检查：`npm run typecheck`
-- [ ] 人工检查：10 个已知与 5 个未知测试问题符合规格指标
+- [x] 聚焦测试：`npm run test -- --run tests/retrieval.test.ts`
+- [x] 类型检查：`npm run typecheck`
+- [x] 自动化评测：10 个已知问题全部召回预期来源，5 个未知问题全部返回资料不足
 
 **Dependencies:** Task 9
 

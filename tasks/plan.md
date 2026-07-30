@@ -77,7 +77,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 
 ### Phase 3: Agent Slice
 
-- [ ] Task 10: 实现授权资料检索与引用
+- [x] Task 10: 实现授权资料检索与引用
 - [ ] Task 11: 实现模型供应商接口及 Cloudflare 适配器
 - [ ] Task 12: 实现 Agent API、输入防护与基础限流
 - [ ] Task 13: 生成“阿竹”像素素材并实现可访问对话面板
