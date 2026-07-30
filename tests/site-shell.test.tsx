@@ -45,6 +45,7 @@ describe("RootLayout", () => {
     );
 
     expect(markup).toContain('lang="zh-CN"');
+    expect(markup).toContain('data-scroll-behavior="smooth"');
     expect(markup).toContain('href="#main-content"');
     expect(markup).toContain("跳到主要内容");
   });

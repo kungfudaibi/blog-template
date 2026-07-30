@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–4 已完成，准备执行 Task 5
+> 状态：已批准，Tasks 1–5 已完成，准备执行 Task 6
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -122,14 +122,14 @@
 **Description:** 使用真实 MDX 加载器交付博客列表、文章详情、文章卡片和第一篇显著标为示例的文章。
 
 **Acceptance criteria:**
-- [ ] `/blog` 展示文章标题、摘要、日期和标签
-- [ ] `/blog/[slug]` 安全渲染允许的 MDX 内容并处理不存在页面
-- [ ] 文章卡片可用键盘访问且链接名称明确
+- [x] `/blog` 展示文章标题、摘要、日期和标签
+- [x] `/blog/[slug]` 安全渲染允许的 MDX 内容并处理不存在页面
+- [x] 文章卡片可用键盘访问且链接名称明确
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/blog.test.tsx`
-- [ ] 构建成功：`npm run build`
-- [ ] 人工检查：列表可进入示例文章且非法 Slug 返回 404
+- [x] 聚焦测试：`npm run test -- --run tests/blog.test.tsx`
+- [x] 构建成功：`npm run build`
+- [x] Chrome 检查：列表可进入示例文章且缺失 Slug 返回 HTTP 404
 
 **Dependencies:** Tasks 3, 4
 
