@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，正在执行 Task 1  
+> 状态：已批准，Task 1 已完成，准备执行 Task 2
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -13,14 +13,14 @@
 **Description:** 初始化 Git，并建立 Next.js、TypeScript、Tailwind、内容与测试依赖的锁定工程配置，先固定命令和版本边界，不实现产品功能。
 
 **Acceptance criteria:**
-- [ ] `package.json` 提供规格要求的 dev、build、start、typecheck、lint、test 命令
-- [ ] TypeScript 严格模式、ESLint 和忽略规则有效
-- [ ] 依赖安装生成可重复使用的 lockfile
+- [x] `package.json` 提供规格要求的 dev、build、start、typecheck、lint、test 命令
+- [x] TypeScript 严格模式、ESLint 和忽略规则有效
+- [x] 依赖安装生成可重复使用的 lockfile
 
 **Verification:**
-- [ ] 安装通过：`npm ci`
-- [ ] TypeScript 配置可解析：`npm run typecheck`
-- [ ] 人工检查：Git 仓库已初始化，且无宽泛版本占位或数据库、认证、分析依赖
+- [x] 安装通过：`npm ci`
+- [x] TypeScript 配置可解析：`npm run typecheck`
+- [x] 人工检查：Git 仓库已初始化，且无宽泛版本占位或数据库、认证、分析依赖
 
 **Dependencies:** None
 
