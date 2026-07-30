@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–8 已完成，准备执行 Task 9
+> 状态：已批准，Tasks 1–9 已完成，准备执行 Task 10
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -222,14 +222,14 @@
 **Description:** 提供关于页及站主可填写的公开资料模板，将示例内容与真实资料槽位明确区分，并为 Agent 提供授权来源。
 
 **Acceptance criteria:**
-- [ ] `/about` 展示程序员定位、公开介绍和可替换联系方式占位
-- [ ] 个人资料按主题记录标题、正文、公开级别和相关站内链接
-- [ ] 非公开或非法级别资料不会进入 Agent 来源集合
+- [x] `/about` 展示程序员定位、公开介绍和可替换联系方式占位
+- [x] 个人资料按主题记录标题、正文、公开级别和相关站内链接
+- [x] 非公开或非法级别资料不会进入 Agent 来源集合
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/profile.test.ts`
-- [ ] 构建成功：`npm run build`
-- [ ] 人工检查：所有占位内容均显著标记为示例
+- [x] 聚焦测试：`npm run test -- --run tests/profile.test.tsx`
+- [x] 构建成功：`npm run build`
+- [x] Chrome 检查：所有占位内容均显著标记为示例，375px 与 1440px 无溢出或控制台错误
 
 **Dependencies:** Tasks 4, 8
 
@@ -244,11 +244,11 @@
 
 ## Checkpoint: Content
 
-- [ ] `npm run typecheck && npm run lint`
-- [ ] `npm run test -- --run`
-- [ ] `npm run build`
-- [ ] 3 篇文章、3 个作品、关于页和 RSS 均可访问
-- [ ] 替换内容不要求修改页面组件
+- [x] `npm run typecheck && npm run lint`
+- [x] `npm run test -- --run`
+- [x] `npm run build`
+- [x] 3 篇文章、3 个作品、关于页和 RSS 均可访问
+- [x] 替换内容不要求修改页面组件
 
 ## Phase 3: Agent Slice
 

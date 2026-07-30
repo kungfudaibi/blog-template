@@ -22,3 +22,5 @@ export {
   type ProfileMetadata,
   type ProjectMetadata,
 } from "./schema";
+
+export { loadAgentProfiles } from "./profile";
