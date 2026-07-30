@@ -4,8 +4,8 @@ import { describe, expect, it } from "vitest";
 import HomePage from "../app/page";
 
 describe("HomePage", () => {
-  it("introduces the zhujiechong site", () => {
-    render(<HomePage />);
+  it("introduces the zhujiechong site", async () => {
+    render(await HomePage());
 
     expect(
       screen.getByRole("heading", { level: 1, name: "zhujiechong" }),

@@ -30,6 +30,14 @@ for (const viewport of viewports) {
     await expect(page.getByRole("link", { name: "浏览作品" })).toBeVisible();
     await expect(page.getByLabel("开发者状态")).toContainText("open_to_build");
 
+    const featuredProjects = page.getByRole("region", { name: "精选作品" });
+    await expect(featuredProjects.getByRole("article")).toHaveCount(2);
+    await expect(
+      page.getByRole("region", { name: "最新文章" }).getByRole("article"),
+    ).toHaveCount(3);
+    await expect(page.getByText("阿竹正在准备中")).toBeVisible();
+    await expect(page.getByText("尚未连接模型")).toBeVisible();
+
     const hasHorizontalOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth,
     );

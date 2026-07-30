@@ -66,7 +66,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] Task 5: 交付博客列表到详情的完整切片
 - [x] Task 6: 补齐博客样例、RSS 与文章元数据
 - [x] Task 7: 交付作品列表到详情的完整切片
-- [ ] Task 8: 补齐作品样例与首页精选区
+- [x] Task 8: 补齐作品样例与首页精选区
 - [ ] Task 9: 交付关于页与授权个人资料模板
 
 ### Checkpoint: Content

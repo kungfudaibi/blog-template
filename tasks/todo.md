@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–7 已完成，准备执行 Task 8
+> 状态：已批准，Tasks 1–8 已完成，准备执行 Task 9
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -197,14 +197,14 @@
 **Description:** 增加两个示例作品，并让首页从内容源读取精选作品和最新文章，形成完整访客入口。
 
 **Acceptance criteria:**
-- [ ] 共 3 个示例作品均可由内容文件替换
-- [ ] 首页展示个人定位、精选作品、最新文章和后续 Agent 入口占位
-- [ ] 无精选内容时首页提供稳定空状态
+- [x] 共 3 个示例作品均可由内容文件替换
+- [x] 首页展示个人定位、精选作品、最新文章和后续 Agent 入口占位
+- [x] 无精选内容时首页提供稳定空状态
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/home-content.test.tsx`
-- [ ] 构建成功：`npm run build`
-- [ ] 人工检查：首页到作品和文章详情的路径完整
+- [x] 聚焦测试：`npm run test -- --run tests/home-content.test.tsx`
+- [x] 构建成功：`npm run build`
+- [x] Chrome 检查：首页到作品和文章详情的路径完整，375px 与 1440px 无溢出或控制台错误
 
 **Dependencies:** Tasks 5, 7
 

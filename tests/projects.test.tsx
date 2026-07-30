@@ -36,7 +36,8 @@ describe("project index", () => {
       "/projects/example-observability-console",
     );
     expect(screen.getByText("全栈开发（示例）")).toBeInTheDocument();
-    expect(screen.getByText("精选作品")).toBeInTheDocument();
+    expect(screen.getAllByText("精选作品")).toHaveLength(2);
+    expect(screen.getAllByRole("article")).toHaveLength(3);
   });
 
   it("renders a stable empty state", () => {

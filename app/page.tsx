@@ -1,6 +1,21 @@
 import Link from "next/link";
 
-export default function HomePage() {
+import { AgentPreview } from "@/components/AgentPreview";
+import { FeaturedProjects } from "@/components/FeaturedProjects";
+import { LatestPosts } from "@/components/LatestPosts";
+import {
+  loadPosts,
+  loadProjects,
+  type LoadedPost,
+  type LoadedProject,
+} from "@/lib/content";
+
+type HomeContentProps = {
+  featuredProjects: LoadedProject[];
+  recentPosts: LoadedPost[];
+};
+
+export function HomeContent({ featuredProjects, recentPosts }: HomeContentProps) {
   return (
     <main id="main-content" className="home-page" tabIndex={-1}>
       <section className="hero" aria-labelledby="hero-title">
@@ -69,6 +84,26 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      <FeaturedProjects projects={featuredProjects} />
+      <LatestPosts posts={recentPosts} />
+      <AgentPreview />
     </main>
+  );
+}
+
+export default async function HomePage() {
+  const [projects, posts] = await Promise.all([
+    loadProjects(),
+    loadPosts({ includeDrafts: false }),
+  ]);
+
+  return (
+    <HomeContent
+      featuredProjects={projects
+        .filter((project) => project.metadata.featured)
+        .slice(0, 2)}
+      recentPosts={posts.slice(0, 3)}
+    />
   );
 }
