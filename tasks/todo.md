@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–10 已完成，准备执行 Task 11
+> 状态：已批准，Tasks 1–11 已完成，准备执行 Task 12
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -281,14 +281,14 @@
 **Description:** 定义可替换模型接口、确定性测试 Provider 和 Cloudflare Workers AI REST 实现，集中处理环境变量、超时和上游错误。
 
 **Acceptance criteria:**
-- [ ] 测试可完全使用模拟 Provider 且不访问网络
-- [ ] Cloudflare 凭据和模型 ID 只从服务端环境变量读取
-- [ ] 429、超时、认证失败和上游错误映射为稳定内部错误
+- [x] 测试可完全使用模拟 Provider 且不访问网络
+- [x] Cloudflare 凭据和模型 ID 只从服务端环境变量读取
+- [x] 429、超时、认证失败和上游错误映射为稳定内部错误
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/model-provider.test.ts`
-- [ ] 类型检查：`npm run typecheck`
-- [ ] 有凭据时人工冒烟：向 Qwen3 30B 发送一个不含私人资料的问题
+- [x] 聚焦测试：`npm run test -- --run tests/model-provider.test.ts`
+- [x] 类型检查：`npm run typecheck`
+- [x] 当前无凭据：未发送真实请求；Mock 已验证请求契约，待 Task 14 配置凭据后再做 Qwen3 30B 冒烟
 
 **Dependencies:** Tasks 1, 10
 
