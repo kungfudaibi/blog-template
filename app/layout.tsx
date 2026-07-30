@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +18,14 @@ type RootLayoutProps = Readonly<{
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="zh-CN">
-      <body>{children}</body>
+      <body>
+        <a className="skip-link" href="#main-content">
+          跳到主要内容
+        </a>
+        <SiteHeader />
+        {children}
+        <SiteFooter />
+      </body>
     </html>
   );
 }
