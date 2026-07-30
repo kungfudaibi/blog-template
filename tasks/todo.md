@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–11 已完成，准备执行 Task 12
+> 状态：已批准，Tasks 1–12 已完成，准备执行 Task 13
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -306,14 +306,14 @@
 **Description:** 交付 `/api/agent`，组合验证、检索、提示词和 Provider，并增加基础实例内限流、响应上限与不记录完整对话的错误处理。
 
 **Acceptance criteria:**
-- [ ] 非法、超长、越权和高频请求被稳定拒绝
-- [ ] 个人问题无资料时不调用模型编造；专业问题标明通用知识边界
-- [ ] API 响应只包含回答、允许的引用和稳定错误码
+- [x] 非法、超长、越权和高频请求被稳定拒绝
+- [x] 个人问题无资料时不调用模型编造；专业问题标明通用知识边界
+- [x] API 响应只包含回答、允许的引用和稳定错误码
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/agent-api.test.ts`
-- [ ] 类型与 Lint：`npm run typecheck && npm run lint`
-- [ ] 人工检查：日志不包含完整问题、回答、密钥或授权资料正文
+- [x] 聚焦测试：`npm run test -- --run tests/agent-api.test.ts tests/rate-limit.test.ts`
+- [x] 类型与 Lint：`npm run typecheck && npm run lint`
+- [x] 代码与 Chrome API 检查：未记录完整问题、回答、密钥或授权资料正文；无凭据与越权路径安全失败
 
 **Dependencies:** Tasks 10, 11
 

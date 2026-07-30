@@ -15,6 +15,17 @@ export {
   type ModelRequest,
   type ModelResponse,
 } from "./provider";
+export {
+  SlidingWindowRateLimiter,
+  type RateLimitDecision,
+  type RateLimiter,
+} from "./rate-limit";
+export {
+  MAX_QUESTION_CHARACTERS,
+  classifyQuestion,
+  parseAgentRequest,
+  type AgentQuestionScope,
+} from "./validation";
 export type {
   AgentSource,
   AgentSourceKind,
