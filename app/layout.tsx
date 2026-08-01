@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { getSiteUrl } from "@/lib/site";
 
 import "./globals.css";
+import "./agent.css";
 
 export const metadata: Metadata = {
   // Relative canonical and RSS URLs are resolved against this root-level base.
