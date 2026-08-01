@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–16 已完成，准备执行 Task 17
+> 状态：已批准，Tasks 1–17 已完成；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -440,14 +440,14 @@
 **Description:** 记录本地开发、内容填写、Agent 环境变量、隐私边界、免费配额失败行为和 Vercel/Cloudflare 配置步骤。
 
 **Acceptance criteria:**
-- [ ] 新维护者可仅按 README 启动、测试和构建项目
-- [ ] 站主可按内容指南替换全部示例资料而无需改组件
-- [ ] 部署文档明确凭据、免费额度、无持久化和禁止自动付费边界
+- [x] 新维护者可仅按 README 启动、测试和构建项目
+- [x] 站主可按内容指南替换全部示例资料而无需改组件
+- [x] 部署文档明确凭据、免费额度、无持久化和禁止自动付费边界
 
 **Verification:**
-- [ ] 文档命令逐项核对：`npm ci && npm run typecheck && npm run lint && npm run test -- --run && npm run build`
-- [ ] 人工检查：README 不含真实密钥、绝对本机路径或过时变更日志语言
-- [ ] 最终评审：对照 `docs/spec.md` 逐项确认成功标准
+- [x] 文档命令逐项核对：`npm ci && npm run typecheck && npm run lint && npm run test -- --run && npm run build`
+- [x] 人工检查：README 不含真实密钥、绝对本机路径或过时变更日志语言
+- [x] 最终评审：对照 `docs/spec.md` 逐项确认成功标准
 
 **Dependencies:** Task 16
 
@@ -462,8 +462,8 @@
 
 ## Checkpoint: Complete
 
-- [ ] 所有任务验收条件完成
-- [ ] 全量类型检查、Lint、测试、E2E 和构建通过
-- [ ] 规格、计划、实际行为和维护文档一致
-- [ ] 安全、隐私、可访问性和免费额度失败路径已审查
+- [x] 所有任务验收条件完成
+- [x] 全量类型检查、Lint、测试、E2E 和构建通过
+- [x] 规格、计划、实际行为和维护文档一致
+- [x] 安全、隐私、可访问性和免费额度失败路径已审查
 - [ ] 用户完成最终审阅；未获得单独授权前不生产部署
