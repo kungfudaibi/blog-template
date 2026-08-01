@@ -16,8 +16,11 @@ vi.mock("@/components/MdxContent", () => ({
 const temporaryRoots: string[] = [];
 
 async function createContentRoot() {
-  const root = await mkdtemp(join(tmpdir(), "zhujiechong-profile-"));
-  temporaryRoots.push(root);
+  const workspace = await mkdtemp(join(tmpdir(), "zhujiechong-profile-"));
+  const root = join(workspace, "content");
+  await mkdir(root, { recursive: true });
+  temporaryRoots.push(workspace);
+  vi.spyOn(process, "cwd").mockReturnValue(workspace);
   return root;
 }
 
@@ -29,6 +32,7 @@ async function writeFixture(root: string, filename: string, source: string) {
 }
 
 afterEach(async () => {
+  vi.restoreAllMocks();
   await Promise.all(
     temporaryRoots.splice(0).map((root) => rm(root, { recursive: true, force: true })),
   );
@@ -80,7 +84,7 @@ relatedPath: /about
 这只是用于验证过滤行为的安全测试文本。
 `);
 
-    const sources = await loadAgentProfiles({ contentRoot: root });
+    const sources = await loadAgentProfiles();
 
     expect(sources.map((source) => source.slug)).toEqual(["bio"]);
     expect(sources[0]?.metadata).toMatchObject({
@@ -101,7 +105,7 @@ visibility: shared
 不能进入来源集合。
 `);
 
-    const error = await loadAgentProfiles({ contentRoot: root }).catch(
+    const error = await loadAgentProfiles().catch(
       (reason) => reason,
     );
 

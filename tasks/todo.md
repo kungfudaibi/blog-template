@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–14 已完成，准备执行 Task 15
+> 状态：已批准，Tasks 1–15 已完成，准备执行 Task 16
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -391,14 +391,14 @@
 **Description:** 为站点增加 sitemap、robots、404/错误体验和合理安全响应头，确保内容可分享且客户端不泄露配置。
 
 **Acceptance criteria:**
-- [ ] 首页、文章和作品具有正确元数据，sitemap/robots 只暴露公开页面
-- [ ] 404 与应用错误保持品牌风格并提供恢复入口
-- [ ] 响应头限制不必要的能力且不破坏 Next.js 或 Agent 请求
+- [x] 首页、文章和作品具有正确元数据，sitemap/robots 只暴露公开页面
+- [x] 404 与应用错误保持品牌风格并提供恢复入口
+- [x] 响应头限制不必要的能力且不破坏 Next.js 或 Agent 请求
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/production-meta.test.ts`
-- [ ] 构建成功：`npm run build`
-- [ ] 人工检查：客户端包与网络响应不含服务端 Token
+- [x] 聚焦测试：`npm run test -- --run tests/production-meta.test.ts`
+- [x] 构建成功：`npm run build`
+- [x] 人工检查：客户端包与网络响应不含服务端 Token
 
 **Dependencies:** Tasks 6, 8, 14
 

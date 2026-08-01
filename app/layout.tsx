@@ -21,6 +21,19 @@ export const metadata: Metadata = {
       "application/rss+xml": "/rss.xml",
     },
   },
+  openGraph: {
+    type: "website",
+    locale: "zh_CN",
+    siteName: "zhujiechong",
+    title: "zhujiechong",
+    description: "程序员 zhujiechong 的个人博客与作品集。",
+    url: "/",
+  },
+  twitter: {
+    card: "summary",
+    title: "zhujiechong",
+    description: "程序员 zhujiechong 的个人博客与作品集。",
+  },
 };
 
 type RootLayoutProps = Readonly<{

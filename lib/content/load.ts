@@ -34,15 +34,11 @@ export type LoadedPost = LoadedContent<Omit<PostMetadata, "slug">>;
 export type LoadedProject = LoadedContent<Omit<ProjectMetadata, "slug">>;
 export type LoadedProfile = LoadedContent<Omit<ProfileMetadata, "slug">>;
 
-type LoaderOptions = {
-  contentRoot?: string;
-};
-
-type PostLoaderOptions = LoaderOptions & {
+type PostLoaderOptions = {
   includeDrafts?: boolean;
 };
 
-type ProfileLoaderOptions = LoaderOptions & {
+type ProfileLoaderOptions = {
   includePrivate?: boolean;
 };
 
@@ -64,8 +60,17 @@ function yamlEngine(source: string): object {
     : { invalidFrontmatterValue: parsed };
 }
 
-function getContentRoot(contentRoot?: string) {
-  return path.resolve(contentRoot ?? path.join(process.cwd(), "content"));
+function getContentDirectory(directory: ContentDirectory) {
+  const contentRoot = path.join(process.cwd(), "content");
+
+  switch (directory) {
+    case "posts":
+      return path.join(contentRoot, "posts");
+    case "profile":
+      return path.join(contentRoot, "profile");
+    case "projects":
+      return path.join(contentRoot, "projects");
+  }
 }
 
 function toSourcePath(directory: ContentDirectory, filename: string) {
@@ -97,10 +102,8 @@ async function readDirectory<Metadata>(
   directory: ContentDirectory,
   extension: ".md" | ".mdx",
   schema: SchemaWithSlug<Metadata>,
-  options: LoaderOptions,
 ): Promise<Array<LoadedContent<Metadata>>> {
-  const contentRoot = getContentRoot(options.contentRoot);
-  const directoryPath = path.join(contentRoot, directory);
+  const directoryPath = getContentDirectory(directory);
   let entries;
 
   try {
@@ -121,7 +124,10 @@ async function readDirectory<Metadata>(
 
   for (const file of files) {
     const sourcePath = toSourcePath(directory, file.name);
-    const raw = await readFile(path.join(directoryPath, file.name), "utf8");
+    const raw = await readFile(
+      path.join(directoryPath, file.name),
+      "utf8",
+    );
     const parsed = (() => {
       try {
         return matter(raw, { engines: { yaml: yamlEngine } });
@@ -159,7 +165,7 @@ async function readDirectory<Metadata>(
 
 export async function loadPosts(options: PostLoaderOptions = {}) {
   const includeDrafts = options.includeDrafts ?? process.env.NODE_ENV !== "production";
-  const posts = await readDirectory("posts", ".mdx", postMetadataSchema, options);
+  const posts = await readDirectory("posts", ".mdx", postMetadataSchema);
 
   return posts
     .filter((post) => includeDrafts || !post.metadata.draft)
@@ -176,12 +182,11 @@ export async function getPostBySlug(slug: string, options: PostLoaderOptions = {
   return posts.find((post) => post.slug === safeSlug);
 }
 
-export async function loadProjects(options: LoaderOptions = {}) {
+export async function loadProjects() {
   const projects = await readDirectory(
     "projects",
     ".mdx",
     projectMetadataSchema,
-    options,
   );
 
   return projects.sort(
@@ -192,9 +197,9 @@ export async function loadProjects(options: LoaderOptions = {}) {
   );
 }
 
-export async function getProjectBySlug(slug: string, options: LoaderOptions = {}) {
+export async function getProjectBySlug(slug: string) {
   const safeSlug = assertSafeSlug(slug);
-  const projects = await loadProjects(options);
+  const projects = await loadProjects();
   return projects.find((project) => project.slug === safeSlug);
 }
 
@@ -203,7 +208,6 @@ export async function loadProfiles(options: ProfileLoaderOptions = {}) {
     "profile",
     ".md",
     profileMetadataSchema,
-    options,
   );
 
   return profiles

@@ -32,6 +32,21 @@ export async function generateMetadata({
     title: `${post.metadata.title} | zhujiechong`,
     description: post.metadata.summary,
     alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      type: "article",
+      locale: "zh_CN",
+      siteName: "zhujiechong",
+      title: post.metadata.title,
+      description: post.metadata.summary,
+      url: `/blog/${post.slug}`,
+      publishedTime: `${post.metadata.publishedAt}T00:00:00Z`,
+      tags: post.metadata.tags,
+    },
+    twitter: {
+      card: "summary",
+      title: post.metadata.title,
+      description: post.metadata.summary,
+    },
   };
 }
 

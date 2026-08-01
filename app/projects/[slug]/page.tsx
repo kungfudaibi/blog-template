@@ -37,6 +37,19 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     title: `${project.metadata.title} | zhujiechong`,
     description: project.metadata.summary,
     alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: {
+      type: "website",
+      locale: "zh_CN",
+      siteName: "zhujiechong",
+      title: project.metadata.title,
+      description: project.metadata.summary,
+      url: `/projects/${project.slug}`,
+    },
+    twitter: {
+      card: "summary",
+      title: project.metadata.title,
+      description: project.metadata.summary,
+    },
   };
 }
 

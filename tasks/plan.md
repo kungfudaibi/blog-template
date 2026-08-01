@@ -91,7 +91,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 
 ### Phase 4: Production Readiness
 
-- [ ] Task 15: 完成站点 SEO、错误边界与安全响应头
+- [x] Task 15: 完成站点 SEO、错误边界与安全响应头
 - [ ] Task 16: 完成跨视口、键盘和减少动画的浏览器验收
 - [ ] Task 17: 完成维护、环境变量与部署文档
 

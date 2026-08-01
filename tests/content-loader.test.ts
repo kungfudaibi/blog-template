@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   ContentSecurityError,
@@ -17,8 +17,11 @@ import {
 const temporaryRoots: string[] = [];
 
 async function createContentRoot() {
-  const root = await mkdtemp(join(tmpdir(), "zhujiechong-content-"));
-  temporaryRoots.push(root);
+  const workspace = await mkdtemp(join(tmpdir(), "zhujiechong-content-"));
+  const root = join(workspace, "content");
+  await mkdir(root, { recursive: true });
+  temporaryRoots.push(workspace);
+  vi.spyOn(process, "cwd").mockReturnValue(workspace);
   return root;
 }
 
@@ -30,6 +33,7 @@ async function writeFixture(root: string, relativePath: string, source: string) 
 }
 
 afterEach(async () => {
+  vi.restoreAllMocks();
   await Promise.all(
     temporaryRoots.splice(0).map((root) => rm(root, { recursive: true, force: true })),
   );
@@ -84,8 +88,8 @@ draft: true
 `,
     );
 
-    const published = await loadPosts({ contentRoot: root, includeDrafts: false });
-    const withDrafts = await loadPosts({ contentRoot: root, includeDrafts: true });
+    const published = await loadPosts({ includeDrafts: false });
+    const withDrafts = await loadPosts({ includeDrafts: true });
 
     expect(published.map((post) => post.slug)).toEqual(["newer", "older"]);
     expect(published[0]).toMatchObject({
@@ -118,7 +122,7 @@ cover: https://unexpected.example/remote.webp
 `,
     );
 
-    const error = await loadPosts({ contentRoot: root }).catch((reason) => reason);
+    const error = await loadPosts().catch((reason) => reason);
 
     expect(error).toBeInstanceOf(ContentValidationError);
     expect(error.message).toContain("posts/broken.mdx");
@@ -137,7 +141,7 @@ title: [unterminated
 `,
     );
 
-    const error = await loadPosts({ contentRoot: root }).catch((reason) => reason);
+    const error = await loadPosts().catch((reason) => reason);
 
     expect(error).toBeInstanceOf(ContentValidationError);
     expect(error.message).toBe("Invalid content syntax in posts/malformed.mdx");
@@ -161,21 +165,21 @@ slug: shared-slug
     await writeFixture(root, "posts/first.mdx", frontmatter("第一篇"));
     await writeFixture(root, "posts/second.mdx", frontmatter("第二篇"));
 
-    await expect(loadPosts({ contentRoot: root })).rejects.toThrow(
+    await expect(loadPosts()).rejects.toThrow(
       /duplicate slug.*shared-slug/i,
     );
   });
 
   it("rejects traversal-shaped slugs before reading the filesystem", async () => {
-    const root = await createContentRoot();
+    await createContentRoot();
 
-    await expect(getPostBySlug("../private", { contentRoot: root })).rejects.toBeInstanceOf(
+    await expect(getPostBySlug("../private")).rejects.toBeInstanceOf(
       ContentSecurityError,
     );
-    await expect(getPostBySlug("hello/world", { contentRoot: root })).rejects.toBeInstanceOf(
+    await expect(getPostBySlug("hello/world")).rejects.toBeInstanceOf(
       ContentSecurityError,
     );
-    await expect(getProjectBySlug("..%2Fprivate", { contentRoot: root })).rejects.toBeInstanceOf(
+    await expect(getProjectBySlug("..%2Fprivate")).rejects.toBeInstanceOf(
       ContentSecurityError,
     );
   });
@@ -196,7 +200,7 @@ cover: /images/posts/date.webp
 `,
     );
 
-    await expect(loadPosts({ contentRoot: root })).rejects.toBeInstanceOf(
+    await expect(loadPosts()).rejects.toBeInstanceOf(
       ContentValidationError,
     );
   });
@@ -247,8 +251,8 @@ visibility: private
 `,
     );
 
-    const projects = await loadProjects({ contentRoot: root });
-    const publicProfiles = await loadProfiles({ contentRoot: root });
+    const projects = await loadProjects();
+    const publicProfiles = await loadProfiles();
 
     expect(projects[0]).toMatchObject({
       slug: "example-platform",
@@ -267,6 +271,6 @@ visibility: private
     await writeFixture(root, "posts/readme.txt", "not content");
     await writeFixture(root, "posts/nested/hidden.mdx", "---\ntitle: hidden\n---");
 
-    await expect(loadPosts({ contentRoot: root })).resolves.toEqual([]);
+    await expect(loadPosts()).resolves.toEqual([]);
   });
 });
