@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–18 已完成；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
+> 状态：Tasks 1–18 已完成；Tasks 19–26 为待批准草案；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -496,3 +496,205 @@
 - `tests/e2e/home.spec.ts`
 
 **Estimated scope:** Medium (6 files)
+
+## Phase 6: Anonymous Portfolio and Capability Map（草案待批准）
+
+## Task 19: 放宽作品外链要求并建立匿名内容边界
+
+**Description:** 让匿名作品可以不提供外部链接，更新内容指南，并用测试固定“无链接可发布、无虚构占位链接”的行为。
+
+**Acceptance criteria:**
+- [ ] `links` 可省略，但存在时仍必须是经过校验的 HTTPS 地址
+- [ ] 作品卡与详情在没有外部链接时不渲染空容器或诱导性文案
+- [ ] 内容指南记录 GitHub 外链的隐私审计与再次批准要求
+
+**Verification:**
+- [ ] 聚焦测试：`npm run test -- --run tests/content-loader.test.ts tests/projects.test.tsx`
+- [ ] 类型检查：`npm run typecheck`
+- [ ] 人工检查：没有为满足 schema 添加 `example.com` 或身份暴露链接
+
+**Dependencies:** Task 18
+
+**Files likely touched:**
+- `lib/content/schema.ts`
+- `components/ProjectLinks.tsx`
+- `docs/content-guide.md`
+- `tests/content-loader.test.ts`
+- `tests/projects.test.tsx`
+
+**Estimated scope:** Medium (5 files)
+
+## Task 20: 建立能力内容契约、加载器与首个超算切片
+
+**Description:** 定义能力元数据、四级状态与安全加载器，并以“超算与 AI Infra”内容完成第一个可测试的数据切片。
+
+**Acceptance criteria:**
+- [ ] 非法状态、日期、排序、重复 slug 和目录穿越输入被拒绝
+- [ ] 能力按 `order` 稳定排序，`featured` 可筛选且状态映射为固定中文
+- [ ] 超算内容包含理解、实践、失败边界与下一步，不夸大失败尝试
+
+**Verification:**
+- [ ] 聚焦测试：`npm run test -- --run tests/capabilities-content.test.ts`
+- [ ] 类型检查：`npm run typecheck`
+- [ ] 人工检查：2024 竞赛只写“超算线上赛第三名”且没有机构名称
+
+**Dependencies:** Task 19
+
+**Files likely touched:**
+- `lib/content/capability-schema.ts`
+- `lib/content/capabilities.ts`
+- `lib/content/index.ts`
+- `content/capabilities/hpc-ai-infra.mdx`
+- `tests/capabilities-content.test.ts`
+
+**Estimated scope:** Medium (5 files)
+
+## Task 21: 交付完整能力地图页面
+
+**Description:** 建立 `/capabilities` 页面、能力档案卡和状态标签，用首个内容切片验证桌面导航、移动端线性阅读和空状态。
+
+**Acceptance criteria:**
+- [ ] 页面展示标题、更新时间、状态、分支、正文和相关内容入口
+- [ ] 核心内容无需 hover、拖拽或动画即可读取，键盘顺序清晰
+- [ ] 无内容时显示稳定空状态，不伪造能力信息
+
+**Verification:**
+- [ ] 聚焦测试：`npm run test -- --run tests/capabilities-page.test.tsx`
+- [ ] 类型与 Lint：`npm run typecheck`、`npm run lint`
+- [ ] Chrome 检查：375px、768px、1440px 无横向溢出
+
+**Dependencies:** Task 20
+
+**Files likely touched:**
+- `app/capabilities/page.tsx`
+- `components/CapabilityCard.tsx`
+- `components/CapabilityStatus.tsx`
+- `components/CapabilityMap.module.css`
+- `tests/capabilities-page.test.tsx`
+
+**Estimated scope:** Medium (5 files)
+
+## Task 22: 补齐其余五个能力领域内容
+
+**Description:** 加入 Agent、网络安全、体系结构与操作系统、电子与嵌入式、算法五个匿名能力档案，并保证每项都有边界与下一步。
+
+**Acceptance criteria:**
+- [ ] 六个领域完整出现且 order、featured 与更新时间合法
+- [ ] 网络安全故事不包含服务器、账号、漏洞或攻击步骤
+- [ ] Agent、算法和体系结构内容不使用“精通”等无证据表述
+
+**Verification:**
+- [ ] 聚焦测试：`npm run test -- --run tests/capabilities-content.test.ts tests/capabilities-page.test.tsx`
+- [ ] 内容扫描：搜索真实身份、机构、私人联系方式与示例占位符
+- [ ] 人工检查：每项均有理解、实践、边界/失败和下一步
+
+**Dependencies:** Task 21
+
+**Files likely touched:**
+- `content/capabilities/agent-development.mdx`
+- `content/capabilities/security.mdx`
+- `content/capabilities/systems.mdx`
+- `content/capabilities/embedded.mdx`
+- `content/capabilities/algorithms.mdx`
+
+**Estimated scope:** Medium (5 files)
+
+## Task 23: 用三个匿名真实项目替换示例作品
+
+**Description:** 删除三个示例项目，加入校园开源镜像站、开源自学文档和 blog-template，明确个人职责、团队边界和可核实结果。
+
+**Acceptance criteria:**
+- [ ] 作品列表不再包含 `【示例】`、`example.com` 或示例 GitHub 地址
+- [ ] 三个项目不出现学校、协会全称、真实姓名、实习单位或未批准外链
+- [ ] 团队项目不声称独立完成，fork 和失败尝试不作为原创成果
+
+**Verification:**
+- [ ] 聚焦测试：`npm run test -- --run tests/projects.test.tsx tests/home-content.test.tsx`
+- [ ] 构建成功：`npm run build`
+- [ ] 人工来源核对：职责与结果能追溯到用户确认材料或公开仓库
+
+**Dependencies:** Tasks 19, 21
+
+**Files likely touched:**
+- `content/projects/example-data-pipeline.mdx` → `content/projects/campus-mirror.mdx`
+- `content/projects/example-dev-workbench.mdx` → `content/projects/open-learning-docs.mdx`
+- `content/projects/example-observability-console.mdx` → `content/projects/blog-template.mdx`
+- `tests/projects.test.tsx`
+- `tests/home-content.test.tsx`
+
+**Estimated scope:** Medium (5 files)
+
+## Task 24: 在首页与导航加入能力地图入口
+
+**Description:** 首页展示三个重点能力摘要，并在全站导航加入“能力”入口，形成作品、文章、能力和 Agent 的访客路径。
+
+**Acceptance criteria:**
+- [ ] 首页从能力内容源读取三个 featured 领域，不硬编码事实
+- [ ] 首页和导航均可进入 `/capabilities`，当前页与键盘焦点状态清楚
+- [ ] 没有 featured 能力时提供稳定空状态
+
+**Verification:**
+- [ ] 聚焦测试：`npm run test -- --run tests/home-content.test.tsx tests/site-shell.test.tsx`
+- [ ] 类型与 Lint：`npm run typecheck`、`npm run lint`
+- [ ] Chrome 检查：首页各目标视口无溢出且入口可用
+
+**Dependencies:** Tasks 22, 23
+
+**Files likely touched:**
+- `app/page.tsx`
+- `components/FeaturedCapabilities.tsx`
+- `components/SiteHeader.tsx`
+- `tests/home-content.test.tsx`
+- `tests/site-shell.test.tsx`
+
+**Estimated scope:** Medium (5 files)
+
+## Task 25: 让 Agent 检索能力资料并拒绝身份猜测
+
+**Description:** 把能力内容加入授权来源，并为真实身份、学校和实习单位问题建立不调用模型的安全拒答路径。
+
+**Acceptance criteria:**
+- [ ] 能力问题召回对应档案并提供 `/capabilities` 引用
+- [ ] 隐藏身份问题在无公开资料时直接拒答，不调用 Provider
+- [ ] 能力回答保留自我评价和事实边界，不把下一步计划描述成已完成经历
+
+**Verification:**
+- [ ] 聚焦测试：`npm run test -- --run tests/retrieval.test.ts tests/agent-api.test.ts`
+- [ ] 自动化评测：六个领域问题召回正确来源，身份问题全部拒答
+- [ ] 人工检查：响应不包含未授权身份和机构信息
+
+**Dependencies:** Task 22
+
+**Files likely touched:**
+- `lib/agent/sources.ts`
+- `lib/agent/retrieve.ts`
+- `app/api/agent/route.ts`
+- `tests/retrieval.test.ts`
+- `tests/agent-api.test.ts`
+
+**Estimated scope:** Medium (5 files)
+
+## Task 26: 完成匿名化、响应式与发布前验收
+
+**Description:** 更新维护和隐私文档，执行仓库内容审计与完整浏览器回归，确保第二轮定制达到 Definition of Done。
+
+**Acceptance criteria:**
+- [ ] README 与内容指南准确说明能力文件、匿名规则和无外链作品
+- [ ] 公开内容、构建产物与 Agent 测试响应不包含禁止公开的信息
+- [ ] 六个能力、三个作品及首页路径在目标视口和键盘流程完整可用
+
+**Verification:**
+- [ ] 全量检查：`npm run typecheck`、`npm run lint`、`npm run test -- --run`、`npm run build`
+- [ ] 全量 E2E：`npx playwright test`
+- [ ] 人工终审：搜索 demo 标识、待填写内容、身份线索和外部链接；用户完成内容确认
+
+**Dependencies:** Tasks 23, 24, 25
+
+**Files likely touched:**
+- `README.md`
+- `docs/content-guide.md`
+- `docs/privacy.md`
+- `tests/e2e/capabilities.spec.ts`
+- `tests/production-meta.test.ts`
+
+**Estimated scope:** Medium (5 files)
