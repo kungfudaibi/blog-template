@@ -536,7 +536,7 @@
 **Verification:**
 - [ ] 聚焦测试：`npm run test -- --run tests/capabilities-content.test.ts`
 - [ ] 类型检查：`npm run typecheck`
-- [ ] 人工检查：2024 竞赛只写“超算线上赛第三名”且没有机构名称
+- [ ] 人工检查：竞赛写“2024 IndySCC 线上赛第三名、2025 ASC 二等奖”，且没有学校、队名和队员身份
 
 **Dependencies:** Task 19
 
