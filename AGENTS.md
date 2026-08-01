@@ -1,4 +1,13 @@
-# Project: zhujiechong
+# Project: blog-template
+
+## Template contract
+
+- `zhujiechong` and `阿竹` are runnable demo identities, not facts about a template user.
+- Before personalizing behavior or public content, update `docs/spec.md`, then update the relevant plan/checklist.
+- Search the repository for `zhujiechong`, `阿竹`, `【示例】`, and `【待填写】`; do not silently leave demo claims in a derived production site.
+- Treat `content/profile/` as public source material. A `private` metadata value is filtering behavior, not a secret vault; never commit sensitive data.
+- Preserve safe refusal, server-only credentials, no conversation persistence, and no automatic billing unless the specification changes and the user explicitly approves it.
+- Repository publication or template use does not authorize preview or production deployment.
 
 ## Source of truth
 
@@ -6,6 +15,7 @@
 - Approved implementation plan: `tasks/plan.md`
 - Ordered task checklist: `tasks/todo.md`
 - Update the specification before changing approved behavior or scope.
+- The checked task files describe the shipped demo baseline. Append or revise tasks for new work; do not erase historical verification evidence.
 
 ## Tech stack
 
@@ -31,6 +41,7 @@
 - Keep server-only code out of client components.
 - Validate content metadata, environment variables, and API input before use.
 - Keep each task scoped to the files and acceptance criteria in `tasks/todo.md`.
+- Keep README customization steps accurate whenever a placeholder, path, environment variable, or required command changes.
 
 ## Safety boundaries
 

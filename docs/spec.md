@@ -1,6 +1,6 @@
 # Spec: 个人博客、作品集与卡通 Agent
 
-> 状态：实现完成，等待真实 Cloudflare 冒烟与用户最终审阅
+> 状态：实现完成，已批准作为公开模板发布；生产部署仍待用户审阅
 > 日期：2026-08-01
 
 ## Objective
@@ -10,6 +10,8 @@
 1. 发布和阅读博客文章。
 2. 以视觉化方式展示个人作品、职责、技术栈、成果和相关链接。
 3. 通过一个原创卡通 Agent 形象，让访客以对话方式了解站主并讨论博客涉及的专业问题；关于站主的回答只基于其授权资料。
+
+本实现同时以 **blog-template** GitHub 模板公开发布。仓库中的 `zhujiechong`、阿竹和全部“示例/待填写”内容构成可运行演示，不代表模板使用者；使用模板后必须先替换身份、内容、链接、Agent 资料与站点 URL，再考虑部署。公开模板授权不等同于任何派生站点的生产部署授权。
 
 站主是一名程序员。主要用户：
 
@@ -290,3 +292,4 @@ export function ProjectCard({ title, summary, href }: ProjectCardProps) {
 - 个人资料：尚未填写，需要提供内容模板。
 - Agent 范围：既回答关于站主的问题，也回答博客涉及的专业问题。
 - 第三方模型：Cloudflare Workers AI 免费计划，默认 Qwen3 30B；不自动升级付费。
+- 仓库发布：以 `blog-template` 名称公开发布为 GitHub Template，采用 MIT License；保留 `zhujiechong` 作为明确标注的演示身份。

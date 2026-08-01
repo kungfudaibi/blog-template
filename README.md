@@ -1,8 +1,37 @@
-# zhujiechong
+# blog-template
 
-一个使用 Next.js App Router、TypeScript、MDX 和 Cloudflare Workers AI 构建的中文个人博客、作品集与卡通 Agent 网站。
+一个可直接复用的中文个人博客、作品集与卡通 Agent 模板，使用 Next.js App Router、TypeScript、MDX 和 Cloudflare Workers AI 构建。
 
-当前仓库提供 3 篇文章、3 个作品和公开个人资料的**示例模板**。这些内容不是站主的真实经历，公开发布前应按[内容维护指南](docs/content-guide.md)替换。
+演示站点名称是 **zhujiechong**，包含 3 篇文章、3 个作品和公开个人资料的**示例模板**。这些内容不是模板使用者的真实经历，公开发布前必须按[内容维护指南](docs/content-guide.md)替换。
+
+## 使用这个模板
+
+在 GitHub 仓库页面选择 **Use this template**，或使用 GitHub CLI 创建自己的仓库：
+
+```powershell
+gh repo create my-blog --template kungfudaibi/blog-template --public --clone
+Set-Location my-blog
+npm ci
+Copy-Item .env.example .env.local
+npm run dev
+```
+
+macOS/Linux 将复制环境文件的命令替换为：
+
+```bash
+cp .env.example .env.local
+```
+
+## 首次定制清单
+
+1. 先更新 `docs/spec.md`，写清网站名称、站主定位、公开边界和模型选择。
+2. 全仓搜索 `zhujiechong`、`阿竹`、`【示例】`、`【待填写】`，替换品牌文案和占位内容。
+3. 按[内容维护指南](docs/content-guide.md)替换 `content/posts/`、`content/projects/`、`content/profile/`。
+4. 更新 `app/layout.tsx`、首页、页眉、页脚、Agent 文案和 `public/agent/azhu.png`。
+5. 设置 `SITE_URL`；需要 Agent 模型时才配置 Cloudflare 服务端凭据。
+6. 运行全部质量门禁并人工检查 375px、768px、1440px 视口。
+
+给编码 Agent 的约束位于 [AGENTS.md](AGENTS.md)。派生项目应先更新规格，再要求 Agent 改变行为或范围。
 
 ## 功能
 
@@ -88,3 +117,7 @@ tasks/              已批准计划和任务清单
 - 未经单独确认，不执行预览或生产部署。
 
 更多信息见[隐私说明](docs/privacy.md)、[部署指南](docs/deployment.md)和[产品规格](docs/spec.md)。
+
+## License
+
+代码和模板文档采用 [MIT License](LICENSE)。派生站点中的个人内容、商标和第三方素材仍由各自权利人负责。
