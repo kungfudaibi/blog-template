@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–15 已完成，准备执行 Task 16
+> 状态：已批准，Tasks 1–16 已完成，准备执行 Task 17
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -416,14 +416,14 @@
 **Description:** 使用 Playwright 覆盖内容主路径、键盘 Agent 流程、手机/桌面视口和减少动画设置，并修复发现的阻塞问题。
 
 **Acceptance criteria:**
-- [ ] 首页到文章/作品详情及 Agent 主流程在目标视口通过
-- [ ] 键盘用户可完成导航、打开/关闭 Agent、发送问题和访问引用
-- [ ] 关键页面无控制台错误、明显横向溢出或焦点丢失
+- [x] 首页到文章/作品详情及 Agent 主流程在目标视口通过
+- [x] 键盘用户可完成导航、打开/关闭 Agent、发送问题和访问引用
+- [x] 关键页面无控制台错误、明显横向溢出或焦点丢失
 
 **Verification:**
-- [ ] 全量 E2E：`npx playwright test`
-- [ ] 全量检查：`npm run typecheck && npm run lint && npm run test -- --run && npm run build`
-- [ ] 人工浏览器检查：375px、768px、1440px 与减少动画模式
+- [x] 全量 E2E：`npx playwright test`
+- [x] 全量检查：`npm run typecheck && npm run lint && npm run test -- --run && npm run build`
+- [x] 人工浏览器检查：375px、768px、1440px 与减少动画模式
 
 **Dependencies:** Task 15
 
