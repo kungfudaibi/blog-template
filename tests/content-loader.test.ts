@@ -265,6 +265,59 @@ visibility: private
     expect(publicProfiles.map((profile) => profile.slug)).toEqual(["bio"]);
   });
 
+  it("accepts an anonymous project without external links", async () => {
+    const root = await createContentRoot();
+
+    await writeFixture(
+      root,
+      "projects/anonymous-project.mdx",
+      `---
+title: 匿名项目
+summary: 只展示经过核实的项目事实
+period: 2025
+role: 核心开发
+tech: [TypeScript]
+cover: /images/projects/anonymous.webp
+featured: true
+---
+
+项目正文。
+`,
+    );
+
+    const projects = await loadProjects();
+
+    expect(projects).toMatchObject([
+      {
+        slug: "anonymous-project",
+        metadata: { title: "匿名项目" },
+      },
+    ]);
+    expect(projects[0]?.metadata).not.toHaveProperty("links");
+  });
+
+  it("still rejects non-HTTPS project links when links are provided", async () => {
+    const root = await createContentRoot();
+
+    await writeFixture(
+      root,
+      "projects/insecure-link.mdx",
+      `---
+title: 不安全链接
+summary: 外链存在时仍需经过协议校验
+period: 2025
+role: 开发
+tech: [TypeScript]
+cover: /images/projects/insecure.webp
+links:
+  demo: http://example.com
+---
+`,
+    );
+
+    await expect(loadProjects()).rejects.toBeInstanceOf(ContentValidationError);
+  });
+
   it("ignores unsupported files even inside an allowed content folder", async () => {
     const root = await createContentRoot();
 

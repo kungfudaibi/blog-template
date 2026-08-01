@@ -66,6 +66,23 @@ describe("ProjectCard", () => {
     expect(demoLink).toHaveAttribute("target", "_blank");
     expect(demoLink).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });
+
+  it("does not render an empty external-link group when links are omitted", () => {
+    const projectWithoutLinks: LoadedProject = {
+      ...exampleProject,
+      slug: "anonymous-project",
+      metadata: {
+        ...exampleProject.metadata,
+        title: "匿名项目",
+        links: undefined,
+      },
+    };
+
+    render(<ProjectCard project={projectWithoutLinks} />);
+
+    expect(screen.queryByLabelText("作品外部链接")).not.toBeInTheDocument();
+    expect(screen.queryByText(/暂无链接|即将公开/)).not.toBeInTheDocument();
+  });
 });
 
 describe("ProjectArticle", () => {
@@ -89,5 +106,20 @@ describe("ProjectArticle", () => {
       "href",
       "/projects",
     );
+  });
+
+  it("omits external-link markup when a project has no approved links", () => {
+    const projectWithoutLinks: LoadedProject = {
+      ...exampleProject,
+      metadata: { ...exampleProject.metadata, links: undefined },
+    };
+
+    render(
+      <ProjectArticle project={projectWithoutLinks}>
+        <p>匿名项目正文。</p>
+      </ProjectArticle>,
+    );
+
+    expect(screen.queryByLabelText("作品外部链接")).not.toBeInTheDocument();
   });
 });

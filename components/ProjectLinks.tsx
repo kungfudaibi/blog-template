@@ -6,6 +6,10 @@ type ProjectLinksProps = {
 };
 
 export function ProjectLinks({ links, className }: ProjectLinksProps) {
+  if (!links) {
+    return null;
+  }
+
   return (
     <div className={className} aria-label="作品外部链接">
       {links.demo ? (

@@ -81,7 +81,8 @@ export const projectMetadataSchema = z
         source: httpsUrlSchema.optional(),
       })
       .strict()
-      .refine((links) => Boolean(links.demo || links.source), "至少提供一个作品链接"),
+      .refine((links) => Boolean(links.demo || links.source), "至少提供一个作品链接")
+      .optional(),
   })
   .strict();
 

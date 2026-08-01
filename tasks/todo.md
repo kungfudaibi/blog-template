@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：Tasks 1–18 已完成；Tasks 19–26 为待批准草案；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
+> 状态：Tasks 1–18 已完成；Tasks 19–26 已批准并进入实施；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -497,21 +497,21 @@
 
 **Estimated scope:** Medium (6 files)
 
-## Phase 6: Anonymous Portfolio and Capability Map（草案待批准）
+## Phase 6: Anonymous Portfolio and Capability Map（已批准，实施中）
 
 ## Task 19: 放宽作品外链要求并建立匿名内容边界
 
 **Description:** 让匿名作品可以不提供外部链接，更新内容指南，并用测试固定“无链接可发布、无虚构占位链接”的行为。
 
 **Acceptance criteria:**
-- [ ] `links` 可省略，但存在时仍必须是经过校验的 HTTPS 地址
-- [ ] 作品卡与详情在没有外部链接时不渲染空容器或诱导性文案
-- [ ] 内容指南记录 GitHub 外链的隐私审计与再次批准要求
+- [x] `links` 可省略，但存在时仍必须是经过校验的 HTTPS 地址
+- [x] 作品卡与详情在没有外部链接时不渲染空容器或诱导性文案
+- [x] 内容指南记录 GitHub 外链的隐私审计与再次批准要求
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/content-loader.test.ts tests/projects.test.tsx`
-- [ ] 类型检查：`npm run typecheck`
-- [ ] 人工检查：没有为满足 schema 添加 `example.com` 或身份暴露链接
+- [x] 聚焦测试：`npm run test -- --run tests/content-loader.test.ts tests/projects.test.tsx`
+- [x] 类型检查：`npm run typecheck`
+- [x] 人工检查：没有为满足 schema 添加 `example.com` 或身份暴露链接
 
 **Dependencies:** Task 18
 

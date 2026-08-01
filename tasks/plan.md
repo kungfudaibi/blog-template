@@ -1,6 +1,6 @@
 # Implementation Plan: zhujiechong 个人博客与卡通 Agent
 
-> 状态：Tasks 1–18 基线已批准；Phase 6 草案等待用户审批
+> 状态：Tasks 1–18 基线已完成；Phase 6 已批准并进入实施
 > 规格来源：`docs/spec.md`  
 > 计划日期：2026-07-30
 
@@ -112,9 +112,9 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] 375px 与 1440px 首页无溢出、控制台错误或图片加载失败
 - [x] 聚焦组件测试、全量质量门禁与生产构建通过
 
-### Phase 6: Anonymous Portfolio and Capability Map（草案待批准）
+### Phase 6: Anonymous Portfolio and Capability Map（已批准，实施中）
 
-- [ ] Task 19: 放宽作品外链要求并建立匿名内容边界
+- [x] Task 19: 放宽作品外链要求并建立匿名内容边界
 - [ ] Task 20: 建立能力内容契约、加载器与首个超算切片
 - [ ] Task 21: 交付完整能力地图页面
 - [ ] Task 22: 补齐其余五个能力领域内容
@@ -125,7 +125,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 
 ### Checkpoint: Anonymous Content Foundation
 
-- [ ] 无外部链接的作品仍能通过校验并稳定渲染
+- [x] 无外部链接的作品仍能通过校验并稳定渲染
 - [ ] 能力元数据、排序、状态映射和正文结构均有自动化测试
 - [ ] 仓库内容不含本轮禁止公开的真实身份字段
 
