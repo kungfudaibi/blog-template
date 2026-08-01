@@ -39,4 +39,31 @@ describe("home content", () => {
       "/blog",
     );
   });
+
+  it("presents the supplied Disco Elysium screenshot as credited inspiration", () => {
+    render(<HomeContent featuredProjects={[]} recentPosts={[]} />);
+
+    const inspiration = screen.getByRole("region", { name: "视觉灵感" });
+
+    expect(
+      within(inspiration).getByRole("heading", {
+        level: 2,
+        name: "最近让我着迷的世界",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(inspiration).getByRole("img", {
+        name: "《极乐迪斯科》游戏画面：人物站在明亮的抽象画作与昆虫前",
+      }),
+    ).toHaveAttribute(
+      "src",
+      expect.stringContaining("disco-elysium-scene"),
+    );
+    expect(
+      within(inspiration).getByText(/《极乐迪斯科》游戏画面截图/),
+    ).toBeInTheDocument();
+    expect(
+      within(inspiration).getByText(/仅作个人审美与创作灵感展示/),
+    ).toBeInTheDocument();
+  });
 });

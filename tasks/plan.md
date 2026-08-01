@@ -102,6 +102,16 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] 未配置任何自动付费或对话持久化能力
 - [ ] 用户评审通过后才进入预览或生产部署
 
+### Phase 5: Owner Customization
+
+- [x] Task 18: 在首页加入《极乐迪斯科》视觉灵感展示
+
+### Checkpoint: Customization
+
+- [x] 图片以完整画面、可见说明和有意义替代文本呈现
+- [x] 375px 与 1440px 首页无溢出、控制台错误或图片加载失败
+- [x] 聚焦组件测试、全量质量门禁与生产构建通过
+
 ## Verification Strategy
 
 - **每个任务：** 运行聚焦测试，并执行与改动相关的类型检查或构建。

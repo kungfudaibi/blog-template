@@ -30,6 +30,50 @@ for (const viewport of viewports) {
     await expect(page.getByRole("link", { name: "浏览作品" })).toBeVisible();
     await expect(page.getByLabel("开发者状态")).toContainText("open_to_build");
 
+    const inspiration = page.getByRole("region", { name: "视觉灵感" });
+    const inspirationImage = inspiration.getByRole("img", {
+      name: "《极乐迪斯科》游戏画面：人物站在明亮的抽象画作与昆虫前",
+    });
+
+    await expect(
+      inspiration.getByRole("heading", {
+        level: 2,
+        name: "最近让我着迷的世界",
+      }),
+    ).toBeVisible();
+    await expect(inspirationImage).toBeVisible();
+    await expect(inspiration).toContainText("《极乐迪斯科》游戏画面截图");
+    await expect
+      .poll(() =>
+        inspirationImage.evaluate(
+          (image) => (image as HTMLImageElement).naturalWidth,
+        ),
+      )
+      .toBeGreaterThan(0);
+
+    const imageMetrics = await inspirationImage.evaluate((image) => {
+      const element = image as HTMLImageElement;
+
+      return {
+        declaredWidth: Number(element.getAttribute("width")),
+        declaredHeight: Number(element.getAttribute("height")),
+        naturalWidth: element.naturalWidth,
+        naturalHeight: element.naturalHeight,
+        renderedRatio: element.clientWidth / element.clientHeight,
+      };
+    });
+
+    expect(imageMetrics.declaredWidth).toBe(1918);
+    expect(imageMetrics.declaredHeight).toBe(1078);
+    expect(imageMetrics.naturalWidth).toBeGreaterThan(0);
+    expect(imageMetrics.naturalHeight).toBeGreaterThan(0);
+    expect(
+      Math.abs(
+        imageMetrics.naturalWidth / imageMetrics.naturalHeight - 1918 / 1078,
+      ),
+    ).toBeLessThan(0.02);
+    expect(imageMetrics.renderedRatio).toBeCloseTo(1918 / 1078, 2);
+
     const featuredProjects = page.getByRole("region", { name: "精选作品" });
     await expect(featuredProjects.getByRole("article")).toHaveCount(2);
     await expect(

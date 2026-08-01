@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { AgentPreview } from "@/components/AgentPreview";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
+import { InspirationFeature } from "@/components/InspirationFeature";
 import { LatestPosts } from "@/components/LatestPosts";
 import {
   loadPosts,
@@ -85,6 +86,7 @@ export function HomeContent({ featuredProjects, recentPosts }: HomeContentProps)
         </div>
       </section>
 
+      <InspirationFeature />
       <FeaturedProjects projects={featuredProjects} />
       <LatestPosts posts={recentPosts} />
       <AgentPreview />

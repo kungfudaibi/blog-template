@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–17 已完成；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
+> 状态：已批准，Tasks 1–18 已完成；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -467,3 +467,32 @@
 - [x] 规格、计划、实际行为和维护文档一致
 - [x] 安全、隐私、可访问性和免费额度失败路径已审查
 - [ ] 用户完成最终审阅；未获得单独授权前不生产部署
+
+## Phase 5: Owner Customization
+
+## Task 18: 加入《极乐迪斯科》视觉灵感展示
+
+**Description:** 将站主提供的游戏截图作为首页独立视觉灵感内容，在不仿制游戏完整界面的前提下融入现有纸张/终端视觉体系。
+
+**Acceptance criteria:**
+- [x] 首页存在名称为“视觉灵感”的语义区域和明确标题
+- [x] 完整图片带有中文替代文本、作品说明与非原创用途声明
+- [x] 桌面采用编辑部式图文布局，手机改为单列且无横向溢出
+
+**Verification:**
+- [x] 聚焦测试：`npm run test -- --run tests/home-content.test.tsx`
+- [x] 全量检查：`npm run typecheck`、`npm run lint`、`npm run test -- --run`、`npm run build`
+- [x] Chrome 检查：375px 与 1440px 无控制台错误、失败请求或布局溢出
+
+**Dependencies:** Task 17
+
+**Files likely touched:**
+- `public/images/inspiration/disco-elysium-scene.png`
+- `components/InspirationFeature.tsx`
+- `components/InspirationFeature.module.css`
+- `app/page.tsx`
+- `playwright.config.ts`
+- `tests/home-content.test.tsx`
+- `tests/e2e/home.spec.ts`
+
+**Estimated scope:** Medium (6 files)
