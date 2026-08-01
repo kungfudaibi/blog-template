@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：已批准，Tasks 1–12 已完成，准备执行 Task 13
+> 状态：已批准，Tasks 1–14 已完成，准备执行 Task 15
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -331,14 +331,14 @@
 **Description:** 按 D 视觉方向生成原创像素机器人资产，构建全站悬浮入口、模态对话面板、焦点管理和减少动画状态。
 
 **Acceptance criteria:**
-- [ ] “阿竹”素材原创、可替换且与暖白纸张/终端视觉协调
-- [ ] 对话面板可用键盘打开、发送、关闭并恢复焦点
-- [ ] 加载、空状态和减少动画模式清晰可辨
+- [x] “阿竹”素材原创、可替换且与暖白纸张/终端视觉协调
+- [x] 对话面板可用键盘打开、发送、关闭并恢复焦点
+- [x] 加载、空状态和减少动画模式清晰可辨
 
 **Verification:**
-- [ ] 组件测试：`npm run test -- --run tests/agent-dialog.test.tsx`
-- [ ] 类型与 Lint：`npm run typecheck && npm run lint`
-- [ ] 人工检查：桌面和手机视口不遮挡关键内容
+- [x] 组件测试：`npm run test -- --run tests/agent-dialog.test.tsx`
+- [x] 类型与 Lint：`npm run typecheck && npm run lint`
+- [x] Chrome 检查：375px 与 1440px 不遮挡关键内容，透明 PNG 四角 alpha 为 0
 
 **Dependencies:** Task 3
 
@@ -356,14 +356,14 @@
 **Description:** 将对话面板连接到 API，渲染引用、失败与重试状态，并覆盖已知、未知、专业和提示词注入路径。
 
 **Acceptance criteria:**
-- [ ] 访客可以发送问题、看到流畅状态变化并打开允许的站内引用
-- [ ] 未知个人问题、限流、配额耗尽和上游失败都有明确可恢复提示
-- [ ] 提示词注入无法获得系统提示、密钥或全部资料
+- [x] 访客可以发送问题、看到流畅状态变化并打开允许的站内引用
+- [x] 未知个人问题、限流、配额耗尽和上游失败都有明确可恢复提示
+- [x] 提示词注入无法获得系统提示、密钥或全部资料
 
 **Verification:**
-- [ ] 集成测试：`npm run test -- --run tests/agent-flow.test.tsx`
-- [ ] E2E：`npx playwright test e2e/agent.spec.ts`
-- [ ] 人工检查：有凭据时完成一次真实问答，无凭据时安全失败
+- [x] 集成测试：`npm run test -- --run tests/agent-flow.test.tsx`
+- [x] E2E：`npm run test:e2e -- tests/e2e/agent.spec.ts tests/e2e/agent-api.spec.ts`
+- [x] 当前无凭据：真实 API 已验证安全失败；有凭据时的 Qwen3 30B 冒烟保留在阶段检查点
 
 **Dependencies:** Tasks 12, 13
 
@@ -378,11 +378,11 @@
 
 ## Checkpoint: Agent
 
-- [ ] `npm run typecheck && npm run lint`
-- [ ] `npm run test -- --run`
-- [ ] `npm run build`
-- [ ] `npx playwright test e2e/agent.spec.ts`
-- [ ] Cloudflare 缺失凭据、配额耗尽和上游错误均不会使网站崩溃或产生费用
+- [x] `npm run typecheck && npm run lint`
+- [x] `npm run test -- --run`
+- [x] `npm run build`
+- [x] `npm run test:e2e -- tests/e2e/agent.spec.ts tests/e2e/agent-api.spec.ts`
+- [x] Cloudflare 缺失凭据、配额耗尽和上游错误均不会使网站崩溃或自动切换付费
 
 ## Phase 4: Production Readiness
 

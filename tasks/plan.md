@@ -80,14 +80,14 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] Task 10: 实现授权资料检索与引用
 - [x] Task 11: 实现模型供应商接口及 Cloudflare 适配器
 - [x] Task 12: 实现 Agent API、输入防护与基础限流
-- [ ] Task 13: 生成“阿竹”像素素材并实现可访问对话面板
-- [ ] Task 14: 串联问答、引用和失败状态的端到端流程
+- [x] Task 13: 生成“阿竹”像素素材并实现可访问对话面板
+- [x] Task 14: 串联问答、引用和失败状态的端到端流程
 
 ### Checkpoint: Agent
 
-- [ ] 模拟 Provider 下已知、未知、专业与注入型问题测试通过
+- [x] 模拟 Provider 下已知、未知、专业与注入型问题测试通过
 - [ ] 有凭据时完成一次 Cloudflare Workers AI 真实冒烟测试
-- [ ] 无凭据、免费额度耗尽或上游失败时网站仍安全可用
+- [x] 无凭据、免费额度耗尽或上游失败时网站仍安全可用
 
 ### Phase 4: Production Readiness
 

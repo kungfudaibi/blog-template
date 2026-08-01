@@ -1,8 +1,8 @@
 import { z } from "zod";
 
+import { MAX_QUESTION_CHARACTERS } from "./constants";
 import { AgentApiError } from "./errors";
 
-export const MAX_QUESTION_CHARACTERS = 500;
 export type AgentQuestionScope = "personal" | "professional";
 
 const questionSchema = z

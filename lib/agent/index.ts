@@ -6,6 +6,7 @@ export {
 } from "./retrieve";
 export { buildAgentSources } from "./sources";
 export { CloudflareModelProvider } from "./cloudflare-provider";
+export { MAX_QUESTION_CHARACTERS } from "./constants";
 export { CLOUDFLARE_DEFAULT_MODEL, readCloudflareConfig } from "./env";
 export {
   MockModelProvider,
@@ -21,7 +22,6 @@ export {
   type RateLimiter,
 } from "./rate-limit";
 export {
-  MAX_QUESTION_CHARACTERS,
   classifyQuestion,
   parseAgentRequest,
   type AgentQuestionScope,

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
+import { AgentLauncher } from "@/components/agent/AgentLauncher";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getSiteUrl } from "@/lib/site";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </a>
         <SiteHeader />
         {children}
+        <AgentLauncher />
         <SiteFooter />
       </body>
     </html>
