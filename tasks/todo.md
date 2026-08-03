@@ -554,14 +554,14 @@
 **Description:** 建立 `/capabilities` 页面、能力档案卡和状态标签，用首个内容切片验证桌面导航、移动端线性阅读和空状态。
 
 **Acceptance criteria:**
-- [ ] 页面展示标题、更新时间、状态、分支、正文和相关内容入口
-- [ ] 核心内容无需 hover、拖拽或动画即可读取，键盘顺序清晰
-- [ ] 无内容时显示稳定空状态，不伪造能力信息
+- [x] 页面展示标题、更新时间、状态、分支、正文和相关内容入口
+- [x] 核心内容无需 hover、拖拽或动画即可读取，键盘顺序清晰
+- [x] 无内容时显示稳定空状态，不伪造能力信息
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/capabilities-page.test.tsx`
-- [ ] 类型与 Lint：`npm run typecheck`、`npm run lint`
-- [ ] Chrome 检查：375px、768px、1440px 无横向溢出
+- [x] 聚焦测试：`npm run test -- --run tests/capabilities-page.test.tsx`
+- [x] 类型与 Lint：`npm run typecheck`、`npm run lint`
+- [x] Chrome 检查：375px、768px、1440px 无横向溢出
 
 **Dependencies:** Task 20
 
