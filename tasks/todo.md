@@ -654,14 +654,14 @@
 **Description:** 把能力内容加入授权来源，并为真实身份、学校和实习单位问题建立不调用模型的安全拒答路径。
 
 **Acceptance criteria:**
-- [ ] 能力问题召回对应档案并提供 `/capabilities` 引用
-- [ ] 隐藏身份问题在无公开资料时直接拒答，不调用 Provider
-- [ ] 能力回答保留自我评价和事实边界，不把下一步计划描述成已完成经历
+- [x] 能力问题召回对应档案并提供 `/capabilities` 引用
+- [x] 隐藏身份问题在无公开资料时直接拒答，不调用 Provider
+- [x] 能力回答保留自我评价和事实边界，不把下一步计划描述成已完成经历
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/retrieval.test.ts tests/agent-api.test.ts`
-- [ ] 自动化评测：六个领域问题召回正确来源，身份问题全部拒答
-- [ ] 人工检查：响应不包含未授权身份和机构信息
+- [x] 聚焦测试：`npm run test -- --run tests/retrieval.test.ts tests/agent-api.test.ts`
+- [x] 自动化评测：六个领域问题召回正确来源，身份问题全部拒答
+- [x] 人工检查：响应不包含未授权身份和机构信息
 
 **Dependencies:** Task 22
 

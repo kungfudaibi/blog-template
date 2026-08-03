@@ -30,6 +30,17 @@ const PERSONAL_PATTERN =
 const PROFESSIONAL_PATTERN =
   /(编程|代码|开发|软件|架构|api|前端|后端|数据库|typescript|javascript|next\.js|react|python|ai|agent|模型|测试|部署|性能|安全|日志|opentelemetry|mdx|cloudflare|算法|系统|网络|工程|技术)/iu;
 
+const PROTECTED_IDENTITY_PATTERNS = [
+  /(真实姓名|本名|叫什么名字|姓甚名谁)/u,
+  /((哪|什么|哪个)所?.{0,4}(学校|大学|学院)|毕业于|就读于|母校)/u,
+  /((实习|任职|工作).{0,12}(公司|单位|哪里)|(什么|哪家|哪个).{0,8}(公司|单位).{0,6}(实习|任职|工作))/u,
+  /maas.{0,16}(哪家|什么|哪个|公司|单位)/iu,
+];
+
+export function isProtectedIdentityQuestion(question: string) {
+  return PROTECTED_IDENTITY_PATTERNS.some((pattern) => pattern.test(question));
+}
+
 export function parseAgentRequest(value: unknown) {
   const parsed = requestSchema.safeParse(value);
 
@@ -55,6 +66,7 @@ export function classifyQuestion(question: string): AgentQuestionScope {
     );
   }
 
+  if (isProtectedIdentityQuestion(question)) return "personal";
   if (PERSONAL_PATTERN.test(question)) return "personal";
   if (PROFESSIONAL_PATTERN.test(question)) return "professional";
 

@@ -23,6 +23,7 @@ export {
 } from "./rate-limit";
 export {
   classifyQuestion,
+  isProtectedIdentityQuestion,
   parseAgentRequest,
   type AgentQuestionScope,
 } from "./validation";

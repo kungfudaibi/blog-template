@@ -120,7 +120,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] Task 22: 补齐其余五个能力领域内容
 - [x] Task 23: 用三个匿名真实项目替换示例作品
 - [x] Task 24: 在首页与导航加入能力地图入口
-- [ ] Task 25: 让 Agent 检索能力资料并拒绝身份猜测
+- [x] Task 25: 让 Agent 检索能力资料并拒绝身份猜测
 - [ ] Task 26: 完成匿名化、响应式与发布前验收
 
 ### Checkpoint: Anonymous Content Foundation
@@ -133,7 +133,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 
 - [x] `/capabilities` 展示六个领域，首页提供三个重点入口
 - [x] 手机、平板、桌面与键盘流程通过浏览器验收
-- [ ] Agent 能引用能力资料，身份问题全部安全拒答
+- [x] Agent 能引用能力资料，身份问题全部安全拒答
 
 ### Checkpoint: Personalization Complete
 

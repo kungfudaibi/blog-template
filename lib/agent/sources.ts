@@ -1,5 +1,7 @@
 import {
+  CAPABILITY_STATUS_LABELS,
   loadAgentProfiles,
+  loadCapabilities,
   loadPosts,
   loadProjects,
 } from "@/lib/content";
@@ -7,10 +9,11 @@ import {
 import type { AgentSource } from "./types";
 
 export async function buildAgentSources(): Promise<AgentSource[]> {
-  const [profiles, posts, projects] = await Promise.all([
+  const [profiles, posts, projects, capabilities] = await Promise.all([
     loadAgentProfiles(),
     loadPosts({ includeDrafts: false }),
     loadProjects(),
+    loadCapabilities(),
   ]);
 
   const profileSources: AgentSource[] = profiles.map((profile) => ({
@@ -45,5 +48,25 @@ export async function buildAgentSources(): Promise<AgentSource[]> {
     keywords: ["作品", "项目", project.metadata.role, ...project.metadata.tech],
   }));
 
-  return [...profileSources, ...postSources, ...projectSources];
+  const capabilitySources: AgentSource[] = capabilities.map((capability) => ({
+    id: `capability:${capability.slug}`,
+    kind: "capability",
+    title: capability.metadata.title,
+    href: `/capabilities#${capability.slug}`,
+    content: [
+      capability.metadata.summary,
+      `当前状态：${CAPABILITY_STATUS_LABELS[capability.metadata.status]}`,
+      `分支：${capability.metadata.branches.join("、")}`,
+      capability.content,
+    ].join("\n\n"),
+    keywords: [
+      "能力",
+      "技能",
+      CAPABILITY_STATUS_LABELS[capability.metadata.status],
+      capability.metadata.title,
+      ...capability.metadata.branches,
+    ],
+  }));
+
+  return [...profileSources, ...postSources, ...projectSources, ...capabilitySources];
 }

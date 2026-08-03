@@ -9,7 +9,11 @@ import { ModelProviderError, type ModelProvider } from "./provider";
 import type { RateLimiter } from "./rate-limit";
 import { retrieveAgentSources } from "./retrieve";
 import type { AgentSource, RetrievalResult } from "./types";
-import { classifyQuestion, parseAgentRequest } from "./validation";
+import {
+  classifyQuestion,
+  isProtectedIdentityQuestion,
+  parseAgentRequest,
+} from "./validation";
 
 const MAX_REQUEST_BODY_CHARACTERS = 2_048;
 const MAX_ANSWER_CHARACTERS = 2_000;
@@ -134,6 +138,16 @@ export function createAgentHandler(dependencies: AgentHandlerDependencies) {
       const requestBody = await readJsonBody(request);
       const { question } = parseAgentRequest(requestBody);
       const scope = classifyQuestion(question);
+
+      if (isProtectedIdentityQuestion(question)) {
+        return jsonResponse({
+          answer: "这些真实身份信息没有在本站公开，我不会猜测或协助反向识别站主。",
+          citations: [],
+          scope,
+          model: null,
+        });
+      }
+
       const sources = await dependencies.loadSources();
       const retrieval = retrieveAgentSources(question, sources);
 

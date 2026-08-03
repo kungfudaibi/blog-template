@@ -1,4 +1,4 @@
-export type AgentSourceKind = "profile" | "post" | "project";
+export type AgentSourceKind = "capability" | "profile" | "post" | "project";
 
 export type AgentSource = {
   id: string;

@@ -110,7 +110,7 @@ describe("agent retrieval", () => {
   it("builds stable public sources from repository content", async () => {
     const repositorySources = await buildAgentSources();
 
-    expect(repositorySources).toHaveLength(9);
+    expect(repositorySources).toHaveLength(15);
     expect(repositorySources).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -124,9 +124,14 @@ describe("agent retrieval", () => {
           kind: "post",
         }),
         expect.objectContaining({
-          id: "project:example-observability-console",
-          href: "/projects/example-observability-console",
+          id: "project:campus-mirror",
+          href: "/projects/campus-mirror",
           kind: "project",
+        }),
+        expect.objectContaining({
+          id: "capability:hpc-ai-infra",
+          href: "/capabilities#hpc-ai-infra",
+          kind: "capability",
         }),
       ]),
     );
@@ -144,9 +149,15 @@ describe("agent retrieval", () => {
       ["免费额度耗尽时博客还能继续访问吗？", "post:agent-needs-boundaries"],
       ["frontmatter 为什么需要校验？", "post:content-is-a-contract"],
       ["文章内容怎样独立于页面组件？", "post:building-this-site"],
-      ["API 观测台使用了什么技术？", "project:example-observability-console"],
-      ["本地开发工作台怎样诊断环境？", "project:example-dev-workbench"],
-      ["数据整理流水线怎样校验输入？", "project:example-data-pipeline"],
+      ["校园开源镜像站使用了什么技术？", "project:campus-mirror"],
+      ["开源自学文档是怎样维护的？", "project:open-learning-docs"],
+      ["blog-template 有哪些安全边界？", "project:blog-template"],
+      ["超算和 AI Infra 做过什么？", "capability:hpc-ai-infra"],
+      ["Agent 开发能力怎么样？", "capability:agent-development"],
+      ["体系结构与操作系统学到哪里了？", "capability:systems"],
+      ["网络安全有什么经历？", "capability:security"],
+      ["电子基础和单片机做过什么？", "capability:embedded"],
+      ["算法与数据结构水平怎么样？", "capability:algorithms"],
       ["这个网站展示了哪些作品项目？", "project:"],
     ] as const;
     const unknownQuestions = [
@@ -169,7 +180,7 @@ describe("agent retrieval", () => {
       retrieveAgentSources(query, repositorySources),
     );
 
-    expect(knownMatches).toHaveLength(10);
+    expect(knownMatches).toHaveLength(16);
     expect(unknownResults.every((result) => result.status === "insufficient"))
       .toBe(true);
   });
