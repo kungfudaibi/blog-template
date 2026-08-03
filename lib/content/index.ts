@@ -24,3 +24,17 @@ export {
 } from "./schema";
 
 export { loadAgentProfiles } from "./profile";
+
+export {
+  getCapabilityBySlug,
+  loadCapabilities,
+  type LoadedCapability,
+} from "./capabilities";
+
+export {
+  CAPABILITY_STATUS_LABELS,
+  capabilityMetadataSchema,
+  capabilityStatusSchema,
+  type CapabilityMetadata,
+  type CapabilityStatus,
+} from "./capability-schema";

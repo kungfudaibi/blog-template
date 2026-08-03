@@ -529,14 +529,14 @@
 **Description:** 定义能力元数据、四级状态与安全加载器，并以“超算与 AI Infra”内容完成第一个可测试的数据切片。
 
 **Acceptance criteria:**
-- [ ] 非法状态、日期、排序、重复 slug 和目录穿越输入被拒绝
-- [ ] 能力按 `order` 稳定排序，`featured` 可筛选且状态映射为固定中文
-- [ ] 超算内容包含理解、实践、失败边界与下一步，不夸大失败尝试
+- [x] 非法状态、日期、排序、重复 slug 和目录穿越输入被拒绝
+- [x] 能力按 `order` 稳定排序，`featured` 可筛选且状态映射为固定中文
+- [x] 超算内容包含理解、实践、失败边界与下一步，不夸大失败尝试
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/capabilities-content.test.ts`
-- [ ] 类型检查：`npm run typecheck`
-- [ ] 人工检查：竞赛写“2024 IndySCC 线上赛第三名、2025 ASC 二等奖”，且没有学校、队名和队员身份
+- [x] 聚焦测试：`npm run test -- --run tests/capabilities-content.test.ts`
+- [x] 类型检查：`npm run typecheck`
+- [x] 人工检查：竞赛写“2024 IndySCC 线上赛第三名、2025 ASC 二等奖”，且没有学校、队名和队员身份
 
 **Dependencies:** Task 19
 

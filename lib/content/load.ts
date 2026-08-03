@@ -42,7 +42,7 @@ type ProfileLoaderOptions = {
   includePrivate?: boolean;
 };
 
-type ContentDirectory = "posts" | "profile" | "projects";
+export type ContentDirectory = "capabilities" | "posts" | "profile" | "projects";
 
 type SchemaWithSlug<Metadata> = z.ZodType<Metadata & { slug?: string }>;
 
@@ -64,6 +64,8 @@ function getContentDirectory(directory: ContentDirectory) {
   const contentRoot = path.join(process.cwd(), "content");
 
   switch (directory) {
+    case "capabilities":
+      return path.join(contentRoot, "capabilities");
     case "posts":
       return path.join(contentRoot, "posts");
     case "profile":
@@ -88,7 +90,7 @@ function formatValidationError(
   return new ContentValidationError(`Invalid content metadata in ${sourcePath}: ${details}`);
 }
 
-function assertSafeSlug(slug: string) {
+export function assertSafeContentSlug(slug: string) {
   const result = safeSlugSchema.safeParse(slug);
 
   if (!result.success) {
@@ -98,7 +100,7 @@ function assertSafeSlug(slug: string) {
   return result.data;
 }
 
-async function readDirectory<Metadata>(
+export async function readContentDirectory<Metadata>(
   directory: ContentDirectory,
   extension: ".md" | ".mdx",
   schema: SchemaWithSlug<Metadata>,
@@ -142,7 +144,7 @@ async function readDirectory<Metadata>(
     }
 
     const { slug: explicitSlug, ...metadata } = validation.data;
-    const slug = assertSafeSlug(explicitSlug ?? path.basename(file.name, extension));
+    const slug = assertSafeContentSlug(explicitSlug ?? path.basename(file.name, extension));
     const previousSource = slugSources.get(slug);
 
     if (previousSource) {
@@ -165,7 +167,7 @@ async function readDirectory<Metadata>(
 
 export async function loadPosts(options: PostLoaderOptions = {}) {
   const includeDrafts = options.includeDrafts ?? process.env.NODE_ENV !== "production";
-  const posts = await readDirectory("posts", ".mdx", postMetadataSchema);
+  const posts = await readContentDirectory("posts", ".mdx", postMetadataSchema);
 
   return posts
     .filter((post) => includeDrafts || !post.metadata.draft)
@@ -177,13 +179,13 @@ export async function loadPosts(options: PostLoaderOptions = {}) {
 }
 
 export async function getPostBySlug(slug: string, options: PostLoaderOptions = {}) {
-  const safeSlug = assertSafeSlug(slug);
+  const safeSlug = assertSafeContentSlug(slug);
   const posts = await loadPosts(options);
   return posts.find((post) => post.slug === safeSlug);
 }
 
 export async function loadProjects() {
-  const projects = await readDirectory(
+  const projects = await readContentDirectory(
     "projects",
     ".mdx",
     projectMetadataSchema,
@@ -198,13 +200,13 @@ export async function loadProjects() {
 }
 
 export async function getProjectBySlug(slug: string) {
-  const safeSlug = assertSafeSlug(slug);
+  const safeSlug = assertSafeContentSlug(slug);
   const projects = await loadProjects();
   return projects.find((project) => project.slug === safeSlug);
 }
 
 export async function loadProfiles(options: ProfileLoaderOptions = {}) {
-  const profiles = await readDirectory(
+  const profiles = await readContentDirectory(
     "profile",
     ".md",
     profileMetadataSchema,
@@ -216,7 +218,7 @@ export async function loadProfiles(options: ProfileLoaderOptions = {}) {
 }
 
 export async function getProfileBySlug(slug: string, options: ProfileLoaderOptions = {}) {
-  const safeSlug = assertSafeSlug(slug);
+  const safeSlug = assertSafeContentSlug(slug);
   const profiles = await loadProfiles(options);
   return profiles.find((profile) => profile.slug === safeSlug);
 }

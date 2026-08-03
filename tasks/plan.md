@@ -115,7 +115,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 ### Phase 6: Anonymous Portfolio and Capability Map（已批准，实施中）
 
 - [x] Task 19: 放宽作品外链要求并建立匿名内容边界
-- [ ] Task 20: 建立能力内容契约、加载器与首个超算切片
+- [x] Task 20: 建立能力内容契约、加载器与首个超算切片
 - [ ] Task 21: 交付完整能力地图页面
 - [ ] Task 22: 补齐其余五个能力领域内容
 - [ ] Task 23: 用三个匿名真实项目替换示例作品
@@ -126,7 +126,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 ### Checkpoint: Anonymous Content Foundation
 
 - [x] 无外部链接的作品仍能通过校验并稳定渲染
-- [ ] 能力元数据、排序、状态映射和正文结构均有自动化测试
+- [x] 能力元数据、排序、状态映射和正文结构均有自动化测试
 - [ ] 仓库内容不含本轮禁止公开的真实身份字段
 
 ### Checkpoint: Capability Experience
