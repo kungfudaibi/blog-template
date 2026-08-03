@@ -11,7 +11,7 @@ export const safeSlugSchema = z
   .regex(SLUG_PATTERN, "slug 只能包含小写字母、数字和单个连字符");
 
 const contentTitleSchema = z.string().trim().min(1).max(120);
-const summarySchema = z.string().trim().min(1).max(240);
+const displaySummarySchema = z.string().trim().max(240);
 const tagSchema = z.string().trim().min(1).max(30);
 const tagListSchema = z
   .array(tagSchema)
@@ -54,7 +54,7 @@ export const postMetadataSchema = z
   .object({
     ...optionalSlug,
     title: contentTitleSchema,
-    summary: summarySchema,
+    summary: displaySummarySchema,
     publishedAt: contentDateSchema,
     tags: tagListSchema,
     cover: localPathSchema,
@@ -66,7 +66,7 @@ export const projectMetadataSchema = z
   .object({
     ...optionalSlug,
     title: contentTitleSchema,
-    summary: summarySchema,
+    summary: displaySummarySchema,
     period: z.preprocess(
       (value) => (typeof value === "number" ? String(value) : value),
       z.string().trim().min(1).max(40),

@@ -1,6 +1,6 @@
 # 部署指南
 
-目标平台是 Vercel，模型服务是 Cloudflare Workers AI REST API。本文件只记录步骤；当前仓库没有获得预览或生产部署授权，也没有执行部署。
+目标平台是 Vercel，模型服务是 Cloudflare Workers AI REST API，`zhujiechong.org` 继续由 Cloudflare 管理 DNS。本文件只记录步骤；当前仓库只获得远程分支发布授权，没有执行 Vercel 预览或生产部署。
 
 ## 1. 发布前检查
 
@@ -30,15 +30,19 @@ npx playwright test
 
 1. 把仓库导入 Vercel，Framework Preset 选择 Next.js；安装和构建使用仓库默认命令。
 2. 在 Project Settings → Environment Variables 中添加：
-   - `SITE_URL=https://<项目>.vercel.app`
+   - Preview 验收阶段：`SITE_URL=https://<项目>.vercel.app`
+   - 绑定正式域名后：`SITE_URL=https://zhujiechong.org`
    - `CLOUDFLARE_ACCOUNT_ID`
    - `CLOUDFLARE_AI_API_TOKEN`
    - `CLOUDFLARE_AI_MODEL=@cf/qwen/qwen3-30b-a3b-fp8`（可省略，代码有同值默认项）
 3. 将 Cloudflare 凭据只配置给确实需要的 Vercel 环境；变量名不要添加 `NEXT_PUBLIC_`。
-4. 域名尚未购买时，先使用稳定的 Vercel 项目域名作为 `SITE_URL`。以后绑定自定义域名时，同步更新 `SITE_URL` 并重新部署。
-5. 获得站主单独授权后再创建部署；用户评审通过前不要把预览提升为生产。
+4. 先从当前功能分支生成 Vercel Preview，完成页面、Agent 安全失败和移动端验收；不要立即提升为生产。
+5. 在 Vercel Project Settings → Domains 添加 `zhujiechong.org` 和 `www.zhujiechong.org`，选择其中一个作为主域名并把另一个重定向过去。
+6. 因 DNS 仍由 Cloudflare 托管，使用 Vercel Domains 页面或 `vercel domains inspect zhujiechong.org` 给出的**项目专属记录**，在 Cloudflare DNS 中添加根域 A 记录及 `www` CNAME；验证阶段保持 **DNS only**，不要照抄可能已变化的通用记录。
+7. Vercel 验证域名并签发证书后，把 Production 环境的 `SITE_URL` 改为 `https://zhujiechong.org` 并重新部署，再检查 canonical、sitemap 与 RSS。
+8. 获得站主单独的生产部署授权后才把已验收提交提升为 Production。
 
-参考：[Vercel 上的 Next.js](https://vercel.com/docs/frameworks/full-stack/nextjs)、[Vercel 环境变量](https://vercel.com/docs/environment-variables)。
+参考：[Vercel 上的 Next.js](https://vercel.com/docs/frameworks/full-stack/nextjs)、[Vercel 环境变量](https://vercel.com/docs/environment-variables)、[Vercel 自定义域名](https://vercel.com/docs/domains/set-up-custom-domain)、[Cloudflare DNS 代理状态](https://developers.cloudflare.com/dns/proxy-status/)。
 
 ## 4. 部署后冒烟检查
 

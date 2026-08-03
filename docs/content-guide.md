@@ -68,7 +68,7 @@ links:
 - 只填写可公开、可核实的结果。
 ```
 
-`links` 整体可省略；提供时，`links.demo` 和 `links.source` 至少填写一个，且必须使用 HTTPS。没有经过隐私审计与站主再次批准时，不添加 GitHub 账号、组织或仓库链接，也不用占位网址代替。当前分支只批准 `docs/spec.md` 隐私口径中列出的四个项目 URL；新增或更换链接时先更新该白名单及 `tests/public-content-privacy.test.ts`。`featured: true` 的作品可进入首页精选区，首页最多展示两个。当前没有作品草稿字段，不准备公开的作品不要提交到此目录。
+`links` 整体可省略；提供时，`links.demo` 和 `links.source` 至少填写一个，且必须使用 HTTPS。没有经过隐私审计与站主再次批准时，不添加 GitHub 账号、组织或仓库链接，也不用占位网址代替。当前分支只批准 `docs/spec.md` 隐私口径中列出的六个项目 URL；新增或更换链接时先更新该白名单及 `tests/public-content-privacy.test.ts`。`featured: true` 的作品可进入首页精选区，首页最多展示两个。当前没有作品草稿字段，不准备公开的作品不要提交到此目录。
 
 ## 常用修改位置
 
@@ -110,7 +110,9 @@ branches: [分支一, 分支二]
 ## 下一步
 ```
 
-`status` 只能使用 `exploring`（正在了解）、`learning`（做过练习）、`practiced`（做过完整实践）或 `independent`（能独立承担）。`order` 必须为正整数，`updatedAt` 使用有效日期。四个二级标题缺一不可；计划与下一步不能写成已经完成的经历。`featured: true` 的档案进入首页重点能力区，首版最多展示三个。
+`status` 只能使用 `exploring`（正在了解）、`learning`（做过练习）、`practiced`（做过完整实践）或 `independent`（能独立承担）。`order` 必须为正整数，`updatedAt` 使用有效日期。正文标题和结构完全由站主决定，可以删改示例中的四个二级标题；系统不会为空白或未完成内容补写事实。`featured: true` 的档案进入首页重点能力区，首版最多展示三个。
+
+文章、作品和能力的 `summary` 可以暂时写成空字符串 `""`；页面会省略空摘要。公开 profile 文件正文为空时会被视为未完成草稿，不出现在关于页或阿竹来源中。用于路由和安全的标题、日期、slug、状态与链接字段仍不能留空。
 
 ## 公开个人资料
 

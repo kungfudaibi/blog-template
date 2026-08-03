@@ -28,11 +28,14 @@ describe("blog index", () => {
       screen.getByRole("heading", { level: 1, name: "文章" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "把个人站点当作长期项目" }),
+      screen.getByRole("link", { name: "黎明悄悄划过天边" }),
     ).toHaveAttribute("href", "/blog/building-this-site");
     expect(
-      screen.getByText("从需求、内容到可维护代码，记录这个站点的第一步。"),
-    ).toBeInTheDocument();
+      screen.getByRole("link", { name: "黎明悄悄划过天边" }).closest("article"),
+    ).toHaveTextContent("。");
+    expect(
+      screen.getByRole("link", { name: "充满信心期盼着明天" }).closest("article"),
+    ).not.toContainHTML("<p>");
   });
 
   it("renders an honest empty state when no posts are available", () => {
@@ -60,6 +63,19 @@ describe("PostCard", () => {
     expect(within(article).getByText("Next.js")).toBeInTheDocument();
     expect(within(article).getByText("工程实践")).toBeInTheDocument();
   });
+
+  it("does not render a paragraph placeholder for an undecided summary", () => {
+    render(
+      <PostCard
+        post={{
+          ...examplePost,
+          metadata: { ...examplePost.metadata, summary: "" },
+        }}
+      />,
+    );
+
+    expect(screen.getByRole("article").querySelector(":scope > p")).toBeNull();
+  });
 });
 
 describe("BlogArticle", () => {
@@ -83,5 +99,20 @@ describe("BlogArticle", () => {
       "href",
       "/blog",
     );
+  });
+
+  it("does not render an empty article summary", () => {
+    const { container } = render(
+      <BlogArticle
+        post={{
+          ...examplePost,
+          metadata: { ...examplePost.metadata, summary: "" },
+        }}
+      >
+        <p>正文。</p>
+      </BlogArticle>,
+    );
+
+    expect(container.querySelector(".blog-article__summary")).toBeNull();
   });
 });

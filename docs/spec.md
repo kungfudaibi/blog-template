@@ -1,7 +1,7 @@
 # Spec: 个人博客、作品集与卡通 Agent
 
-> 状态：匿名作品、能力地图、已批准项目外链和自助维护入口已完成技术验收，等待站主内容终审；未部署
-> 日期：2026-08-03
+> 状态：定制内容与五项目作品集已完成；`zhujiechong.org` 已购入但尚未绑定或部署
+> 日期：2026-08-04
 
 ## Objective
 
@@ -13,7 +13,7 @@
 
 本实现同时以 **blog-template** GitHub 模板公开发布。仓库中的 `zhujiechong`、阿竹和全部“示例/待填写”内容构成可运行演示，不代表模板使用者；使用模板后必须先替换身份、内容、链接、Agent 资料与站点 URL，再考虑部署。公开模板授权不等同于任何派生站点的生产部署授权。
 
-在当前定制分支中，`zhujiechong` 同时作为站主选择的公开笔名使用，不得据此补全或推测真实身份。网站内容与 Agent 回答均不得公开真实姓名、学校、学院、实习单位、电话、私人邮箱或其他可定位身份的信息。
+在当前定制分支中，`zhujiechong` 同时作为站主选择的公开笔名使用，不得据此补全或推测真实身份。网站内容与 Agent 回答均不得公开真实姓名、学校、学院、实习单位或其他未经站主明确授权的身份信息。站主主动写入 `content/profile/contact.md` 且标记为 `visibility: public` 的联系方式，已随本次提交明确批准公开并可作为 Agent 来源。
 
 站主是一名程序员。主要用户：
 
@@ -196,7 +196,9 @@ branches: [并行计算, AI Infra]
 - `practiced`：做过完整实践
 - `independent`：能独立承担
 
-每个能力正文必须包含“我的理解”“做过的事”“边界与失败”“下一步”四个部分。等级是当前自我判断，不等同于证书、招聘评级或跨领域可比较分数。
+能力正文不强制标题名称、数量或顺序，站主可以使用任意 Markdown 结构。空正文或暂未写完的段落代表“尚未想好”，系统不得补写或据此推测经历。等级是当前自我判断，不等同于证书、招聘评级或跨领域可比较分数。
+
+文章、作品和能力的 `summary` 字段允许使用空字符串表达暂未完成；列表、详情与 SEO 不渲染或虚构空摘要。公开 profile 文件正文为空时保留在仓库作为草稿，但不进入关于页或 Agent 来源；标题、日期、slug、状态、链接协议等用于路由与安全的结构化字段仍需校验。
 
 ### 匿名作品与能力地图
 
@@ -204,7 +206,7 @@ branches: [并行计算, AI Infra]
 - 桌面端使用领域导航与档案内容布局，移动端使用线性卡片或可访问的渐进式展开；核心内容不得依赖 hover 或动画才能读取。
 - 首页展示三个重点方向并链接到完整能力页；默认重点为超算与 AI Infra、Agent 开发、体系结构与操作系统。
 - 能力卡展示文字状态、领域理解、实践证据、失败与边界、相关作品以及下一步计划，不使用百分比进度条或雷达图。
-- 精选作品首版替换为三个匿名项目：校园开源镜像站、开源自学文档、blog-template。
+- 作品集包含五个可核实项目：校园开源镜像站、开源自学文档、blog-template、FPGA Verilog 智能小车、第八日餐厅（OctodayMenu）。首页仍最多展示两个 `featured` 作品。
 - 超算竞赛、AlphaFold 优化、Docker 大数据集群、FPGA 智能小车、数字逻辑实验辅助和开放数据提取作为作品详情或能力实践档案呈现；fork 只作为研究尝试，不宣称原创。
 - 能力内容加入 Agent 的公开授权来源；当访客询问真实姓名、学校、实习单位或其他未授权身份信息时，Agent 明确表示资料未公开，不调用模型猜测。
 
@@ -216,7 +218,8 @@ branches: [并行计算, AI Infra]
 - 学校相关团队与组织只写“校园”“校内团队”或“校内开源社团”。
 - 网络安全故事可以保留 `py2.8` 挖矿进程的叙事，但不得公开服务器地址、账号、漏洞入口、恶意代码或仍可利用的攻击步骤。
 - GitHub 账号、组织名和仓库路径默认不公开；完成隐私审计并再次获得批准后，可以只在对应作品中提供精确项目链接，不自动链接个人主页或其他仓库。
-- 站主于 2026-08-03 批准以下作品外链：校园开源镜像站源码 `https://github.com/kungfudaibi/sxu-mirror`；开源自学文档演示 `https://kungfudaibi.github.io/` 与源码 `https://github.com/kungfudaibi/kungfudaibi.github.io`；blog-template 源码 `https://github.com/kungfudaibi/blog-template`。除此之外的账号或仓库仍需再次批准。
+- 站主批准以下作品外链：校园开源镜像站源码 `https://github.com/kungfudaibi/sxu-mirror`；开源自学文档演示 `https://kungfudaibi.github.io/` 与源码 `https://github.com/kungfudaibi/kungfudaibi.github.io`；blog-template 源码 `https://github.com/kungfudaibi/blog-template`；FPGA Verilog 智能小车源码 `https://github.com/kungfudaibi/fpga_smart_car_tank`；第八日餐厅源码 `https://github.com/kungfudaibi/OctodayMenu`。除此之外的账号或仓库仍需再次批准。
+- FPGA 小车必须说明其团队协作、摄像头与无线控制参考来源，以及最终攻击信号只依赖距离的未完成边界；第八日餐厅必须说明它是校内开源组织项目的 fork，并把站主的前后端提交与上游创意、流程和其他协作者贡献区分开。
 
 Agent 授权资料按主题拆分，至少记录来源标题、正文和可公开级别。私人资料、密钥、内部地址和未授权第三方信息不得进入该目录。
 
@@ -320,7 +323,7 @@ export function ProjectCard({ title, summary, href }: ProjectCardProps) {
 ## Success Criteria
 
 - 首页在桌面和手机视口均清晰展示个人定位、代表作品入口、文章入口和 Agent 入口。
-- 至少可用示例内容渲染 3 个作品和 3 篇文章；替换内容无需修改页面代码。
+- 当前内容可渲染 5 个作品和 3 篇文章；替换内容无需修改页面代码。
 - 文章和作品拥有可分享的独立 URL、标题和描述元数据。
 - Agent 在测试资料集上的 10 个已知问题中，至少 9 个回答与资料一致并链接到相关内容。
 - Agent 对测试资料集之外的 5 个未知问题全部明确表示资料不足，不虚构答案。
@@ -330,10 +333,10 @@ export function ProjectCard({ title, summary, href }: ProjectCardProps) {
 - 键盘用户可以完成导航、浏览作品、阅读文章、打开 Agent、发送问题和关闭面板。
 - `npm run typecheck`、`npm run lint`、`npm run test -- --run`、`npx playwright test` 和 `npm run build` 全部通过。
 - `/capabilities` 在 375px、768px 和 1440px 视口完整呈现六个领域，键盘可访问且无横向溢出或控制台错误。
-- 每个领域都有文字状态、实践证据、边界/失败和下一步；页面不存在百分比能力值或雷达图。
-- 三个示例作品被匿名真实作品替换，没有虚构结果、暴露身份的外链或把 fork 宣称为原创。
+- 每个领域保留文字状态，正文结构由站主自由决定；页面不存在百分比能力值或雷达图，也不会为空白草稿补写内容。
+- 五个作品均来自可核实资料，没有虚构结果、未经批准的身份外链或把 fork 与团队成果宣称为个人原创。
 - Agent 能引用公开能力内容回答技能问题，并对真实身份与未公开机构问题全部拒绝猜测。
-- 构建产物、公开内容和 Agent 响应不包含真实姓名、学校、实习单位、电话或私人邮箱。
+- 构建产物、公开内容和 Agent 响应不包含真实姓名、学校、实习单位或未经明确授权的联系方式。
 
 ## Open Questions
 
@@ -344,7 +347,7 @@ export function ProjectCard({ title, summary, href }: ProjectCardProps) {
 
 以下默认项如无异议，不阻塞进入计划阶段：
 
-- 域名尚未购买，开发和首版预览使用部署平台临时域名。
+- 站主已购入 `zhujiechong.org` 并继续使用 Cloudflare 管理 DNS；首版计划部署到 Vercel，绑定域名前先使用 Vercel Preview 验收。
 - 个人资料尚未准备，项目先提供结构化 Markdown 模板和明确的示例占位内容。
 - 首版不展示保密项目，不提供英文版、联系表单或站点统计；提供 RSS。
 - 模型调用通过可替换的服务端适配层接入；首版使用 Cloudflare Workers AI 免费计划和 Qwen3 30B。
@@ -362,8 +365,8 @@ export function ProjectCard({ title, summary, href }: ProjectCardProps) {
 - 第三方模型：Cloudflare Workers AI 免费计划，默认 Qwen3 30B；不自动升级付费。
 - 仓库发布：以 `blog-template` 名称公开发布为 GitHub Template，采用 MIT License；保留 `zhujiechong` 作为明确标注的演示身份。
 - 首页定制：加入站主提供的《极乐迪斯科》游戏画面截图，作为带署名与替代文本的视觉灵感展示，不复制游戏完整 UI。
-- 公开身份：`zhujiechong` 是站点笔名；不公开真实姓名、学校、学院、实习单位、电话或私人邮箱。
+- 公开身份：`zhujiechong` 是站点笔名；不公开真实姓名、学校、学院、实习单位或未授权联系方式。`content/profile/contact.md` 中由站主主动填写并标记 public 的联系方式属于已授权公开资料。
 - 竞赛口径：2024 IndySCC 线上赛第三名、2025 ASC 二等奖；可以公开比赛名称，但不公开学校、队名和队员身份。
 - 实习口径：只写“某 MaaS 平台”。
 - 能力展示：采用证据型“能力地图 + 实践档案”，使用四级文字状态，不使用百分比或雷达图。
-- GitHub 外链：整理阶段可用于事实核验；完成隐私审计并再次批准前不在公开页面提供。
+- GitHub 外链：只公开本规格精确列出的作品演示与源码地址，不自动公开个人主页或其他仓库。

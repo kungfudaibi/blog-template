@@ -29,7 +29,7 @@ export function LatestPosts({ posts }: LatestPostsProps) {
               <h3>
                 <Link href={`/blog/${post.slug}`}>{post.metadata.title}</Link>
               </h3>
-              <p>{post.metadata.summary}</p>
+              {post.metadata.summary ? <p>{post.metadata.summary}</p> : null}
             </article>
           ))}
         </div>

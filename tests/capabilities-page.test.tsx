@@ -26,7 +26,7 @@ describe("capability page", () => {
       "2026-08-01",
     );
     expect(within(article).getByText("并行计算")).toBeInTheDocument();
-    expect(within(article).getByText(/边界与失败/)).toBeInTheDocument();
+    expect(within(article).getByText(/竞赛经历/)).toBeInTheDocument();
     expect(
       within(article).getByRole("link", { name: "查看相关作品与实践" }),
     ).toHaveAttribute("href", "/projects");
@@ -45,5 +45,30 @@ describe("capability page", () => {
     expect(
       screen.queryByRole("navigation", { name: "能力领域索引" }),
     ).not.toBeInTheDocument();
+  });
+
+  it("does not render a summary placeholder for an unfinished capability", () => {
+    const { container } = render(
+      <CapabilityIndex
+        capabilities={[
+          {
+            slug: "unfinished",
+            sourcePath: "capabilities/unfinished.mdx",
+            metadata: {
+              title: "暂未命名能力",
+              summary: "",
+              status: "exploring",
+              updatedAt: "2026-08-04",
+              order: 1,
+              featured: false,
+              branches: ["待整理"],
+            },
+            content: "",
+          },
+        ]}
+      />,
+    );
+
+    expect(container.querySelector("[class*='summary']")).toBeNull();
   });
 });

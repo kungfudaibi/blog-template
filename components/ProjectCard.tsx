@@ -20,7 +20,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <h2>
         <Link href={`/projects/${slug}`}>{metadata.title}</Link>
       </h2>
-      <p className="project-card__summary">{metadata.summary}</p>
+      {metadata.summary ? (
+        <p className="project-card__summary">{metadata.summary}</p>
+      ) : null}
       <dl className="project-card__facts">
         <div>
           <dt>职责</dt>

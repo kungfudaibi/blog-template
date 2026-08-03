@@ -6,7 +6,7 @@
 - Before personalizing behavior or public content, update `docs/spec.md`, then update the relevant plan/checklist.
 - Search the repository for `zhujiechong`, `阿竹`, `【示例】`, and `【待填写】`; do not silently leave demo claims in a derived production site.
 - Treat `content/profile/` as public source material. A `private` metadata value is filtering behavior, not a secret vault; never commit sensitive data.
-- Treat `content/capabilities/` as public Agent source material. Every record must retain evidence, limitations/failures, and next steps; a plan is not a completed achievement.
+- Treat `content/capabilities/` as public Agent source material. Capability bodies use author-defined Markdown structure with no mandatory headings; never fill blank or unfinished content with invented evidence, limitations, or plans.
 - Treat `content/projects/` and every project URL as public. Only add exact HTTPS links approved in `docs/spec.md`; project-link approval does not authorize a profile page, unrelated repository, or private service URL.
 - Preserve safe refusal, server-only credentials, no conversation persistence, and no automatic billing unless the specification changes and the user explicitly approves it.
 - Repository publication or template use does not authorize preview or production deployment.

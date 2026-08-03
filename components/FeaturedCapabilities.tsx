@@ -31,7 +31,9 @@ export function FeaturedCapabilities({ capabilities }: FeaturedCapabilitiesProps
                   {capability.metadata.title}
                 </Link>
               </h3>
-              <p>{capability.metadata.summary}</p>
+              {capability.metadata.summary ? (
+                <p>{capability.metadata.summary}</p>
+              ) : null}
               <ul aria-label={`${capability.metadata.title} 分支`}>
                 {capability.metadata.branches.map((branch) => (
                   <li key={branch}>{branch}</li>

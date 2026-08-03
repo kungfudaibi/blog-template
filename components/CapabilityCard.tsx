@@ -36,7 +36,9 @@ export function CapabilityCard({ capability }: CapabilityCardProps) {
           <CapabilityStatus status={metadata.status} />
         </div>
         <h2 id={titleId}>{metadata.title}</h2>
-        <p className={styles.summary}>{metadata.summary}</p>
+        {metadata.summary ? (
+          <p className={styles.summary}>{metadata.summary}</p>
+        ) : null}
         <div className={styles.meta}>
           <p>
             <span>更新：</span>

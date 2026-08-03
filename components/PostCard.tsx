@@ -32,7 +32,7 @@ export function PostCard({ post }: PostCardProps) {
       <h2>
         <Link href={`/blog/${slug}`}>{metadata.title}</Link>
       </h2>
-      <p>{metadata.summary}</p>
+      {metadata.summary ? <p>{metadata.summary}</p> : null}
       <span className="post-card__read-more" aria-hidden="true">
         阅读全文 <span aria-hidden="true">→</span>
       </span>

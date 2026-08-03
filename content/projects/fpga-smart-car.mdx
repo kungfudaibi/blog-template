@@ -1,0 +1,26 @@
+---
+title: FPGA Verilog 智能小车
+summary: 基于 Nexys A7-100T 的数字逻辑课程设计，整合无线控制、超声波测距、摄像头与电机驱动。
+period: 2024 课程设计
+role: FPGA 逻辑设计与整机联调（团队项目）
+tech: [Verilog, VHDL, Vivado, FPGA, ESP32]
+cover: /images/projects/fpga-smart-car.webp
+featured: false
+links:
+  source: https://github.com/kungfudaibi/fpga_smart_car_tank
+---
+
+## 我的职责
+
+- 使用 Verilog 与 VHDL 组织小车控制、顶层综合和外设连接，并参与整机联调。
+- 围绕 Nexys A7-100T 接入 ESP32 无线控制、MaxSonar 超声波测距、L298N 电机驱动和 OV5640 摄像头。
+- 调试遥控、测距、摄像头数据路径和攻击信号等模块，把硬件连接与 FPGA 逻辑放到同一条验证链路中。
+
+## 成果
+
+- 仓库保留了可在 Vivado 中打开的工程、约束文件，以及小车控制、无线控制、测距、摄像头和攻击信号等模块。
+- 完成了一台可以进行无线控制和距离检测的课程设计小车，并在仓库中保留演示视频与硬件说明。
+
+## 边界与失败
+
+这是团队课程设计，不是个人独立完成。摄像头部分主要参考公开的 FPGA 小车项目，无线控制也参考了外部 ESP32 实现，因此不把这些参考代码写成个人原创。最后调试阶段攻击信号存在问题，最终逻辑只依据超声波距离触发，没有实现针对特定目标的完整攻击判断。

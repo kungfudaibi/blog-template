@@ -2,7 +2,7 @@
 
 一个可直接复用的中文个人博客、作品集与卡通 Agent 模板，使用 Next.js App Router、TypeScript、MDX 和 Cloudflare Workers AI 构建。
 
-当前定制分支以公开别名 **zhujiechong** 运行，包含 3 篇技术记录、3 个作品、6 个能力档案和公开资料问答。真实姓名、学校、实习单位、私人联系方式和未经批准的账号链接均不公开；作品只展示规格中逐项批准的项目链接。代码仍可作为模板复用；派生站发布前必须按[内容维护指南](docs/content-guide.md)替换身份与内容，并重新确认公开边界。
+当前定制分支以公开别名 **zhujiechong** 运行，包含 3 篇技术记录、5 个作品、6 个能力档案和公开资料问答。真实姓名、学校、实习单位、未授权联系方式和未经批准的账号链接均不公开；`content/profile/contact.md` 中由站主主动填写并标记 public 的联系方式除外。作品只展示规格中逐项批准的项目链接。代码仍可作为模板复用；派生站发布前必须按[内容维护指南](docs/content-guide.md)替换身份与内容，并重新确认公开边界。
 
 ## 使用这个模板
 
@@ -94,7 +94,7 @@ npx playwright test
 | 想修改的内容 | 修改位置 |
 |---|---|
 | 博客文章 | `content/posts/*.mdx` |
-| 三个作品的标题、职责、正文、技术栈和外链 | `content/projects/*.mdx` |
+| 作品的标题、职责、正文、技术栈和外链 | `content/projects/*.mdx` |
 | 六个领域的状态、证据、边界和下一步 | `content/capabilities/*.mdx` |
 | 关于页和阿竹可引用的公开资料 | `content/profile/*.md`；关于页开场文案在 `app/about/page.tsx` |
 | 首页姓名、标语和介绍 | `app/page.tsx` |

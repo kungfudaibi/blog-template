@@ -22,7 +22,7 @@ export const capabilityMetadataSchema = z
   .object({
     slug: safeSlugSchema.optional(),
     title: z.string().trim().min(1).max(120),
-    summary: z.string().trim().min(1).max(240),
+    summary: z.string().trim().max(240),
     status: capabilityStatusSchema,
     updatedAt: contentDateSchema,
     order: z.number().int().min(1).max(999),

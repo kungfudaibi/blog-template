@@ -26,7 +26,7 @@ const linkedProjectFixture: LoadedProject = {
 };
 
 describe("project index", () => {
-  it("loads three anonymous projects and exposes their core facts", async () => {
+  it("loads five verified projects and exposes their roles and approved links", async () => {
     render(await ProjectsPage());
 
     expect(screen.getByRole("heading", { level: 1, name: "作品" }))
@@ -43,9 +43,21 @@ describe("project index", () => {
       "href",
       "/projects/blog-template",
     );
+    expect(
+      screen.getByRole("link", { name: "FPGA Verilog 智能小车" }),
+    ).toHaveAttribute("href", "/projects/fpga-smart-car");
+    expect(
+      screen.getByRole("link", { name: "第八日餐厅（OctodayMenu）" }),
+    ).toHaveAttribute("href", "/projects/octoday-menu");
     expect(screen.getByText("参与建设与维护（团队项目）")).toBeInTheDocument();
+    expect(
+      screen.getByText("FPGA 逻辑设计与整机联调（团队项目）"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("前后端开发（开源团队 fork）"),
+    ).toBeInTheDocument();
     expect(screen.getAllByText("精选作品")).toHaveLength(2);
-    expect(screen.getAllByRole("article")).toHaveLength(3);
+    expect(screen.getAllByRole("article")).toHaveLength(5);
     expect(screen.queryByText(/【示例】/)).not.toBeInTheDocument();
     const campusMirrorCard = screen
       .getByRole("link", { name: "校园开源镜像站" })
@@ -56,8 +68,14 @@ describe("project index", () => {
     const blogTemplateCard = screen
       .getByRole("link", { name: "blog-template" })
       .closest("article");
+    const fpgaCarCard = screen
+      .getByRole("link", { name: "FPGA Verilog 智能小车" })
+      .closest("article");
+    const octodayMenuCard = screen
+      .getByRole("link", { name: "第八日餐厅（OctodayMenu）" })
+      .closest("article");
 
-    expect(screen.getAllByLabelText("作品外部链接")).toHaveLength(3);
+    expect(screen.getAllByLabelText("作品外部链接")).toHaveLength(5);
     expect(
       within(campusMirrorCard!).getByRole("link", {
         name: "查看源代码（新窗口）",
@@ -81,6 +99,22 @@ describe("project index", () => {
         name: "查看源代码（新窗口）",
       }),
     ).toHaveAttribute("href", "https://github.com/kungfudaibi/blog-template");
+    expect(
+      within(fpgaCarCard!).getByRole("link", {
+        name: "查看源代码（新窗口）",
+      }),
+    ).toHaveAttribute(
+      "href",
+      "https://github.com/kungfudaibi/fpga_smart_car_tank",
+    );
+    expect(
+      within(octodayMenuCard!).getByRole("link", {
+        name: "查看源代码（新窗口）",
+      }),
+    ).toHaveAttribute(
+      "href",
+      "https://github.com/kungfudaibi/OctodayMenu",
+    );
   });
 
   it("renders a stable empty state", () => {
@@ -126,6 +160,19 @@ describe("ProjectCard", () => {
     expect(screen.queryByLabelText("作品外部链接")).not.toBeInTheDocument();
     expect(screen.queryByText(/暂无链接|即将公开/)).not.toBeInTheDocument();
   });
+
+  it("does not render a summary placeholder when the project summary is undecided", () => {
+    render(
+      <ProjectCard
+        project={{
+          ...linkedProjectFixture,
+          metadata: { ...linkedProjectFixture.metadata, summary: "" },
+        }}
+      />,
+    );
+
+    expect(document.querySelector(".project-card__summary")).toBeNull();
+  });
 });
 
 describe("ProjectArticle", () => {
@@ -164,5 +211,20 @@ describe("ProjectArticle", () => {
     );
 
     expect(screen.queryByLabelText("作品外部链接")).not.toBeInTheDocument();
+  });
+
+  it("does not render an empty project detail summary", () => {
+    const { container } = render(
+      <ProjectArticle
+        project={{
+          ...linkedProjectFixture,
+          metadata: { ...linkedProjectFixture.metadata, summary: "" },
+        }}
+      >
+        <p>正文。</p>
+      </ProjectArticle>,
+    );
+
+    expect(container.querySelector(".project-article__summary")).toBeNull();
   });
 });

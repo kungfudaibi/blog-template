@@ -28,16 +28,18 @@ export async function generateMetadata({
     return { title: "文章未找到 | zhujiechong" };
   }
 
+  const description = post.metadata.summary || undefined;
+
   return {
     title: `${post.metadata.title} | zhujiechong`,
-    description: post.metadata.summary,
+    description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
       locale: "zh_CN",
       siteName: "zhujiechong",
       title: post.metadata.title,
-      description: post.metadata.summary,
+      description,
       url: `/blog/${post.slug}`,
       publishedTime: `${post.metadata.publishedAt}T00:00:00Z`,
       tags: post.metadata.tags,
@@ -45,7 +47,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary",
       title: post.metadata.title,
-      description: post.metadata.summary,
+      description,
     },
   };
 }

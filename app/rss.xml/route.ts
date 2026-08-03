@@ -23,12 +23,14 @@ export async function GET() {
       const publishedAt = new Date(
         `${post.metadata.publishedAt}T00:00:00Z`,
       ).toUTCString();
+      const description = post.metadata.summary
+        ? `\n      <description>${escapeXml(post.metadata.summary)}</description>`
+        : "";
 
       return `    <item>
       <title>${escapeXml(post.metadata.title)}</title>
       <link>${escapeXml(link)}</link>
-      <guid isPermaLink="true">${escapeXml(link)}</guid>
-      <description>${escapeXml(post.metadata.summary)}</description>
+      <guid isPermaLink="true">${escapeXml(link)}</guid>${description}
       <pubDate>${publishedAt}</pubDate>
     </item>`;
     })

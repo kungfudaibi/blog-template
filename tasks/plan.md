@@ -1,6 +1,6 @@
 # Implementation Plan: zhujiechong 个人博客与卡通 Agent
 
-> 状态：Tasks 1–25、27 已完成；Task 26 技术验收已完成，等待站主内容终审；未部署
+> 状态：Tasks 1–25、27 已完成；Tasks 28–29 实施中；Task 26 技术验收已完成，等待站主内容终审；未部署
 > 规格来源：`docs/spec.md`  
 > 计划日期：2026-07-30
 
@@ -150,6 +150,38 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] 三个作品按精确白名单展示对应演示或源码链接
 - [x] 外链保留明确名称、新窗口提示与 `noopener noreferrer`
 - [x] README 和内容指南能让站主无需修改组件即可维护主要公开内容
+
+### Phase 8: Additional Portfolio Projects（已完成）
+
+- [x] Task 28: 补充 FPGA Verilog 智能小车与第八日餐厅
+
+### Checkpoint: Five-project Portfolio
+
+- [x] `/projects` 展示五个项目，首页精选数量保持为两个
+- [x] 两个新增项目展示精确批准的源码链接
+- [x] FPGA 参考实现/未完成功能与 OctodayMenu fork/团队边界均清晰可见
+
+### Phase 9: Free-form Content Drafts（已完成）
+
+- [x] Task 29: 取消能力必需标题并安全接受空草稿
+
+### Checkpoint: Author-owned Drafts
+
+- [x] 能力正文使用任意 Markdown 标题时可以加载和构建
+- [x] 空摘要不导致校验失败，也不渲染空段落或虚构文案
+- [x] 空 profile 正文不公开展示、不进入 Agent 来源
+- [x] 测试断言同步站主当前文案，不恢复被删除或改写的内容
+
+### Phase 10: Remote Submission & Deployment Notes（实施中）
+
+- [ ] Task 30: 提交定制分支并更新 `zhujiechong.org` 部署说明
+
+### Checkpoint: Reviewable Remote Branch
+
+- [ ] 当前定制内容、五个作品和自由草稿规则形成可复现提交
+- [ ] 远程存在 `feature/disco-customization` 同名分支
+- [ ] 部署文档覆盖 Vercel Preview、Cloudflare DNS、正式 `SITE_URL` 与回滚边界
+- [ ] 未执行未经单独授权的 Vercel 生产部署
 
 ## Verification Strategy
 

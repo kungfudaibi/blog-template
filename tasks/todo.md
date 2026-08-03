@@ -731,3 +731,94 @@
 - `docs/privacy.md`
 
 **Estimated scope:** Small
+
+## Task 28: 补充 FPGA Verilog 智能小车与第八日餐厅
+
+**Description:** 根据站主确认和公开仓库证据新增两个作品详情，保持首页精选不变，并显式记录团队、fork、参考实现和未完成功能边界。
+
+**Acceptance criteria:**
+- [x] `/projects` 从内容源加载五个项目，并可进入两个新增详情页
+- [x] FPGA Verilog 智能小车展示 Nexys A7-100T、Verilog/VHDL、外设联调与已知未完成边界
+- [x] 第八日餐厅展示 Vue 3/UniApp 前端、Express/PostgreSQL 后端和站主前后端提交
+- [x] OctodayMenu 明确标注 fork/团队边界，FPGA 项目不把参考实现写成个人原创
+- [x] 两个项目只提供规格批准的源码链接，不新增演示或个人主页链接
+- [x] 站主现有未提交内容改动保持不变
+
+**Verification:**
+- [x] RED：作品测试在两个内容文件尚未存在时失败
+- [x] GREEN：`npm run test -- --run tests/projects.test.tsx`
+- [x] 链接白名单测试包含两个新增精确 URL
+- [x] 类型、Lint、构建及其余测试运行
+- [x] 浏览器检查：五张作品卡、两个详情页及外链标签可访问
+
+**Dependencies:** Task 27
+
+**Files likely touched:**
+- `docs/spec.md`
+- `tasks/plan.md`
+- `tasks/todo.md`
+- `content/projects/fpga-smart-car.mdx`
+- `content/projects/octoday-menu.mdx`
+- `README.md`
+- `docs/privacy.md`
+- `tests/projects.test.tsx`
+- `tests/public-content-privacy.test.ts`
+- `tests/e2e/projects.spec.ts`
+
+**Estimated scope:** Small
+
+## Task 29: 取消能力必需标题并安全接受空草稿
+
+**Description:** 以站主当前编辑内容为事实来源，取消能力正文的固定四标题校验；允许空摘要和空 profile 草稿，同时在公开页面与 Agent 来源中省略空内容。
+
+**Acceptance criteria:**
+- [x] 能力正文不再要求“我的理解 / 做过的事 / 边界与失败 / 下一步”
+- [x] 文章、作品和能力 `summary: ""` 可以加载，页面不渲染空摘要段落
+- [x] 空的公开 profile 文件不出现在关于页或 Agent 来源中
+- [x] 不恢复站主删除的 FAQ、正文、标题或措辞
+- [x] 结构化安全字段与项目链接白名单继续校验
+
+**Verification:**
+- [x] RED：空摘要、自由能力标题和空 profile 的聚焦测试先失败
+- [x] GREEN：相关内容加载、页面与 Agent 来源测试通过
+- [x] 全量类型、Lint、单元/组件、浏览器与生产构建通过
+
+**Dependencies:** Task 28
+
+**Files likely touched:**
+- `docs/spec.md`
+- `tasks/plan.md`
+- `tasks/todo.md`
+- `AGENTS.md`
+- `lib/content/schema.ts`
+- `lib/content/capability-schema.ts`
+- `lib/content/capabilities.ts`
+- `lib/content/load.ts`
+- `components/PostCard.tsx`
+- `components/BlogArticle.tsx`
+- `app/blog/[slug]/page.tsx`
+- `tests/*.test.tsx`
+- `docs/content-guide.md`
+
+**Estimated scope:** Medium
+
+## Task 30: 提交定制分支并更新 `zhujiechong.org` 部署说明
+
+**Description:** 将站主已审核的定制内容、两个新增作品和自由草稿规则提交到当前功能分支，推送同名远程分支，并记录 Cloudflare DNS + Vercel 的部署路径；本任务不执行生产部署。
+
+**Acceptance criteria:**
+- [ ] 规格记录 `zhujiechong.org` 已购入、Cloudflare 管理 DNS、Vercel 为首选托管平台
+- [ ] 站主主动标记 public 的联系方式视为明确授权公开，未授权身份信息继续受保护
+- [ ] 提交前通过类型、Lint、测试、构建、浏览器和秘密检查
+- [ ] 本地 `feature/disco-customization` 推送到 `origin/feature/disco-customization`
+- [ ] 部署指南说明 Preview 优先、使用 Vercel 给出的项目专属 DNS 记录及生产 `SITE_URL`
+- [ ] 不创建 Vercel 预览或生产部署
+
+**Verification:**
+- [ ] `git diff --cached` 范围和公开内容经过检查
+- [ ] `git ls-files .env*` 仅包含无秘密的示例文件
+- [ ] 远程分支指向本次提交
+
+**Dependencies:** Task 29
+
+**Estimated scope:** Small

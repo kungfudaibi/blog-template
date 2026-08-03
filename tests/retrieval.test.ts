@@ -110,7 +110,7 @@ describe("agent retrieval", () => {
   it("builds stable public sources from repository content", async () => {
     const repositorySources = await buildAgentSources();
 
-    expect(repositorySources).toHaveLength(15);
+    expect(repositorySources).toHaveLength(16);
     expect(repositorySources).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -145,13 +145,11 @@ describe("agent retrieval", () => {
     const knownCases = [
       ["zhujiechong 的职业是什么？", "profile:bio"],
       ["怎样联系站主？", "profile:contact"],
-      ["为什么个人 Agent 要诚实地说不知道？", "post:agent-needs-boundaries"],
-      ["免费额度耗尽时博客还能继续访问吗？", "post:agent-needs-boundaries"],
-      ["frontmatter 为什么需要校验？", "post:content-is-a-contract"],
-      ["文章内容怎样独立于页面组件？", "post:building-this-site"],
       ["校园开源镜像站使用了什么技术？", "project:campus-mirror"],
       ["开源自学文档是怎样维护的？", "project:open-learning-docs"],
       ["blog-template 有哪些安全边界？", "project:blog-template"],
+      ["FPGA Verilog 智能小车做了什么？", "project:fpga-smart-car"],
+      ["第八日餐厅用了哪些前后端技术？", "project:octoday-menu"],
       ["超算和 AI Infra 做过什么？", "capability:hpc-ai-infra"],
       ["Agent 开发能力怎么样？", "capability:agent-development"],
       ["体系结构与操作系统学到哪里了？", "capability:systems"],
@@ -180,7 +178,7 @@ describe("agent retrieval", () => {
       retrieveAgentSources(query, repositorySources),
     );
 
-    expect(knownMatches).toHaveLength(16);
+    expect(knownMatches).toHaveLength(knownCases.length);
     expect(unknownResults.every((result) => result.status === "insufficient"))
       .toBe(true);
   });

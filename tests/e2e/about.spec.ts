@@ -23,7 +23,7 @@ for (const viewport of [
     await expect(page.getByLabel("资料状态")).toContainText("匿名公开");
 
     const publicProfiles = page.getByRole("region", { name: "公开个人资料" });
-    await expect(publicProfiles.getByRole("article")).toHaveCount(3);
+    await expect(publicProfiles.getByRole("article")).toHaveCount(2);
     await expect(
       publicProfiles.getByRole("heading", {
         level: 2,
@@ -31,7 +31,7 @@ for (const viewport of [
       }),
     ).toBeVisible();
     await expect(page.getByRole("heading", { name: "可以问的问题" }))
-      .toBeVisible();
+      .toHaveCount(0);
 
     const hasHorizontalOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth,

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("a visitor can move from the article list to a published technical note", async ({
+test("a visitor can open a published note whose summary is still undecided", async ({
   page,
 }) => {
   const browserErrors: string[] = [];
@@ -11,17 +11,17 @@ test("a visitor can move from the article list to a published technical note", a
 
   await page.goto("/blog");
   await page
-    .getByRole("link", { name: "把个人站点当作长期项目" })
+    .getByRole("link", { name: "充满信心期盼着明天" })
     .click();
 
-  await expect(page).toHaveURL(/\/blog\/building-this-site$/);
+  await expect(page).toHaveURL(/\/blog\/content-is-a-contract$/);
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "把个人站点当作长期项目",
+      name: "充满信心期盼着明天",
     }),
   ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "先从问题开始" })).toBeVisible();
+  await expect(page.locator(".blog-article__summary")).toHaveCount(0);
   expect(browserErrors).toEqual([]);
 });
 

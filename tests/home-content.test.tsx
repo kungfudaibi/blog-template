@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import HomePage, { HomeContent } from "@/app/page";
+import type { LoadedCapability, LoadedPost, LoadedProject } from "@/lib/content";
 
 describe("home content", () => {
   it("loads capabilities, projects, recent posts, and the honest agent preview", async () => {
@@ -53,6 +54,64 @@ describe("home content", () => {
       "href",
       "/blog",
     );
+  });
+
+  it("omits undecided summaries from every home content card", () => {
+    const capability = {
+      slug: "draft-capability",
+      sourcePath: "capabilities/draft-capability.mdx",
+      metadata: {
+        title: "能力草稿",
+        summary: "",
+        status: "exploring",
+        updatedAt: "2026-08-04",
+        order: 1,
+        featured: true,
+        branches: ["待整理"],
+      },
+      content: "",
+    } satisfies LoadedCapability;
+    const project = {
+      slug: "draft-project",
+      sourcePath: "projects/draft-project.mdx",
+      metadata: {
+        title: "作品草稿",
+        summary: "",
+        period: "2026",
+        role: "开发",
+        tech: ["TypeScript"],
+        cover: "/images/projects/draft.webp",
+        featured: true,
+      },
+      content: "",
+    } satisfies LoadedProject;
+    const post = {
+      slug: "draft-post",
+      sourcePath: "posts/draft-post.mdx",
+      metadata: {
+        title: "文章草稿",
+        summary: "",
+        publishedAt: "2026-08-04",
+        tags: ["草稿"],
+        cover: "/images/posts/draft.webp",
+        draft: false,
+      },
+      content: "",
+    } satisfies LoadedPost;
+
+    render(
+      <HomeContent
+        featuredCapabilities={[capability]}
+        featuredProjects={[project]}
+        recentPosts={[post]}
+      />,
+    );
+
+    for (const title of ["能力草稿", "作品草稿", "文章草稿"]) {
+      expect(
+        screen.getByRole("link", { name: title }).closest("article")?.querySelector("h3 + p"),
+      ).toBeNull();
+    }
   });
 
   it("presents the supplied Disco Elysium screenshot as credited inspiration", () => {

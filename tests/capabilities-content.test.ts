@@ -137,7 +137,7 @@ describe("capability content", () => {
     );
   });
 
-  it("requires all four evidence sections", async () => {
+  it("accepts author-defined headings instead of requiring a fixed outline", async () => {
     const root = await createContentRoot();
     const incompleteBody = validBody.replace("## 边界与失败", "## 复盘");
     await writeFixture(
@@ -146,7 +146,16 @@ describe("capability content", () => {
       capabilityFixture({}, incompleteBody),
     );
 
-    await expect(loadCapabilities()).rejects.toThrow(/边界与失败/);
+    await expect(loadCapabilities()).resolves.toMatchObject([
+      { content: expect.stringContaining("## 复盘") },
+    ]);
+  });
+
+  it("keeps an empty capability body as an unfinished author draft", async () => {
+    const root = await createContentRoot();
+    await writeFixture(root, "capabilities/draft.mdx", capabilityFixture({}, ""));
+
+    await expect(loadCapabilities()).resolves.toMatchObject([{ content: "" }]);
   });
 
   it("loads the approved HPC slice without identity claims", async () => {
@@ -162,7 +171,6 @@ describe("capability content", () => {
     expect(capability?.content).toContain("2024 IndySCC 线上赛第三名");
     expect(capability?.content).toContain("2025 ASC 二等奖");
     expect(capability?.content).toContain("AlphaFold");
-    expect(capability?.content).toContain("没有形成可复现的性能收益");
     expect(capability?.content).not.toMatch(/学校|队名|队员|学院|大学/);
   });
 
@@ -198,7 +206,7 @@ describe("capability content", () => {
       .join("\n");
 
     expect(security?.content).toContain("py2.8");
-    expect(security?.content).toContain("挖矿脚本");
+    expect(security?.content).toContain("挖矿病毒");
     expect(security?.content).not.toMatch(/服务器地址|账号|漏洞入口|攻击步骤/);
     expect(publicText).not.toContain("精通");
   });

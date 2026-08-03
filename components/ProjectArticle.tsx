@@ -25,7 +25,9 @@ export function ProjectArticle({ project, children }: ProjectArticleProps) {
             {metadata.featured ? <strong>精选作品</strong> : null}
           </div>
           <h1>{metadata.title}</h1>
-          <p className="project-article__summary">{metadata.summary}</p>
+          {metadata.summary ? (
+            <p className="project-article__summary">{metadata.summary}</p>
+          ) : null}
           <dl className="project-article__facts">
             <div>
               <dt>时间</dt>

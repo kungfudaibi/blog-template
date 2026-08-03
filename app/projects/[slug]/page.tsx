@@ -33,22 +33,24 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   if (!project) return { title: "作品未找到 | zhujiechong" };
 
+  const description = project.metadata.summary || undefined;
+
   return {
     title: `${project.metadata.title} | zhujiechong`,
-    description: project.metadata.summary,
+    description,
     alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {
       type: "website",
       locale: "zh_CN",
       siteName: "zhujiechong",
       title: project.metadata.title,
-      description: project.metadata.summary,
+      description,
       url: `/projects/${project.slug}`,
     },
     twitter: {
       card: "summary",
       title: project.metadata.title,
-      description: project.metadata.summary,
+      description,
     },
   };
 }

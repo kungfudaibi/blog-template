@@ -26,7 +26,7 @@ for (const viewport of [
     ).toBeVisible();
     await expect(
       page.getByRole("article", { name: "超算与 AI Infra" }).getByRole("heading", {
-        name: "边界与失败",
+        name: "竞赛经历",
       }),
     ).toBeVisible();
 

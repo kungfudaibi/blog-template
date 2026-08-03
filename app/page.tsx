@@ -88,7 +88,7 @@ export function HomeContent({
         <div>
           <h2 id="home-note-title">一座正在搭建的数字工作台</h2>
           <p>
-            这里把匿名作品、能力档案、技术文章与资料问答放在同一条线上；每一项事实都保留来源、边界和继续修订的空间。
+            Wubba lubba dub dub!
           </p>
         </div>
       </section>

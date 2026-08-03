@@ -37,12 +37,25 @@ describe("published blog feed", () => {
       params: Promise.resolve({ slug: "building-this-site" }),
     });
 
-    expect(metadata.title).toBe(
-      "把个人站点当作长期项目 | zhujiechong",
-    );
-    expect(metadata.description).toBe(
-      "从需求、内容到可维护代码，记录这个站点的第一步。",
-    );
+    expect(metadata.title).toBe("黎明悄悄划过天边 | zhujiechong");
+    expect(metadata.description).toBe("。");
     expect(metadata.alternates?.canonical).toBe("/blog/building-this-site");
+  });
+
+  it("omits undecided summaries from article metadata and RSS items", async () => {
+    vi.stubEnv("SITE_URL", "https://blog.zhujiechong.test");
+
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ slug: "content-is-a-contract" }),
+    });
+    const xml = await (await GET()).text();
+    const undecidedItem = xml
+      .match(/<item>[\s\S]*?<\/item>/g)
+      ?.find((item) => item.includes("content-is-a-contract"));
+
+    expect(metadata.description).toBeUndefined();
+    expect(undecidedItem).toBeDefined();
+    expect(undecidedItem).not.toContain("<description>");
+    expect(xml).not.toContain("<description></description>");
   });
 });

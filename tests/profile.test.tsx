@@ -49,9 +49,11 @@ describe("about page", () => {
         "我是 zhujiechong，一名程序员。这里使用公开别名，只展示经过确认的作品、能力与技术记录，不公开真实姓名、学校或实习单位。",
       ),
     ).toBeInTheDocument();
-    expect(screen.getByText(/目前不公开个人联系方式/)).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { level: 2, name: "公开介绍" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "联系状态" }),
     ).toBeInTheDocument();
   });
 

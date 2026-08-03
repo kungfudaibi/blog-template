@@ -22,7 +22,9 @@ export function BlogArticle({ post, children }: BlogArticleProps) {
         <header className="blog-article__header">
           <p className="eyebrow">POST / {post.slug}</p>
           <h1>{metadata.title}</h1>
-          <p className="blog-article__summary">{metadata.summary}</p>
+          {metadata.summary ? (
+            <p className="blog-article__summary">{metadata.summary}</p>
+          ) : null}
           <div className="blog-article__meta">
             <time dateTime={metadata.publishedAt}>
               {formatPublishedDate(metadata.publishedAt)}

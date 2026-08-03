@@ -33,7 +33,9 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
                     {project.metadata.title}
                   </Link>
                 </h3>
-                <p>{project.metadata.summary}</p>
+                {project.metadata.summary ? (
+                  <p>{project.metadata.summary}</p>
+                ) : null}
                 <ul aria-label="技术栈">
                   {project.metadata.tech.map((tech) => (
                     <li key={tech}>{tech}</li>

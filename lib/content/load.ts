@@ -213,7 +213,11 @@ export async function loadProfiles(options: ProfileLoaderOptions = {}) {
   );
 
   return profiles
-    .filter((profile) => options.includePrivate || profile.metadata.visibility === "public")
+    .filter(
+      (profile) =>
+        options.includePrivate ||
+        (profile.metadata.visibility === "public" && profile.content.length > 0),
+    )
     .sort((left, right) => left.slug.localeCompare(right.slug, "en"));
 }
 

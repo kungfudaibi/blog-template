@@ -3,7 +3,6 @@ title: "联系状态"
 visibility: public
 relatedPath: /about
 ---
+邮箱 1534779821@qq.com
 
-目前不公开个人联系方式，也不提供可以反向识别身份的账号或主页链接。
-
-如果未来增加公开联系渠道，会先完成隐私审计并更新本站说明；阿竹不会根据其他资料猜测邮箱、手机号或社交账号。
+微信 iwantsaywocunzai

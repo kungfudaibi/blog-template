@@ -107,6 +107,47 @@ draft: true
     ]);
   });
 
+  it("accepts blank summaries as undecided display copy", async () => {
+    const root = await createContentRoot();
+
+    await writeFixture(
+      root,
+      "posts/blank-summary.mdx",
+      `---
+title: 尚未想好摘要
+summary: ""
+publishedAt: 2026-08-04
+tags: [草稿]
+cover: /images/posts/blank.webp
+draft: false
+---
+
+正文也可以之后再继续。
+`,
+    );
+    await writeFixture(
+      root,
+      "projects/blank-summary.mdx",
+      `---
+title: 尚未想好项目摘要
+summary: ""
+period: 2026
+role: 开发
+tech: [TypeScript]
+cover: /images/projects/blank.webp
+featured: false
+---
+`,
+    );
+
+    await expect(loadPosts({ includeDrafts: false })).resolves.toMatchObject([
+      { metadata: { summary: "" } },
+    ]);
+    await expect(loadProjects()).resolves.toMatchObject([
+      { metadata: { summary: "" } },
+    ]);
+  });
+
   it("rejects invalid frontmatter with a safe relative file location", async () => {
     const root = await createContentRoot();
 
@@ -263,6 +304,25 @@ visibility: private
       },
     });
     expect(publicProfiles.map((profile) => profile.slug)).toEqual(["bio"]);
+  });
+
+  it("filters an empty public profile from display sources but retains it for maintenance", async () => {
+    const root = await createContentRoot();
+
+    await writeFixture(
+      root,
+      "profile/contact.md",
+      `---
+title: 联系方式
+visibility: public
+---
+`,
+    );
+
+    await expect(loadProfiles()).resolves.toEqual([]);
+    await expect(loadProfiles({ includePrivate: true })).resolves.toMatchObject([
+      { slug: "contact", content: "" },
+    ]);
   });
 
   it("accepts an anonymous project without external links", async () => {
