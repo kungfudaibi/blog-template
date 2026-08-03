@@ -32,7 +32,7 @@ const localPathSchema = z
     "路径不能包含目录穿越片段",
   );
 
-const publishedDateSchema = z.preprocess(
+export const contentDateSchema = z.preprocess(
   (value) => (value instanceof Date ? value.toISOString().slice(0, 10) : value),
   z
     .string()
@@ -55,7 +55,7 @@ export const postMetadataSchema = z
     ...optionalSlug,
     title: contentTitleSchema,
     summary: summarySchema,
-    publishedAt: publishedDateSchema,
+    publishedAt: contentDateSchema,
     tags: tagListSchema,
     cover: localPathSchema,
     draft: z.boolean().default(false),

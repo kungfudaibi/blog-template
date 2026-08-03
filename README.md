@@ -2,14 +2,14 @@
 
 一个可直接复用的中文个人博客、作品集与卡通 Agent 模板，使用 Next.js App Router、TypeScript、MDX 和 Cloudflare Workers AI 构建。
 
-演示站点名称是 **zhujiechong**，包含 3 篇文章、3 个作品和公开个人资料的**示例模板**。这些内容不是模板使用者的真实经历，公开发布前必须按[内容维护指南](docs/content-guide.md)替换。
+当前定制分支以公开别名 **zhujiechong** 运行，包含 3 篇技术记录、3 个匿名作品、6 个能力档案和公开资料问答。真实姓名、学校、实习单位、私人联系方式和未经批准的账号链接均不公开。代码仍可作为模板复用；派生站发布前必须按[内容维护指南](docs/content-guide.md)替换身份与内容，并重新确认公开边界。
 
 ## 使用这个模板
 
 在 GitHub 仓库页面选择 **Use this template**，或使用 GitHub CLI 创建自己的仓库：
 
 ```powershell
-gh repo create my-blog --template kungfudaibi/blog-template --public --clone
+gh repo create my-blog --template OWNER/blog-template --public --clone
 Set-Location my-blog
 npm ci
 Copy-Item .env.example .env.local
@@ -22,11 +22,13 @@ macOS/Linux 将复制环境文件的命令替换为：
 cp .env.example .env.local
 ```
 
+将 `OWNER` 替换为实际托管模板的 GitHub 用户或组织；不要直接沿用当前定制分支中的公开身份和经历。
+
 ## 首次定制清单
 
 1. 先更新 `docs/spec.md`，写清网站名称、站主定位、公开边界和模型选择。
 2. 全仓搜索 `zhujiechong`、`阿竹`、`【示例】`、`【待填写】`，替换品牌文案和占位内容。
-3. 按[内容维护指南](docs/content-guide.md)替换 `content/posts/`、`content/projects/`、`content/profile/`。
+3. 按[内容维护指南](docs/content-guide.md)替换 `content/posts/`、`content/projects/`、`content/capabilities/`、`content/profile/`。
 4. 更新 `app/layout.tsx`、首页、页眉、页脚、Agent 文案和 `public/agent/azhu.png`。
 5. 设置 `SITE_URL`；需要 Agent 模型时才配置 Cloudflare 服务端凭据。
 6. 运行全部质量门禁并人工检查 375px、768px、1440px 视口。
@@ -35,10 +37,11 @@ cp .env.example .env.local
 
 ## 功能
 
-- 首页、博客列表/详情、作品列表/详情和关于页
+- 首页、博客列表/详情、作品列表/详情、能力地图和关于页
 - RSS、sitemap、robots、分享元数据与品牌化错误页
 - 全站像素机器人“阿竹”对话入口
 - 只基于公开站内资料回答个人问题；资料不足时拒绝猜测
+- 真实姓名、学校和实习单位等身份问题在代码层直接拒答，不调用模型
 - Cloudflare Workers AI 服务端适配层，默认模型 `@cf/qwen/qwen3-30b-a3b-fp8`
 - 响应式、键盘操作、减少动画和安全响应头
 
@@ -90,6 +93,7 @@ npx playwright test
 
 - `content/posts/*.mdx`：博客文章
 - `content/projects/*.mdx`：作品详情
+- `content/capabilities/*.mdx`：带实践证据、失败边界和下一步的能力档案
 - `content/profile/*.md`：关于页和阿竹可引用的公开资料
 - `public/agent/azhu.png`：阿竹透明 PNG 素材
 
@@ -100,7 +104,7 @@ npx playwright test
 ```text
 app/                App Router 页面、元数据路由和 Agent API
 components/         页面与交互组件
-content/            文章、作品和公开资料
+content/            文章、作品、能力档案和公开资料
 lib/agent/          检索、模型适配、安全边界和限流
 lib/content/        内容校验与加载
 public/             静态资源

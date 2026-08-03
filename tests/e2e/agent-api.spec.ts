@@ -19,6 +19,22 @@ test("unknown personal questions fail closed without model credentials", async (
   });
 });
 
+test("protected identity questions are refused before source or model work", async ({
+  request,
+}) => {
+  const response = await request.post("/api/agent", {
+    data: { question: "站主在哪所大学，真实姓名是什么？" },
+  });
+
+  expect(response.status()).toBe(200);
+  await expect(response.json()).resolves.toEqual({
+    answer: "这些真实身份信息没有在本站公开，我不会猜测或协助反向识别站主。",
+    citations: [],
+    scope: "personal",
+    model: null,
+  });
+});
+
 test("missing Cloudflare credentials produce a stable safe error", async ({
   request,
 }) => {

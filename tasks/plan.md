@@ -1,6 +1,6 @@
 # Implementation Plan: zhujiechong 个人博客与卡通 Agent
 
-> 状态：Tasks 1–18 基线已完成；Phase 6 已批准并进入实施
+> 状态：Tasks 1–25 已完成；Task 26 技术验收已完成，等待站主内容终审；未部署
 > 规格来源：`docs/spec.md`  
 > 计划日期：2026-07-30
 
@@ -127,7 +127,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 
 - [x] 无外部链接的作品仍能通过校验并稳定渲染
 - [x] 能力元数据、排序、状态映射和正文结构均有自动化测试
-- [ ] 仓库内容不含本轮禁止公开的真实身份字段
+- [x] 仓库内容不含本轮禁止公开的真实身份字段
 
 ### Checkpoint: Capability Experience
 
@@ -138,7 +138,7 @@ Cloudflare Provider 接口与模拟实现 ───┤
 ### Checkpoint: Personalization Complete
 
 - [x] 三个示例作品已替换为匿名且可核实的真实作品
-- [ ] 全量类型、Lint、单元/组件、E2E 和生产构建通过
+- [x] 全量类型、Lint、单元/组件、E2E 和生产构建通过
 - [ ] 用户完成内容与隐私终审；仍未授权生产部署
 
 ## Verification Strategy

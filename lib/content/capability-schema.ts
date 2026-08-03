@@ -1,19 +1,6 @@
 import { z } from "zod";
 
-import { safeSlugSchema } from "./schema";
-
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-
-const updatedDateSchema = z.preprocess(
-  (value) => (value instanceof Date ? value.toISOString().slice(0, 10) : value),
-  z
-    .string()
-    .regex(DATE_PATTERN, "日期必须使用 YYYY-MM-DD")
-    .refine((value) => {
-      const parsed = new Date(`${value}T00:00:00Z`);
-      return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
-    }, "日期无效"),
-);
+import { contentDateSchema, safeSlugSchema } from "./schema";
 
 const branchSchema = z.string().trim().min(1).max(40);
 
@@ -37,7 +24,7 @@ export const capabilityMetadataSchema = z
     title: z.string().trim().min(1).max(120),
     summary: z.string().trim().min(1).max(240),
     status: capabilityStatusSchema,
-    updatedAt: updatedDateSchema,
+    updatedAt: contentDateSchema,
     order: z.number().int().min(1).max(999),
     featured: z.boolean().default(false),
     branches: z

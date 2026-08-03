@@ -15,13 +15,13 @@ import {
 } from "@/lib/content";
 
 type HomeContentProps = {
-  featuredCapabilities?: LoadedCapability[];
+  featuredCapabilities: LoadedCapability[];
   featuredProjects: LoadedProject[];
   recentPosts: LoadedPost[];
 };
 
 export function HomeContent({
-  featuredCapabilities = [],
+  featuredCapabilities,
   featuredProjects,
   recentPosts,
 }: HomeContentProps) {

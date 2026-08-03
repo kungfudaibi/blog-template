@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：Tasks 1–18 已完成；Tasks 19–26 已批准并进入实施；等待真实 Cloudflare 冒烟与用户最终审阅，未部署
+> 状态：Tasks 1–25 已完成；Task 26 技术验收已完成，等待真实 Cloudflare 冒烟与用户内容终审；未部署
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -679,14 +679,15 @@
 **Description:** 更新维护和隐私文档，执行仓库内容审计与完整浏览器回归，确保第二轮定制达到 Definition of Done。
 
 **Acceptance criteria:**
-- [ ] README 与内容指南准确说明能力文件、匿名规则和无外链作品
-- [ ] 公开内容、构建产物与 Agent 测试响应不包含禁止公开的信息
-- [ ] 六个能力、三个作品及首页路径在目标视口和键盘流程完整可用
+- [x] README 与内容指南准确说明能力文件、匿名规则和无外链作品
+- [x] 公开内容、构建产物与 Agent 测试响应不包含禁止公开的信息
+- [x] 六个能力、三个作品及首页路径在目标视口和键盘流程完整可用
 
 **Verification:**
-- [ ] 全量检查：`npm run typecheck`、`npm run lint`、`npm run test -- --run`、`npm run build`
-- [ ] 全量 E2E：`npx playwright test`
-- [ ] 人工终审：搜索 demo 标识、待填写内容、身份线索和外部链接；用户完成内容确认
+- [x] 全量检查：`npm run typecheck`、`npm run lint`、`npm run test -- --run`、`npm run build`
+- [x] 全量 E2E：`npx playwright test`
+- [x] 技术人工审计：搜索 demo 标识、待填写内容、身份线索、构建产物和外部链接
+- [ ] 站主内容终审：确认公开叙事、能力状态、作品职责与隐私口径
 
 **Dependencies:** Tasks 23, 24, 25
 

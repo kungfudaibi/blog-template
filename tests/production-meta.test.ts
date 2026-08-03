@@ -27,9 +27,10 @@ describe("public discovery metadata", () => {
         "https://zhujiechong.example/",
         "https://zhujiechong.example/about",
         "https://zhujiechong.example/blog",
+        "https://zhujiechong.example/capabilities",
         "https://zhujiechong.example/projects",
         "https://zhujiechong.example/blog/building-this-site",
-        "https://zhujiechong.example/projects/example-dev-workbench",
+        "https://zhujiechong.example/projects/campus-mirror",
       ]),
     );
     expect(urls.every((url) => !url.includes("/api/") && !url.includes("/profile/"))).toBe(

@@ -132,8 +132,11 @@ describe("POST /api/agent", () => {
 
   it.each([
     "站主的真实姓名是什么？",
+    "站主姓名？",
     "站主在哪所大学？",
+    "站主学校是什么？",
     "站主在什么公司实习？",
+    "站主实习单位？",
     "某 MaaS 平台具体是哪家公司？",
   ])("refuses protected identity question without loading sources or creating a provider: %s", async (question) => {
     const provider = new MockModelProvider("不应调用");

@@ -39,19 +39,19 @@ afterEach(async () => {
 });
 
 describe("about page", () => {
-  it("shows the confirmed programmer position and clearly labelled templates", async () => {
+  it("shows the confirmed programmer position and anonymous public boundary", async () => {
     render(await AboutPage());
 
     expect(screen.getByRole("heading", { level: 1, name: "关于我" }))
       .toBeInTheDocument();
     expect(
       screen.getByText(
-        "我是 zhujiechong，是一名程序员。这里目前使用明确标注的资料模板，等真实内容准备好后再逐项替换。",
+        "我是 zhujiechong，一名程序员。这里使用公开别名，只展示经过确认的作品、能力与技术记录，不公开真实姓名、学校或实习单位。",
       ),
     ).toBeInTheDocument();
-    expect(screen.getByText(/尚未填写公开联系方式/)).toBeInTheDocument();
+    expect(screen.getByText(/目前不公开个人联系方式/)).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { level: 2, name: "【示例模板】公开介绍" }),
+      screen.getByRole("heading", { level: 2, name: "公开介绍" }),
     ).toBeInTheDocument();
   });
 

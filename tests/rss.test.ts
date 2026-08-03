@@ -9,13 +9,11 @@ afterEach(() => {
 });
 
 describe("published blog feed", () => {
-  it("loads exactly three replaceable sample posts from MDX", async () => {
+  it("loads exactly three published technical notes from MDX", async () => {
     const posts = await loadPosts({ includeDrafts: false });
 
     expect(posts).toHaveLength(3);
-    expect(posts.every((post) => post.metadata.title.startsWith("【示例】"))).toBe(
-      true,
-    );
+    expect(posts.every((post) => !post.metadata.title.includes("【示例】"))).toBe(true);
   });
 
   it("returns valid RSS-shaped XML with absolute links to published posts", async () => {
@@ -40,10 +38,10 @@ describe("published blog feed", () => {
     });
 
     expect(metadata.title).toBe(
-      "【示例】把个人站点当作长期项目 | zhujiechong",
+      "把个人站点当作长期项目 | zhujiechong",
     );
     expect(metadata.description).toBe(
-      "从需求、内容到可维护代码，记录这个样例站点的第一步。",
+      "从需求、内容到可维护代码，记录这个站点的第一步。",
     );
     expect(metadata.alternates?.canonical).toBe("/blog/building-this-site");
   });

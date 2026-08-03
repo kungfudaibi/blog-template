@@ -4,7 +4,7 @@ for (const viewport of [
   { name: "mobile", width: 375, height: 812 },
   { name: "desktop", width: 1440, height: 900 },
 ] as const) {
-  test(`about page exposes only labelled public templates at ${viewport.name} width`, async ({
+  test(`about page exposes only anonymous public records at ${viewport.name} width`, async ({
     page,
   }) => {
     const browserErrors: string[] = [];
@@ -20,17 +20,17 @@ for (const viewport of [
     expect(response?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1, name: "关于我" }))
       .toBeVisible();
-    await expect(page.getByLabel("资料状态")).toContainText("待完善");
+    await expect(page.getByLabel("资料状态")).toContainText("匿名公开");
 
     const publicProfiles = page.getByRole("region", { name: "公开个人资料" });
     await expect(publicProfiles.getByRole("article")).toHaveCount(3);
     await expect(
       publicProfiles.getByRole("heading", {
         level: 2,
-        name: "【待填写】公开联系方式",
+        name: "联系状态",
       }),
     ).toBeVisible();
-    await expect(page.getByRole("heading", { name: "可以填写的问题" }))
+    await expect(page.getByRole("heading", { name: "可以问的问题" }))
       .toBeVisible();
 
     const hasHorizontalOverflow = await page.evaluate(

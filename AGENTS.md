@@ -2,10 +2,11 @@
 
 ## Template contract
 
-- `zhujiechong` and `阿竹` are runnable demo identities, not facts about a template user.
+- On `feature/disco-customization`, `zhujiechong` is the approved public pseudonym and `阿竹` is the site Agent name. Template consumers must replace both before treating the repository as their own identity.
 - Before personalizing behavior or public content, update `docs/spec.md`, then update the relevant plan/checklist.
 - Search the repository for `zhujiechong`, `阿竹`, `【示例】`, and `【待填写】`; do not silently leave demo claims in a derived production site.
 - Treat `content/profile/` as public source material. A `private` metadata value is filtering behavior, not a secret vault; never commit sensitive data.
+- Treat `content/capabilities/` as public Agent source material. Every record must retain evidence, limitations/failures, and next steps; a plan is not a completed achievement.
 - Preserve safe refusal, server-only credentials, no conversation persistence, and no automatic billing unless the specification changes and the user explicitly approves it.
 - Repository publication or template use does not authorize preview or production deployment.
 

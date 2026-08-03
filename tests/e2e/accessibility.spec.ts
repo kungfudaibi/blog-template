@@ -4,6 +4,7 @@ const publicRoutes = [
   "/",
   "/blog",
   "/blog/building-this-site",
+  "/capabilities",
   "/projects",
   "/projects/campus-mirror",
   "/about",
@@ -84,6 +85,7 @@ test("discovery endpoints, recovery page, and security headers work in-browser",
   const robots = await request.get("/robots.txt");
   expect(sitemap.status()).toBe(200);
   expect(await sitemap.text()).toContain("/blog/building-this-site");
+  expect(await sitemap.text()).toContain("/capabilities");
   expect(robots.status()).toBe(200);
   expect(await robots.text()).toContain("Disallow: /api/");
 

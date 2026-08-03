@@ -20,12 +20,11 @@ export function AboutContent({ profiles }: AboutContentProps) {
         <p className="eyebrow">ABOUT / PUBLIC PROFILE</p>
         <h1>关于我</h1>
         <p>
-          我是
-          zhujiechong，是一名程序员。这里目前使用明确标注的资料模板，等真实内容准备好后再逐项替换。
+          我是 zhujiechong，一名程序员。这里使用公开别名，只展示经过确认的作品、能力与技术记录，不公开真实姓名、学校或实习单位。
         </p>
         <aside aria-label="资料状态">
-          <strong>资料状态：待完善</strong>
-          <span>阿竹以后只会引用下方明确标记为公开的内容。</span>
+          <strong>资料状态：匿名公开</strong>
+          <span>阿竹只会引用本站明确公开的资料，并拒绝身份猜测。</span>
         </aside>
       </header>
 
