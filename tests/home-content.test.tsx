@@ -10,15 +10,11 @@ describe("home content", () => {
     const featured = screen.getByRole("region", { name: "精选作品" });
     const recent = screen.getByRole("region", { name: "最新文章" });
 
-    expect(
-      within(featured).getByRole("link", { name: "【示例】API 观测台" }),
-    ).toHaveAttribute("href", "/projects/example-observability-console");
-    expect(
-      within(featured).getByRole("link", { name: "【示例】本地开发工作台" }),
-    ).toHaveAttribute("href", "/projects/example-dev-workbench");
-    expect(
-      within(featured).queryByText("【示例】数据整理流水线"),
-    ).not.toBeInTheDocument();
+    expect(within(featured).getByRole("link", { name: "校园开源镜像站" }))
+      .toHaveAttribute("href", "/projects/campus-mirror");
+    expect(within(featured).getByRole("link", { name: "blog-template" }))
+      .toHaveAttribute("href", "/projects/blog-template");
+    expect(within(featured).queryByText("开源自学文档")).not.toBeInTheDocument();
 
     expect(within(recent).getAllByRole("article")).toHaveLength(3);
     expect(screen.getByText("阿竹正在准备中")).toBeInTheDocument();

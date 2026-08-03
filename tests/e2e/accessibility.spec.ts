@@ -5,7 +5,7 @@ const publicRoutes = [
   "/blog",
   "/blog/building-this-site",
   "/projects",
-  "/projects/example-observability-console",
+  "/projects/campus-mirror",
   "/about",
 ] as const;
 
@@ -61,11 +61,11 @@ test("keyboard users can skip, navigate, and open a project", async ({ page }) =
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/projects$/);
 
-  const projectLink = page.getByRole("link", { name: "【示例】API 观测台" });
+  const projectLink = page.getByRole("link", { name: "校园开源镜像站" });
   await projectLink.focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/projects\/example-observability-console$/);
-  await expect(page.getByRole("heading", { level: 1, name: "【示例】API 观测台" }))
+  await expect(page).toHaveURL(/\/projects\/campus-mirror$/);
+  await expect(page.getByRole("heading", { level: 1, name: "校园开源镜像站" }))
     .toBeVisible();
 });
 

@@ -6,38 +6,48 @@ import { ProjectArticle } from "@/components/ProjectArticle";
 import { ProjectCard } from "@/components/ProjectCard";
 import type { LoadedProject } from "@/lib/content";
 
-const exampleProject: LoadedProject = {
-  slug: "example-observability-console",
-  sourcePath: "projects/example-observability-console.mdx",
+const linkedProjectFixture: LoadedProject = {
+  slug: "linked-project",
+  sourcePath: "projects/linked-project.mdx",
   metadata: {
-    title: "【示例】API 观测台",
-    summary: "把分散的请求日志整理成可追踪问题路径的样例工具。",
+    title: "外链测试项目",
+    summary: "用于验证外链安全属性的测试夹具。",
     period: "2026",
-    role: "全栈开发（示例）",
-    tech: ["Next.js", "TypeScript", "OpenTelemetry"],
+    role: "测试",
+    tech: ["Next.js", "TypeScript"],
     cover: "/images/projects/observability-console.webp",
     featured: true,
     links: {
-      demo: "https://example.com/projects/observability",
-      source: "https://github.com/example/observability-console",
+      demo: "https://demo.example.test/project",
+      source: "https://code.example.test/project",
     },
   },
-  content: "这是等待站主替换的示例作品。",
+  content: "测试正文。",
 };
 
 describe("project index", () => {
-  it("loads a repository project and exposes its core facts", async () => {
+  it("loads three anonymous projects and exposes their core facts", async () => {
     render(await ProjectsPage());
 
     expect(screen.getByRole("heading", { level: 1, name: "作品" }))
       .toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "【示例】API 观测台" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "校园开源镜像站" })).toHaveAttribute(
       "href",
-      "/projects/example-observability-console",
+      "/projects/campus-mirror",
     );
-    expect(screen.getByText("全栈开发（示例）")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "开源自学文档" })).toHaveAttribute(
+      "href",
+      "/projects/open-learning-docs",
+    );
+    expect(screen.getByRole("link", { name: "blog-template" })).toHaveAttribute(
+      "href",
+      "/projects/blog-template",
+    );
+    expect(screen.getByText("参与建设与维护（团队项目）")).toBeInTheDocument();
     expect(screen.getAllByText("精选作品")).toHaveLength(2);
     expect(screen.getAllByRole("article")).toHaveLength(3);
+    expect(screen.queryByText(/【示例】/)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("作品外部链接")).not.toBeInTheDocument();
   });
 
   it("renders a stable empty state", () => {
@@ -50,7 +60,7 @@ describe("project index", () => {
 
 describe("ProjectCard", () => {
   it("shows the role and tech stack with safe, clearly named external links", () => {
-    render(<ProjectCard project={exampleProject} />);
+    render(<ProjectCard project={linkedProjectFixture} />);
 
     const article = screen.getByRole("article");
     expect(within(article).getByText("Next.js")).toBeInTheDocument();
@@ -61,7 +71,7 @@ describe("ProjectCard", () => {
     });
     expect(demoLink).toHaveAttribute(
       "href",
-      "https://example.com/projects/observability",
+      "https://demo.example.test/project",
     );
     expect(demoLink).toHaveAttribute("target", "_blank");
     expect(demoLink).toHaveAttribute("rel", expect.stringContaining("noopener"));
@@ -69,10 +79,10 @@ describe("ProjectCard", () => {
 
   it("does not render an empty external-link group when links are omitted", () => {
     const projectWithoutLinks: LoadedProject = {
-      ...exampleProject,
+      ...linkedProjectFixture,
       slug: "anonymous-project",
       metadata: {
-        ...exampleProject.metadata,
+        ...linkedProjectFixture.metadata,
         title: "匿名项目",
         links: undefined,
       },
@@ -88,19 +98,19 @@ describe("ProjectCard", () => {
 describe("ProjectArticle", () => {
   it("provides project semantics, detail content, and a route back", () => {
     render(
-      <ProjectArticle project={exampleProject}>
+      <ProjectArticle project={linkedProjectFixture}>
         <h2>我的职责</h2>
-        <p>样例职责。</p>
-        <h2>样例成果</h2>
+        <p>测试职责。</p>
+        <h2>成果</h2>
       </ProjectArticle>,
     );
 
     expect(
-      screen.getByRole("heading", { level: 1, name: "【示例】API 观测台" }),
+      screen.getByRole("heading", { level: 1, name: "外链测试项目" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2, name: "我的职责" }))
       .toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 2, name: "样例成果" }))
+    expect(screen.getByRole("heading", { level: 2, name: "成果" }))
       .toBeInTheDocument();
     expect(screen.getByRole("link", { name: "返回作品列表" })).toHaveAttribute(
       "href",
@@ -110,8 +120,8 @@ describe("ProjectArticle", () => {
 
   it("omits external-link markup when a project has no approved links", () => {
     const projectWithoutLinks: LoadedProject = {
-      ...exampleProject,
-      metadata: { ...exampleProject.metadata, links: undefined },
+      ...linkedProjectFixture,
+      metadata: { ...linkedProjectFixture.metadata, links: undefined },
     };
 
     render(

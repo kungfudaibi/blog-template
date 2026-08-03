@@ -604,14 +604,14 @@
 **Description:** 删除三个示例项目，加入校园开源镜像站、开源自学文档和 blog-template，明确个人职责、团队边界和可核实结果。
 
 **Acceptance criteria:**
-- [ ] 作品列表不再包含 `【示例】`、`example.com` 或示例 GitHub 地址
-- [ ] 三个项目不出现学校、协会全称、真实姓名、实习单位或未批准外链
-- [ ] 团队项目不声称独立完成，fork 和失败尝试不作为原创成果
+- [x] 作品列表不再包含 `【示例】`、`example.com` 或示例 GitHub 地址
+- [x] 三个项目不出现学校、协会全称、真实姓名、实习单位或未批准外链
+- [x] 团队项目不声称独立完成，fork 和失败尝试不作为原创成果
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/projects.test.tsx tests/home-content.test.tsx`
-- [ ] 构建成功：`npm run build`
-- [ ] 人工来源核对：职责与结果能追溯到用户确认材料或公开仓库
+- [x] 聚焦测试：`npm run test -- --run tests/projects.test.tsx tests/home-content.test.tsx`
+- [x] 构建成功：`npm run build`
+- [x] 人工来源核对：职责与结果能追溯到用户确认材料或公开仓库
 
 **Dependencies:** Tasks 19, 21
 
