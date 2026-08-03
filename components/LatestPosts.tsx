@@ -13,7 +13,7 @@ export function LatestPosts({ posts }: LatestPostsProps) {
     <section className="home-section" aria-labelledby="latest-posts-title">
       <div className="home-section__heading">
         <div>
-          <p className="eyebrow">04 / WRITING</p>
+          <p className="eyebrow">05 / WRITING</p>
           <h2 id="latest-posts-title">最新文章</h2>
         </div>
         <Link href="/blog">查看全部文章</Link>

@@ -26,10 +26,22 @@ describe("SiteHeader", () => {
     expect(links.map((link) => link.textContent)).toEqual([
       "首页",
       "作品",
+      "能力",
       "文章",
       "关于",
     ]);
     expect(screen.getByRole("link", { name: "首页" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  });
+
+  it("marks the capability route as current", () => {
+    usePathname.mockReturnValue("/capabilities");
+
+    render(<SiteHeader />);
+
+    expect(screen.getByRole("link", { name: "能力" })).toHaveAttribute(
       "aria-current",
       "page",
     );

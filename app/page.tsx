@@ -1,22 +1,30 @@
 import Link from "next/link";
 
 import { AgentPreview } from "@/components/AgentPreview";
+import { FeaturedCapabilities } from "@/components/FeaturedCapabilities";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { InspirationFeature } from "@/components/InspirationFeature";
 import { LatestPosts } from "@/components/LatestPosts";
 import {
+  loadCapabilities,
   loadPosts,
   loadProjects,
+  type LoadedCapability,
   type LoadedPost,
   type LoadedProject,
 } from "@/lib/content";
 
 type HomeContentProps = {
+  featuredCapabilities?: LoadedCapability[];
   featuredProjects: LoadedProject[];
   recentPosts: LoadedPost[];
 };
 
-export function HomeContent({ featuredProjects, recentPosts }: HomeContentProps) {
+export function HomeContent({
+  featuredCapabilities = [],
+  featuredProjects,
+  recentPosts,
+}: HomeContentProps) {
   return (
     <main id="main-content" className="home-page" tabIndex={-1}>
       <section className="hero" aria-labelledby="hero-title">
@@ -80,13 +88,13 @@ export function HomeContent({ featuredProjects, recentPosts }: HomeContentProps)
         <div>
           <h2 id="home-note-title">一座正在搭建的数字工作台</h2>
           <p>
-            第一版会包含作品集、技术文章与一个能根据本站资料回答问题的卡通 Agent。
-            目前展示的是结构样例，真实项目和个人资料将在后续替换。
+            这里把匿名作品、能力档案、技术文章与资料问答放在同一条线上；每一项事实都保留来源、边界和继续修订的空间。
           </p>
         </div>
       </section>
 
       <InspirationFeature />
+      <FeaturedCapabilities capabilities={featuredCapabilities} />
       <FeaturedProjects projects={featuredProjects} />
       <LatestPosts posts={recentPosts} />
       <AgentPreview />
@@ -95,13 +103,15 @@ export function HomeContent({ featuredProjects, recentPosts }: HomeContentProps)
 }
 
 export default async function HomePage() {
-  const [projects, posts] = await Promise.all([
+  const [capabilities, projects, posts] = await Promise.all([
+    loadCapabilities({ featuredOnly: true }),
     loadProjects(),
     loadPosts({ includeDrafts: false }),
   ]);
 
   return (
     <HomeContent
+      featuredCapabilities={capabilities.slice(0, 3)}
       featuredProjects={projects
         .filter((project) => project.metadata.featured)
         .slice(0, 2)}

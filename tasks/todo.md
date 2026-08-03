@@ -629,14 +629,14 @@
 **Description:** 首页展示三个重点能力摘要，并在全站导航加入“能力”入口，形成作品、文章、能力和 Agent 的访客路径。
 
 **Acceptance criteria:**
-- [ ] 首页从能力内容源读取三个 featured 领域，不硬编码事实
-- [ ] 首页和导航均可进入 `/capabilities`，当前页与键盘焦点状态清楚
-- [ ] 没有 featured 能力时提供稳定空状态
+- [x] 首页从能力内容源读取三个 featured 领域，不硬编码事实
+- [x] 首页和导航均可进入 `/capabilities`，当前页与键盘焦点状态清楚
+- [x] 没有 featured 能力时提供稳定空状态
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/home-content.test.tsx tests/site-shell.test.tsx`
-- [ ] 类型与 Lint：`npm run typecheck`、`npm run lint`
-- [ ] Chrome 检查：首页各目标视口无溢出且入口可用
+- [x] 聚焦测试：`npm run test -- --run tests/home-content.test.tsx tests/site-shell.test.tsx`
+- [x] 类型与 Lint：`npm run typecheck`、`npm run lint`
+- [x] Chrome 检查：首页各目标视口无溢出且入口可用
 
 **Dependencies:** Tasks 22, 23
 

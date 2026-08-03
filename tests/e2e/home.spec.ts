@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const viewports = [
   { name: "mobile", width: 375, height: 812 },
+  { name: "tablet", width: 768, height: 1024 },
   { name: "desktop", width: 1440, height: 900 },
 ] as const;
 
@@ -73,6 +74,12 @@ for (const viewport of viewports) {
       ),
     ).toBeLessThan(0.02);
     expect(imageMetrics.renderedRatio).toBeCloseTo(1918 / 1078, 2);
+
+    const featuredCapabilities = page.getByRole("region", { name: "重点能力" });
+    await expect(featuredCapabilities.getByRole("article")).toHaveCount(3);
+    await expect(
+      featuredCapabilities.getByRole("link", { name: "超算与 AI Infra" }),
+    ).toHaveAttribute("href", "/capabilities#hpc-ai-infra");
 
     const featuredProjects = page.getByRole("region", { name: "精选作品" });
     await expect(featuredProjects.getByRole("article")).toHaveCount(2);

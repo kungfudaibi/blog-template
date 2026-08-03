@@ -11,7 +11,7 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
     <section className="home-section" aria-labelledby="featured-projects-title">
       <div className="home-section__heading">
         <div>
-          <p className="eyebrow">03 / FEATURED</p>
+          <p className="eyebrow">04 / FEATURED</p>
           <h2 id="featured-projects-title">精选作品</h2>
         </div>
         <Link href="/projects">查看全部作品</Link>
