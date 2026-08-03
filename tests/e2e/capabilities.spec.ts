@@ -24,7 +24,11 @@ for (const viewport of [
     await expect(
       page.getByRole("article", { name: "超算与 AI Infra" }),
     ).toBeVisible();
-    await expect(page.getByRole("heading", { name: "边界与失败" })).toBeVisible();
+    await expect(
+      page.getByRole("article", { name: "超算与 AI Infra" }).getByRole("heading", {
+        name: "边界与失败",
+      }),
+    ).toBeVisible();
 
     const hasHorizontalOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth,

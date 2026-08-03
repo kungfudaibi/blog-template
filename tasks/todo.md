@@ -579,14 +579,14 @@
 **Description:** 加入 Agent、网络安全、体系结构与操作系统、电子与嵌入式、算法五个匿名能力档案，并保证每项都有边界与下一步。
 
 **Acceptance criteria:**
-- [ ] 六个领域完整出现且 order、featured 与更新时间合法
-- [ ] 网络安全故事不包含服务器、账号、漏洞或攻击步骤
-- [ ] Agent、算法和体系结构内容不使用“精通”等无证据表述
+- [x] 六个领域完整出现且 order、featured 与更新时间合法
+- [x] 网络安全故事不包含服务器、账号、漏洞或攻击步骤
+- [x] Agent、算法和体系结构内容不使用“精通”等无证据表述
 
 **Verification:**
-- [ ] 聚焦测试：`npm run test -- --run tests/capabilities-content.test.ts tests/capabilities-page.test.tsx`
-- [ ] 内容扫描：搜索真实身份、机构、私人联系方式与示例占位符
-- [ ] 人工检查：每项均有理解、实践、边界/失败和下一步
+- [x] 聚焦测试：`npm run test -- --run tests/capabilities-content.test.ts tests/capabilities-page.test.tsx`
+- [x] 内容扫描：搜索真实身份、机构、私人联系方式与示例占位符
+- [x] 人工检查：每项均有理解、实践、边界/失败和下一步
 
 **Dependencies:** Task 21
 

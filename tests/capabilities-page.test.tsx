@@ -30,6 +30,10 @@ describe("capability page", () => {
     expect(
       within(article).getByRole("link", { name: "查看相关作品与实践" }),
     ).toHaveAttribute("href", "/projects");
+    expect(screen.getAllByRole("article")).toHaveLength(6);
+    expect(
+      within(navigation).getByRole("link", { name: "算法与数据结构" }),
+    ).toHaveAttribute("href", "#algorithms");
   });
 
   it("renders a stable empty state without invented capability levels", () => {

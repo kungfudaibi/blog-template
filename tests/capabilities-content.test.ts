@@ -165,4 +165,41 @@ describe("capability content", () => {
     expect(capability?.content).toContain("没有形成可复现的性能收益");
     expect(capability?.content).not.toMatch(/学校|队名|队员|学院|大学/);
   });
+
+  it("loads all six anonymous capability records with three featured fields", async () => {
+    vi.restoreAllMocks();
+
+    const capabilities = await loadCapabilities();
+    const featured = await loadCapabilities({ featuredOnly: true });
+
+    expect(capabilities.map((capability) => capability.metadata.title)).toEqual([
+      "超算与 AI Infra",
+      "Agent 开发",
+      "体系结构与操作系统",
+      "网络安全",
+      "电子基础与嵌入式",
+      "算法与数据结构",
+    ]);
+    expect(featured.map((capability) => capability.metadata.title)).toEqual([
+      "超算与 AI Infra",
+      "Agent 开发",
+      "体系结构与操作系统",
+    ]);
+    expect(capabilities.every((capability) => capability.metadata.updatedAt)).toBe(true);
+  });
+
+  it("keeps the security story non-operational and avoids unsupported mastery claims", async () => {
+    vi.restoreAllMocks();
+
+    const capabilities = await loadCapabilities();
+    const security = capabilities.find((capability) => capability.slug === "security");
+    const publicText = capabilities
+      .map((capability) => `${capability.metadata.summary}\n${capability.content}`)
+      .join("\n");
+
+    expect(security?.content).toContain("py2.8");
+    expect(security?.content).toContain("挖矿脚本");
+    expect(security?.content).not.toMatch(/服务器地址|账号|漏洞入口|攻击步骤/);
+    expect(publicText).not.toContain("精通");
+  });
 });
