@@ -18,8 +18,30 @@ test("a visitor can open a project and inspect its role and outcomes", async ({
   ).toBeVisible();
   await expect(page.getByRole("heading", { name: "我的职责" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "成果" })).toBeVisible();
-  await expect(page.getByLabel("作品外部链接")).toHaveCount(0);
+  const sourceLink = page.getByRole("link", {
+    name: "查看源代码（新窗口）",
+  });
+  await expect(sourceLink).toHaveAttribute(
+    "href",
+    "https://github.com/kungfudaibi/sxu-mirror",
+  );
+  await expect(sourceLink).toHaveAttribute("target", "_blank");
+  await expect(sourceLink).toHaveAttribute("rel", "noopener noreferrer");
   expect(browserErrors).toEqual([]);
+});
+
+test("the project index marks every approved demo and source link", async ({
+  page,
+}) => {
+  await page.goto("/projects");
+
+  await expect(page.getByLabel("作品外部链接")).toHaveCount(3);
+  await expect(
+    page.getByRole("link", { name: "查看演示（新窗口）" }),
+  ).toHaveAttribute("href", "https://kungfudaibi.github.io/");
+  await expect(
+    page.getByRole("link", { name: "查看源代码（新窗口）" }),
+  ).toHaveCount(3);
 });
 
 test("a missing project returns an HTTP 404", async ({ page }) => {

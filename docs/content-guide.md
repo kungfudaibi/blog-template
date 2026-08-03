@@ -54,6 +54,9 @@ role: "我的具体职责"
 tech: [Next.js, TypeScript]
 cover: /images/projects/project-slug.webp
 featured: false
+links:
+  demo: https://project.example.com
+  source: https://github.com/owner/project
 ---
 
 ## 我的职责
@@ -65,7 +68,23 @@ featured: false
 - 只填写可公开、可核实的结果。
 ```
 
-`links` 整体可省略；提供时，`links.demo` 和 `links.source` 至少填写一个，且必须使用 HTTPS。没有经过隐私审计与站主再次批准时，不添加 GitHub 账号、组织或仓库链接，也不用占位网址代替。`featured: true` 的作品可进入首页精选区，首页最多展示两个。当前没有作品草稿字段，不准备公开的作品不要提交到此目录。
+`links` 整体可省略；提供时，`links.demo` 和 `links.source` 至少填写一个，且必须使用 HTTPS。没有经过隐私审计与站主再次批准时，不添加 GitHub 账号、组织或仓库链接，也不用占位网址代替。当前分支只批准 `docs/spec.md` 隐私口径中列出的四个项目 URL；新增或更换链接时先更新该白名单及 `tests/public-content-privacy.test.ts`。`featured: true` 的作品可进入首页精选区，首页最多展示两个。当前没有作品草稿字段，不准备公开的作品不要提交到此目录。
+
+## 常用修改位置
+
+| 内容 | 文件或目录 |
+|---|---|
+| 文章 | `content/posts/*.mdx` |
+| 作品及演示/源码链接 | `content/projects/*.mdx` 的 frontmatter 与正文 |
+| 能力状态与经历 | `content/capabilities/*.mdx` |
+| 关于页公开资料、联系方式、FAQ | `content/profile/*.md` |
+| 首页固定文案 | `app/page.tsx` |
+| 关于页开场文案 | `app/about/page.tsx` |
+| 站名与全站元数据 | `app/layout.tsx`，随后全仓搜索旧站名 |
+| Agent 图片 | `public/agent/azhu.png` |
+| 项目、文章和灵感图片 | `public/images/` |
+
+修改标题、链接或固定文案后，相关测试可能会提示旧值；同步修改 `tests/` 中对应断言，不要通过删除隐私或安全测试来绕过失败。
 
 ## 能力档案
 

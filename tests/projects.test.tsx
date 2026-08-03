@@ -47,7 +47,40 @@ describe("project index", () => {
     expect(screen.getAllByText("精选作品")).toHaveLength(2);
     expect(screen.getAllByRole("article")).toHaveLength(3);
     expect(screen.queryByText(/【示例】/)).not.toBeInTheDocument();
-    expect(screen.queryByLabelText("作品外部链接")).not.toBeInTheDocument();
+    const campusMirrorCard = screen
+      .getByRole("link", { name: "校园开源镜像站" })
+      .closest("article");
+    const learningDocsCard = screen
+      .getByRole("link", { name: "开源自学文档" })
+      .closest("article");
+    const blogTemplateCard = screen
+      .getByRole("link", { name: "blog-template" })
+      .closest("article");
+
+    expect(screen.getAllByLabelText("作品外部链接")).toHaveLength(3);
+    expect(
+      within(campusMirrorCard!).getByRole("link", {
+        name: "查看源代码（新窗口）",
+      }),
+    ).toHaveAttribute("href", "https://github.com/kungfudaibi/sxu-mirror");
+    expect(
+      within(learningDocsCard!).getByRole("link", {
+        name: "查看演示（新窗口）",
+      }),
+    ).toHaveAttribute("href", "https://kungfudaibi.github.io/");
+    expect(
+      within(learningDocsCard!).getByRole("link", {
+        name: "查看源代码（新窗口）",
+      }),
+    ).toHaveAttribute(
+      "href",
+      "https://github.com/kungfudaibi/kungfudaibi.github.io",
+    );
+    expect(
+      within(blogTemplateCard!).getByRole("link", {
+        name: "查看源代码（新窗口）",
+      }),
+    ).toHaveAttribute("href", "https://github.com/kungfudaibi/blog-template");
   });
 
   it("renders a stable empty state", () => {

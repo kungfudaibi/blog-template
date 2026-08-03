@@ -1,6 +1,6 @@
 # Task Checklist: zhujiechong 个人博客与卡通 Agent
 
-> 状态：Tasks 1–25 已完成；Task 26 技术验收已完成，等待真实 Cloudflare 冒烟与用户内容终审；未部署
+> 状态：Tasks 1–25、27 已完成；Task 26 技术验收已完成，等待真实 Cloudflare 冒烟与用户内容终审；未部署
 > 详细架构：`tasks/plan.md`  
 > 已批准规格：`docs/spec.md`
 
@@ -699,3 +699,35 @@
 - `tests/production-meta.test.ts`
 
 **Estimated scope:** Medium (5 files)
+
+## Task 27: 标注已批准项目外链并补齐自助维护入口
+
+**Description:** 将站主明确批准的项目演示与源码地址加入三个作品，并把常用内容文件、字段和验证方式整理成可直接照做的维护入口。
+
+**Acceptance criteria:**
+- [x] 校园开源镜像站显示批准的源码链接
+- [x] 开源自学文档显示批准的演示与源码链接
+- [x] blog-template 显示批准的源码链接
+- [x] 公开内容隐私测试只允许规格中列出的项目 URL，不放宽到任意账号或外链
+- [x] README 与内容指南明确文章、作品、能力、关于资料和图片分别在哪里修改
+
+**Verification:**
+- [x] RED：作品内容测试在链接尚未写入时失败
+- [x] GREEN：`npm run test -- --run tests/projects.test.tsx tests/public-content-privacy.test.ts`
+- [x] 质量检查：`npm run typecheck`、`npm run lint`、`npm run test -- --run`、`npm run build`
+- [x] 浏览器检查：三个作品的外链标签、地址和安全属性正确
+
+**Dependencies:** Task 26 technical verification
+
+**Files likely touched:**
+- `docs/spec.md`
+- `tasks/plan.md`
+- `tasks/todo.md`
+- `content/projects/*.mdx`
+- `tests/projects.test.tsx`
+- `tests/public-content-privacy.test.ts`
+- `README.md`
+- `docs/content-guide.md`
+- `docs/privacy.md`
+
+**Estimated scope:** Small

@@ -1,6 +1,6 @@
 # Implementation Plan: zhujiechong 个人博客与卡通 Agent
 
-> 状态：Tasks 1–25 已完成；Task 26 技术验收已完成，等待站主内容终审；未部署
+> 状态：Tasks 1–25、27 已完成；Task 26 技术验收已完成，等待站主内容终审；未部署
 > 规格来源：`docs/spec.md`  
 > 计划日期：2026-07-30
 
@@ -140,6 +140,16 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] 三个示例作品已替换为匿名且可核实的真实作品
 - [x] 全量类型、Lint、单元/组件、E2E 和生产构建通过
 - [ ] 用户完成内容与隐私终审；仍未授权生产部署
+
+### Phase 7: Approved Project Links and Self-editing Guide（已完成）
+
+- [x] Task 27: 标注已批准项目外链并补齐自助维护入口
+
+### Checkpoint: Project Links
+
+- [x] 三个作品按精确白名单展示对应演示或源码链接
+- [x] 外链保留明确名称、新窗口提示与 `noopener noreferrer`
+- [x] README 和内容指南能让站主无需修改组件即可维护主要公开内容
 
 ## Verification Strategy
 
