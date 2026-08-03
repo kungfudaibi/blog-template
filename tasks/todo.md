@@ -822,3 +822,24 @@
 **Dependencies:** Task 29
 
 **Estimated scope:** Small
+
+## Task 31: 以站主最新文本更新 FPGA 小车公开边界
+
+**Description:** 以站主对 FPGA 小车作品页的直接编辑为公开内容事实来源，删除不再希望公开的攻击信号未完成细节，同时保留团队协作与参考实现披露。
+
+**Acceptance criteria:**
+- [x] 不恢复站主从 `content/projects/fpga-smart-car.mdx` 删除的文本
+- [x] FPGA 小车仍说明团队课程设计边界
+- [x] FPGA 小车仍说明摄像头与无线控制参考了外部实现
+- [x] 规格不再强制公开被删除的攻击信号细节
+- [x] 项目外链、其他作品与隐私边界保持不变
+
+**Verification:**
+- [x] RED：旧 E2E 断言因找不到“攻击信号存在问题”而失败
+- [x] GREEN：聚焦项目 E2E 通过
+- [x] 类型、Lint、测试与构建通过
+- [x] 提交内容与敏感信息检查通过
+
+**Dependencies:** Task 30
+
+**Estimated scope:** Small

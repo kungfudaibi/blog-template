@@ -219,7 +219,7 @@ branches: [并行计算, AI Infra]
 - 网络安全故事可以保留 `py2.8` 挖矿进程的叙事，但不得公开服务器地址、账号、漏洞入口、恶意代码或仍可利用的攻击步骤。
 - GitHub 账号、组织名和仓库路径默认不公开；完成隐私审计并再次获得批准后，可以只在对应作品中提供精确项目链接，不自动链接个人主页或其他仓库。
 - 站主批准以下作品外链：校园开源镜像站源码 `https://github.com/kungfudaibi/sxu-mirror`；开源自学文档演示 `https://kungfudaibi.github.io/` 与源码 `https://github.com/kungfudaibi/kungfudaibi.github.io`；blog-template 源码 `https://github.com/kungfudaibi/blog-template`；FPGA Verilog 智能小车源码 `https://github.com/kungfudaibi/fpga_smart_car_tank`；第八日餐厅源码 `https://github.com/kungfudaibi/OctodayMenu`。除此之外的账号或仓库仍需再次批准。
-- FPGA 小车必须说明其团队协作、摄像头与无线控制参考来源，以及最终攻击信号只依赖距离的未完成边界；第八日餐厅必须说明它是校内开源组织项目的 fork，并把站主的前后端提交与上游创意、流程和其他协作者贡献区分开。
+- FPGA 小车必须说明其团队协作以及摄像头与无线控制的参考来源；具体未完成尝试由站主决定是否公开，不得恢复站主主动删除的描述。第八日餐厅必须说明它是校内开源组织项目的 fork，并把站主的前后端提交与上游创意、流程和其他协作者贡献区分开。
 
 Agent 授权资料按主题拆分，至少记录来源标题、正文和可公开级别。私人资料、密钥、内部地址和未授权第三方信息不得进入该目录。
 

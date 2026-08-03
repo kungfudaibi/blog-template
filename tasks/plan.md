@@ -183,6 +183,16 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] 部署文档覆盖 Vercel Preview、Cloudflare DNS、正式 `SITE_URL` 与回滚边界
 - [x] 未执行未经单独授权的 Vercel 生产部署
 
+### Phase 11: Author Content Revision（已完成）
+
+- [x] Task 31: 以站主最新文本更新 FPGA 小车公开边界
+
+### Checkpoint: FPGA Content Source of Truth
+
+- [x] 不恢复站主主动删除的攻击信号未完成细节
+- [x] 仍明确披露团队协作以及摄像头、无线控制的参考来源
+- [x] 规格与浏览器断言同步最新公开文本
+
 ## Verification Strategy
 
 - **每个任务：** 运行聚焦测试，并执行与改动相关的类型检查或构建。

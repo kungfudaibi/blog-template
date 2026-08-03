@@ -52,7 +52,8 @@ test("the FPGA car and OctodayMenu details preserve project boundaries", async (
   await expect(
     page.getByRole("heading", { level: 1, name: "FPGA Verilog 智能小车" }),
   ).toBeVisible();
-  await expect(page.getByText(/攻击信号存在问题/)).toBeVisible();
+  await expect(page.getByText(/这是团队课程设计，不是个人独立完成/)).toBeVisible();
+  await expect(page.getByText(/无线控制也参考了外部 ESP32 实现/)).toBeVisible();
   await expect(
     page.getByRole("link", { name: "查看源代码（新窗口）" }),
   ).toHaveAttribute(
