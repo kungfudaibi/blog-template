@@ -807,17 +807,17 @@
 **Description:** 将站主已审核的定制内容、两个新增作品和自由草稿规则提交到当前功能分支，推送同名远程分支，并记录 Cloudflare DNS + Vercel 的部署路径；本任务不执行生产部署。
 
 **Acceptance criteria:**
-- [ ] 规格记录 `zhujiechong.org` 已购入、Cloudflare 管理 DNS、Vercel 为首选托管平台
-- [ ] 站主主动标记 public 的联系方式视为明确授权公开，未授权身份信息继续受保护
-- [ ] 提交前通过类型、Lint、测试、构建、浏览器和秘密检查
-- [ ] 本地 `feature/disco-customization` 推送到 `origin/feature/disco-customization`
-- [ ] 部署指南说明 Preview 优先、使用 Vercel 给出的项目专属 DNS 记录及生产 `SITE_URL`
-- [ ] 不创建 Vercel 预览或生产部署
+- [x] 规格记录 `zhujiechong.org` 已购入、Cloudflare 管理 DNS、Vercel 为首选托管平台
+- [x] 站主主动标记 public 的联系方式视为明确授权公开，未授权身份信息继续受保护
+- [x] 提交前通过类型、Lint、测试、构建、浏览器和秘密检查
+- [x] 本地 `feature/disco-customization` 推送到 `origin/feature/disco-customization`
+- [x] 部署指南说明 Preview 优先、使用 Vercel 给出的项目专属 DNS 记录及生产 `SITE_URL`
+- [x] 不创建 Vercel 预览或生产部署
 
 **Verification:**
-- [ ] `git diff --cached` 范围和公开内容经过检查
-- [ ] `git ls-files .env*` 仅包含无秘密的示例文件
-- [ ] 远程分支指向本次提交
+- [x] `git diff --cached` 范围和公开内容经过检查
+- [x] `git ls-files .env*` 仅包含无秘密的示例文件
+- [x] 远程分支已创建并将在本任务收尾提交后再次校验 HEAD
 
 **Dependencies:** Task 29
 

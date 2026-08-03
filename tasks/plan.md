@@ -172,16 +172,16 @@ Cloudflare Provider 接口与模拟实现 ───┤
 - [x] 空 profile 正文不公开展示、不进入 Agent 来源
 - [x] 测试断言同步站主当前文案，不恢复被删除或改写的内容
 
-### Phase 10: Remote Submission & Deployment Notes（实施中）
+### Phase 10: Remote Submission & Deployment Notes（已完成）
 
-- [ ] Task 30: 提交定制分支并更新 `zhujiechong.org` 部署说明
+- [x] Task 30: 提交定制分支并更新 `zhujiechong.org` 部署说明
 
 ### Checkpoint: Reviewable Remote Branch
 
-- [ ] 当前定制内容、五个作品和自由草稿规则形成可复现提交
-- [ ] 远程存在 `feature/disco-customization` 同名分支
-- [ ] 部署文档覆盖 Vercel Preview、Cloudflare DNS、正式 `SITE_URL` 与回滚边界
-- [ ] 未执行未经单独授权的 Vercel 生产部署
+- [x] 当前定制内容、五个作品和自由草稿规则形成可复现提交
+- [x] 远程存在 `feature/disco-customization` 同名分支
+- [x] 部署文档覆盖 Vercel Preview、Cloudflare DNS、正式 `SITE_URL` 与回滚边界
+- [x] 未执行未经单独授权的 Vercel 生产部署
 
 ## Verification Strategy
 
