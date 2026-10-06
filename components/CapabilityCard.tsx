@@ -1,5 +1,6 @@
 import type { LoadedCapability } from "@/lib/content";
 
+import { CapabilityIcon } from "./CapabilityIcon";
 import { MdxContent } from "./MdxContent";
 import styles from "./CapabilityMap.module.css";
 
@@ -26,7 +27,10 @@ export function CapabilityCard({ capability }: CapabilityCardProps) {
       tabIndex={-1}
     >
       <header className={styles.cardHeader}>
-        <h2 id={titleId}>{metadata.title}</h2>
+        <div className={styles.cardTitle}>
+          <span className={styles.cardIcon}><CapabilityIcon slug={slug} /></span>
+          <h2 id={titleId}>{metadata.title}</h2>
+        </div>
         <div className={styles.meta}>
           <p>
             <span>更新：</span>

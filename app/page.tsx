@@ -18,6 +18,8 @@ import {
 } from "@/lib/content";
 import { loadDailyQuotes, selectDailyQuote, type SelectedDailyQuote } from "@/lib/daily-quote";
 
+import "./home.css";
+
 export const dynamic = "force-dynamic";
 
 type HomeContentProps = {
@@ -38,30 +40,21 @@ export function HomeContent({
   return (
     <main id="main-content" className="home-page" tabIndex={-1}>
       <section className="hero" aria-labelledby="hero-title">
-        <div className="hero__copy">
-          <div className="hero__main">
-            <h1 id="hero-title">zhujiechong</h1>
-            <p className="hero__tagline">写下做过的事，也写下仍在思考的事。</p>
-            <div className="hero__actions" aria-label="快速入口">
-              <Link className="button button--primary" href="/blog">
-                阅读文章
-              </Link>
-              <Link className="button button--secondary" href="/projects">
-                浏览作品
-              </Link>
-            </div>
-          </div>
-          <div className="hero__aside">
-            <span className="hero__character"><CharacterAccent character="gugugaga" /></span>
-            <DailyQuote quote={dailyQuote} />
-          </div>
+        <CharacterAccent character="gugugaga" />
+        <p className="hero__hello">嗨，我是 zhujiechong 👋</p>
+        <h1 id="hero-title">写下做过的事，<br /><strong>也写下仍在思考的事。</strong></h1>
+        <p className="hero__intro">在这里整理项目、写技术实践，也收藏那些打动我的瞬间。</p>
+        <div className="hero__actions" aria-label="快速入口">
+          <Link href="/blog">读点文章 ↗</Link>
+          <Link href="/projects">看看作品 ↗</Link>
         </div>
       </section>
 
+      <DailyQuote quote={dailyQuote} />
       <LatestPosts posts={recentPosts} />
       <FeaturedProjects projects={featuredProjects} />
-      <FeaturedCapabilities capabilities={featuredCapabilities} />
       <InspirationFeature moments={moments} />
+      <FeaturedCapabilities capabilities={featuredCapabilities} />
     </main>
   );
 }

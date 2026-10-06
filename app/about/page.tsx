@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 
+import { CharacterAccent } from "@/components/CharacterAccent";
 import { ProfileSection } from "@/components/ProfileSection";
 import { loadProfiles, type LoadedProfile } from "@/lib/content";
+
+import "./about.css";
 
 export const metadata: Metadata = {
   title: "关于我 | zhujiechong",
@@ -15,8 +18,9 @@ type AboutContentProps = {
 
 export function AboutContent({ profiles }: AboutContentProps) {
   return (
-    <main id="main-content" className="content-page" tabIndex={-1}>
-      <header className="page-intro">
+    <main id="main-content" className="content-page about-page" tabIndex={-1}>
+      <header className="page-intro about-page__intro">
+        <CharacterAccent character="gugugaga" />
         <h1>关于我</h1>
       </header>
 

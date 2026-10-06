@@ -8,17 +8,17 @@ describe("HomePage", () => {
     render(await HomePage());
 
     expect(
-      screen.getByRole("heading", { level: 1, name: "zhujiechong" }),
+      screen.getByRole("heading", { level: 1, name: /写下做过的事.*也写下仍在思考的事/ }),
     ).toBeInTheDocument();
-    expect(screen.getByText("写下做过的事，也写下仍在思考的事。")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "浏览作品" })).toHaveAttribute(
+    expect(screen.getByText(/嗨，我是 zhujiechong/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "看看作品 ↗" })).toHaveAttribute(
       "href",
       "/projects",
     );
-    expect(screen.getByRole("link", { name: "阅读文章" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "读点文章 ↗" })).toHaveAttribute(
       "href",
       "/blog",
     );
-    expect(screen.getByRole("region", { name: "最新文章" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "最近写下" })).toBeInTheDocument();
   });
 });

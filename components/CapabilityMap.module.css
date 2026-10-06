@@ -1,78 +1,159 @@
 .page {
-  width: min(100% - 2.5rem, 58rem);
-  padding-top: clamp(3.5rem, 8vw, 5.5rem);
+  width: min(100% - 3rem, 68.75rem);
+  padding-top: clamp(2.5rem, 6vw, 4rem);
 }
 
 .intro {
-  max-width: 46rem;
+  display: flex;
+  min-height: 11rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .intro h1 {
   margin: 0;
-  font-size: clamp(2.7rem, 7vw, 3.75rem);
-  font-weight: 730;
-  letter-spacing: -0.055em;
-  line-height: 1.08;
+  font-size: clamp(2.25rem, 5vw, 3.15rem);
+  font-weight: 650;
+  letter-spacing: -0.065em;
+  line-height: 1.25;
 }
 
 .intro p {
-  max-width: 42rem;
-  margin: 1rem 0 0;
+  margin: 0.9rem 0 0;
   color: var(--muted);
-  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.mascot {
+  display: block;
+  width: 4.8rem;
+  height: 4.8rem;
+  flex: none;
+}
+
+.mascot > span {
+  width: 4.8rem;
+  height: 4.8rem;
 }
 
 .layout {
+  display: grid;
   margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  grid-template-columns: 13.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(2rem, 5vw, 4.5rem);
 }
 
 .navigation {
-  border-block: 1px solid var(--line);
+  position: sticky;
+  top: 2rem;
+  padding-left: 0.7rem;
+  border-left: 1px solid var(--line);
 }
 
 .navigation ol {
-  display: flex;
+  display: grid;
   margin: 0;
-  padding: 0.35rem 0;
-  flex-wrap: wrap;
-  gap: 0 1.65rem;
+  padding: 0;
+  gap: 0.3rem;
   list-style: none;
 }
 
 .navigation a {
-  display: inline-flex;
-  min-height: 2.75rem;
+  --field-color: #6786a6;
+}
+
+.navigation a[href="#agent-development"] { --field-color: #bd7f8c; }
+.navigation a[href="#systems"] { --field-color: #9d8567; }
+.navigation a[href="#security"] { --field-color: #71947f; }
+.navigation a[href="#embedded"] { --field-color: #8a82ab; }
+.navigation a[href="#algorithms"] { --field-color: #718f9e; }
+
+.navigation a {
+  display: flex;
+  min-height: 2.9rem;
+  margin-left: -0.8rem;
+  padding: 0.5rem 0.75rem;
   align-items: center;
-  color: var(--blue-dark);
-  font-size: 0.9rem;
-  font-weight: 650;
-  text-decoration-color: transparent;
-  white-space: nowrap;
+  gap: 0.7rem;
+  border-left: 2px solid transparent;
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #68757c;
+  font-size: 0.8rem;
+  font-weight: 520;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.navigation a svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  color: var(--field-color);
 }
 
 .navigation a:hover,
 .navigation a:focus-visible {
-  text-decoration-color: var(--coral);
+  border-left-color: var(--field-color);
+  color: var(--ink);
+  background: #f2f5f7;
 }
 
 .cards {
-  max-width: 48rem;
-  margin-top: 0.75rem;
+  display: grid;
+  min-width: 0;
+  gap: 1.35rem;
 }
 
 .card {
+  --field-color: #6786a6;
+  --field-wash: #eef3f8;
   min-width: 0;
-  padding-block: clamp(2.5rem, 6vw, 3.75rem);
-  scroll-margin-top: 6rem;
-  border-bottom: 1px solid var(--line);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  scroll-margin-top: 1.5rem;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--field-color);
+  border-radius: 0.9rem;
+  background: var(--paper-light);
+  box-shadow: 0 8px 26px #27323b05;
+}
+
+.card[id="agent-development"] { --field-color: #bd7f8c; --field-wash: #f9eff1; }
+.card[id="systems"] { --field-color: #9d8567; --field-wash: #f7f2ea; }
+.card[id="security"] { --field-color: #71947f; --field-wash: #edf5ef; }
+.card[id="embedded"] { --field-color: #8a82ab; --field-wash: #f2eff8; }
+.card[id="algorithms"] { --field-color: #718f9e; --field-wash: #edf4f5; }
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.cardIcon {
+  display: grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  flex: none;
+  place-items: center;
+  border-radius: 0.7rem;
+  color: var(--field-color);
+  background: var(--field-wash);
+}
+
+.cardIcon svg {
+  width: 1.45rem;
+  height: 1.45rem;
 }
 
 .card h2 {
   margin: 0;
-  font-size: clamp(1.8rem, 4vw, 2.35rem);
-  font-weight: 690;
+  font-size: clamp(1.35rem, 2.7vw, 1.75rem);
+  font-weight: 650;
   letter-spacing: -0.04em;
-  line-height: 1.15;
+  line-height: 1.25;
 }
 
 .meta {
@@ -87,7 +168,7 @@
   margin: 0;
   color: var(--muted);
   font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-  font-size: 0.76rem;
+  font-size: 0.73rem;
 }
 
 .meta ul {
@@ -100,8 +181,8 @@
 }
 
 .meta li {
-  color: var(--blue-dark);
-  font-size: 0.78rem;
+  color: var(--field-color);
+  font-size: 0.75rem;
 }
 
 .meta li + li::before {
@@ -112,8 +193,10 @@
 
 .body {
   max-width: 44rem;
-  margin-top: 1.75rem;
-  font-size: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.96rem;
   line-height: 1.8;
 }
 
@@ -123,7 +206,7 @@
 
 .body h2 {
   margin-top: 1.8em;
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.18rem, 2.4vw, 1.4rem);
   font-weight: 680;
   letter-spacing: -0.025em;
   line-height: 1.3;
@@ -131,11 +214,30 @@
 
 .body h3 {
   margin-top: 1.6em;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
 }
 
-@media (max-width: 42rem) {
-  .navigation ol { gap: 0 1rem; }
-  .navigation a { font-size: 0.85rem; }
-  .card { scroll-margin-top: 8rem; }
+@media (max-width: 48rem) {
+  .page { width: min(100% - 2rem, 68.75rem); }
+  .layout { grid-template-columns: 1fr; gap: 1.5rem; }
+  .navigation { position: static; padding: 0; border-left: 0; }
+  .navigation ol { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+  .navigation a { height: 100%; margin: 0; border: 1px solid var(--line); border-radius: 0.55rem; background: #fff; }
+  .navigation a:hover,
+  .navigation a:focus-visible { border-color: var(--field-color); }
+}
+
+@media (max-width: 38rem) {
+  .intro { min-height: 9rem; }
+  .mascot { width: 3.7rem; height: 3.7rem; }
+  .mascot > span { width: 3.7rem; height: 3.7rem; }
+  .navigation a { padding: 0.55rem; gap: 0.45rem; font-size: 0.73rem; }
+  .navigation a svg { width: 1rem; height: 1rem; }
+  .card { padding: 1.35rem 1.25rem; }
+  .cardIcon { width: 2.4rem; height: 2.4rem; }
+  .cardIcon svg { width: 1.25rem; height: 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigation a { transition: none; }
 }

@@ -1,59 +1,82 @@
 .feature {
-  margin-top: clamp(3.5rem, 8vw, 5rem);
+  position: relative;
 }
 
 .heading {
   display: flex;
-  padding-bottom: 1.25rem;
-  align-items: center;
-  gap: 0.35rem;
-  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.2rem;
+  align-items: baseline;
 }
 
 .heading h2 {
   margin: 0;
-  font-size: clamp(1.7rem, 4vw, 2.25rem);
-  letter-spacing: -0.045em;
-  line-height: 1.1;
+}
+
+.mascot {
+  position: absolute;
+  z-index: 1;
+  top: 2rem;
+  left: -4.2rem;
+  rotate: -8deg;
+  pointer-events: none;
 }
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-  gap: 1.25rem;
-  padding-top: 1.5rem;
+  gap: 1rem;
 }
 
 .card {
   min-width: 0;
-  overflow: hidden;
+  border: 1px solid #eceeec;
+  border-radius: 0.95rem;
+  background: #fff;
+}
+
+.cardLink {
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: minmax(0, 15.3rem) 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
 }
 
 .card figure {
   margin: 0;
 }
 
-.cardLink {
+.image {
   display: block;
-  height: 100%;
-  text-decoration: none;
+  width: 100%;
+  height: auto;
+  border-radius: 0.6rem;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.03rem;
+  font-weight: 650;
+}
+
+.cardCopy span {
+  color: #7289b0;
+  font-size: 0.76rem;
 }
 
 .cardLink:hover h3 {
   color: var(--blue);
 }
 
-.image {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: 1px solid var(--line);
-}
+@media (max-width: 48rem) {
+  .mascot {
+    top: -2rem;
+    right: 4rem;
+    left: auto;
+  }
 
-.card h3 {
-  margin: 0;
-  padding: 1rem 0 0;
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  .cardLink {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }

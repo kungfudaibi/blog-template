@@ -11,8 +11,8 @@ export function InspirationFeature({ moments }: { moments: LoadedMoment[] }) {
     <section id="moments" className={styles.feature} aria-label="视觉灵感">
       <div className={styles.heading}>
         <h2>那些打动我的瞬间</h2>
-        <CharacterAccent character="phrolova" />
       </div>
+      <span className={styles.mascot}><CharacterAccent character="phrolova" /></span>
       <div className={styles.gallery}>
         {moments.map((moment) => (
           <article className={styles.card} aria-label={moment.metadata.title} key={moment.slug}>
@@ -33,7 +33,10 @@ export function InspirationFeature({ moments }: { moments: LoadedMoment[] }) {
                 />
                 <figcaption className="sr-only">{moment.metadata.credit}</figcaption>
               </figure>
-              <h3>{moment.metadata.title}</h3>
+              <div className={styles.cardCopy}>
+                <h3>{moment.metadata.title}</h3>
+                <span>翻开这张卡片 ↗</span>
+              </div>
             </Link>
           </article>
         ))}

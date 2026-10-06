@@ -20,6 +20,8 @@ npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high
 
 `v0.1.0` 已从提交 `bd67669` 创建，Vercel `blog` 生产与 `blog-template` 预览部署均成功。公开域名检查：首页、文章、作品、能力、瞬间、关于、RSS、sitemap 和 robots 均返回 200；首页四只角色素材返回 200，旧 `/api/agent` 返回 404，canonical 与内容索引使用 `https://www.zhujiechong.org`。
 
+`v0.2.0` 记录已验收视觉改版：统一首页和内页风格，更新关于页联系卡片与能力地图。发布从 `feature/disco-customization` 推送触发既有 Vercel 项目，不修改 DNS 或环境变量。设计原型、原始角色参考图和旧动图留在本地；若生产验收失败，回退到上一已验证部署。
+
 ## Vercel 与域名
 
 1. 推送 `feature/disco-customization` 后查看 GitHub 上 `Vercel – blog` 的生产部署状态和 `Vercel – blog-template` 的预览部署状态。

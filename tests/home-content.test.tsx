@@ -5,12 +5,25 @@ import HomePage, { HomeContent } from "@/app/page";
 import type { LoadedCapability, LoadedPost, LoadedProject } from "@/lib/content";
 
 describe("home content", () => {
+  it("uses the approved light home layout with real content and quiet section headings", async () => {
+    render(await HomePage());
+
+    expect(screen.getByRole("heading", { level: 1, name: /写下做过的事.*也写下仍在思考的事/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "最近写下" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "做过的东西" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "还在摸索" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /一次系统 SSD 损坏后的恢复/ }))
+      .toHaveAttribute("href", expect.stringMatching(/^\/blog\//));
+    expect(screen.getByRole("link", { name: /校园开源镜像站/ }))
+      .toHaveAttribute("href", "/projects/campus-mirror");
+    expect(screen.queryByText(/有些画面与句子会在脑海里留下很久/)).not.toBeInTheDocument();
+  });
   it("loads capabilities, projects, recent posts, and no question assistant", async () => {
     render(await HomePage());
 
-    const capabilities = screen.getByRole("region", { name: "重点能力" });
-    const featured = screen.getByRole("region", { name: "精选作品" });
-    const recent = screen.getByRole("region", { name: "最新文章" });
+    const capabilities = screen.getByRole("region", { name: "还在摸索" });
+    const featured = screen.getByRole("region", { name: "做过的东西" });
+    const recent = screen.getByRole("region", { name: "最近写下" });
 
     expect(
       recent.compareDocumentPosition(capabilities) & Node.DOCUMENT_POSITION_FOLLOWING,
@@ -58,20 +71,20 @@ describe("home content", () => {
       <HomeContent featuredCapabilities={[]} featuredProjects={[]} recentPosts={[]} />,
     );
 
-    expect(screen.getByText("重点能力还在整理")).toBeInTheDocument();
-    expect(screen.getByText("精选作品稍后补上")).toBeInTheDocument();
-    expect(screen.getByText("最新文章稍后补上")).toBeInTheDocument();
+    expect(screen.getByText("感兴趣的方向还在整理")).toBeInTheDocument();
+    expect(screen.getByText("作品稍后补上")).toBeInTheDocument();
+    expect(screen.getByText("文章稍后补上")).toBeInTheDocument();
     expect(screen.getByText("还没有选好的句子。")).toBeInTheDocument();
     expect(screen.queryByText(/先看看/)).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "查看完整能力地图" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "能力地图 ↗" })).toHaveAttribute(
       "href",
       "/capabilities",
     );
-    expect(screen.getByRole("link", { name: "查看全部作品" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "全部作品 ↗" })).toHaveAttribute(
       "href",
       "/projects",
     );
-    expect(screen.getByRole("link", { name: "查看全部文章" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "全部文章 ↗" })).toHaveAttribute(
       "href",
       "/blog",
     );
@@ -191,9 +204,9 @@ describe("home content", () => {
 
     expect(screen.queryByRole("region", { name: "可爱小队" })).not.toBeInTheDocument();
     const placements = [
-      ["zhujiechong", "咕咕嘎嘎"],
-      ["最新文章", "Doro"],
-      ["精选作品", "菲比啾比"],
+      ["写下做过的事，也写下仍在思考的事。", "咕咕嘎嘎"],
+      ["最近写下", "Doro"],
+      ["做过的东西", "菲比啾比"],
       ["视觉灵感", "弗糯糯"],
     ] as const;
     for (const [regionName, name] of placements) {
@@ -205,7 +218,7 @@ describe("home content", () => {
         expect.stringContaining("four-companions-v2.png"),
       );
     }
-    expect(within(screen.getByRole("region", { name: "最新文章" }))
+    expect(within(screen.getByRole("region", { name: "最近写下" }))
       .queryByRole("button", { name: /Doro 动画/ })).not.toBeInTheDocument();
   });
 });

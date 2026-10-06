@@ -25,6 +25,22 @@ for (const viewport of [
     await expect(page.getByText("FIELD INDEX")).toHaveCount(0);
     await expect(page.getByRole("navigation", { name: "能力领域索引" }).getByRole("link"))
       .toHaveCount(6);
+    const fieldNavigation = page.getByRole("navigation", { name: "能力领域索引" });
+    await expect(fieldNavigation.locator("svg[aria-hidden='true']")).toHaveCount(6);
+    await expect(page.getByRole("img", { name: "Doro" })).toBeVisible();
+    const mascotSurface = page.locator("main > header > span");
+    await expect(mascotSurface).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    await expect(mascotSurface).toHaveCSS("border-top-width", "0px");
+    const layoutColumns = await fieldNavigation.evaluate((element) =>
+      getComputedStyle(element.parentElement!).gridTemplateColumns.split(" ").length,
+    );
+    expect(layoutColumns).toBe(viewport.name === "desktop" ? 2 : 1);
+    await expect(fieldNavigation).toHaveCSS(
+      "position",
+      viewport.name === "desktop" ? "sticky" : "static",
+    );
+    await expect(page.getByRole("article").first().locator("svg[aria-hidden='true']"))
+      .toHaveCount(1);
     await expect(
       page.getByRole("article", { name: "超算与 AI Infra" }),
     ).toBeVisible();

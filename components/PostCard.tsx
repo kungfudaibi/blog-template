@@ -20,24 +20,22 @@ export function PostCard({ post }: PostCardProps) {
 
   return (
     <article className="post-card">
-      <div className="post-card__meta">
-        <time dateTime={metadata.publishedAt}>
-          {formatPublishedDate(metadata.publishedAt)}
-        </time>
-        <AiCreationCredit model={metadata.aiCreatedWith} />
-        <ul aria-label="文章标签">
-          {metadata.tags.map((tag) => (
-            <li key={tag}>{tag}</li>
-          ))}
-        </ul>
+      <time dateTime={metadata.publishedAt}>
+        {formatPublishedDate(metadata.publishedAt)}
+      </time>
+      <div className="post-card__body">
+        <h2><Link href={`/blog/${slug}`}>{metadata.title}</Link></h2>
+        {metadata.summary ? <p>{metadata.summary}</p> : null}
+        <div className="post-card__meta">
+          <AiCreationCredit model={metadata.aiCreatedWith} />
+          <ul aria-label="文章标签">
+            {metadata.tags.map((tag) => (
+              <li key={tag}>{tag}</li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <h2>
-        <Link href={`/blog/${slug}`}>{metadata.title}</Link>
-      </h2>
-      {metadata.summary ? <p>{metadata.summary}</p> : null}
-      <span className="post-card__read-more" aria-hidden="true">
-        阅读全文 <span aria-hidden="true">→</span>
-      </span>
+      <span className="post-card__arrow" aria-hidden="true">↗</span>
     </article>
   );
 }

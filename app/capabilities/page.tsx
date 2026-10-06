@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { CapabilityCard } from "@/components/CapabilityCard";
+import { CapabilityIcon } from "@/components/CapabilityIcon";
+import { CharacterAccent } from "@/components/CharacterAccent";
 import styles from "@/components/CapabilityMap.module.css";
 import { loadCapabilities, type LoadedCapability } from "@/lib/content";
 
@@ -18,10 +20,11 @@ export function CapabilityIndex({ capabilities }: CapabilityIndexProps) {
   return (
     <main id="main-content" className={`content-page ${styles.page}`} tabIndex={-1}>
       <header className={styles.intro}>
-        <h1>能力地图</h1>
-        <p>
-          记录我感兴趣的，尝试做的，做过的所有~
-        </p>
+        <div>
+          <h1>能力地图</h1>
+          <p>记录我感兴趣的，尝试做的，做过的所有~</p>
+        </div>
+        <span className={styles.mascot}><CharacterAccent character="doro" /></span>
       </header>
 
       {capabilities.length > 0 ? (
@@ -30,7 +33,10 @@ export function CapabilityIndex({ capabilities }: CapabilityIndexProps) {
             <ol>
               {capabilities.map((capability) => (
                 <li key={capability.slug}>
-                  <a href={`#${capability.slug}`}>{capability.metadata.title}</a>
+                  <a href={`#${capability.slug}`}>
+                    <CapabilityIcon slug={capability.slug} />
+                    <span>{capability.metadata.title}</span>
+                  </a>
                 </li>
               ))}
             </ol>

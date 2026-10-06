@@ -1,5 +1,26 @@
 import { expect, test } from "@playwright/test";
 
+test("project index uses the same quiet navigation and card language as home", async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/projects");
+
+  const navigation = page.getByRole("navigation", { name: "主导航" }).locator("ul");
+  expect(await navigation.evaluate((element) => parseFloat(getComputedStyle(element).borderRadius)))
+    .toBeGreaterThanOrEqual(8);
+  expect(await page.locator("main").evaluate((element) => element.getBoundingClientRect().width))
+    .toBeLessThanOrEqual(880);
+  const cards = page.getByRole("article");
+  expect(await cards.first().evaluate((element) => parseFloat(getComputedStyle(element).borderRadius)))
+    .toBeGreaterThanOrEqual(10);
+  await expect(cards).toHaveCount(2);
+  await page.screenshot({ path: testInfo.outputPath("projects-desktop.png"), fullPage: true });
+
+  await page.setViewportSize({ width: 375, height: 812 });
+  await expect(cards).toHaveCount(2);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+  await page.screenshot({ path: testInfo.outputPath("projects-mobile.png"), fullPage: true });
+});
+
 test("a visitor can open a project and inspect its role and outcomes", async ({
   page,
 }) => {

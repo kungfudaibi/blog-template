@@ -38,7 +38,7 @@
 .gugugaga img { clip-path: inset(0 76.4% 0 0); }
 .doro img { clip-path: inset(0 52% 0 23.6%); }
 .phoebe img { clip-path: inset(0 28.5% 0 48%); }
-.phrolova img { clip-path: inset(0 0 0 71.5%); }
+.phrolova img { clip-path: inset(0 0 0 76%); }
 
 @media (max-width: 42rem) {
   .accent { width: 3.5rem; height: 3.5rem; }

@@ -26,9 +26,9 @@ for (const viewport of viewports) {
     await page.goto("/");
 
     await expect(
-      page.getByRole("heading", { level: 1, name: "zhujiechong" }),
+      page.getByRole("heading", { level: 1, name: /写下做过的事.*也写下仍在思考的事/ }),
     ).toBeVisible();
-    await expect(page.getByRole("link", { name: "阅读文章" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "读点文章 ↗" })).toBeVisible();
     const dailyQuote = page.getByRole("region", { name: "每日一言" });
     await expect(dailyQuote.getByText(/In dark times|Something beautiful/)).toBeVisible();
     await expect(dailyQuote.getByRole("link", { name: "极乐迪斯科" }))
@@ -87,33 +87,33 @@ for (const viewport of viewports) {
     ).toBeLessThan(0.02);
     expect(imageMetrics.renderedRatio).toBeCloseTo(1918 / 1078, 2);
 
-    const featuredCapabilities = page.getByRole("region", { name: "重点能力" });
+    const featuredCapabilities = page.getByRole("region", { name: "还在摸索" });
     await expect(featuredCapabilities.getByRole("article")).toHaveCount(3);
     await expect(
       featuredCapabilities.getByRole("link", { name: "超算与 AI Infra" }),
     ).toHaveAttribute("href", "/capabilities#hpc-ai-infra");
 
-    const featuredProjects = page.getByRole("region", { name: "精选作品" });
+    const featuredProjects = page.getByRole("region", { name: "做过的东西" });
     await expect(featuredProjects.getByRole("article")).toHaveCount(2);
     await expect(featuredProjects.getByRole("link", { name: "校园开源镜像站" })).toBeVisible();
     await expect(featuredProjects.getByRole("link", { name: "FPGA Verilog 智能小车" })).toBeVisible();
     await expect(
-      page.getByRole("region", { name: "最新文章" }).getByRole("article"),
+      page.getByRole("region", { name: "最近写下" }).getByRole("article"),
     ).toHaveCount(1);
-    await expect(page.getByRole("region", { name: "最新文章" })
+    await expect(page.getByRole("region", { name: "最近写下" })
       .getByText("AI 创作 · Codex（基于 GPT-6）")).toBeVisible();
     await expect(page.getByText("咕咕嘎嘎正在准备中")).toHaveCount(0);
     await expect(page.getByText("尚未连接模型")).toHaveCount(0);
 
     await expect(page.getByRole("region", { name: "可爱小队" })).toHaveCount(0);
     const placements = [
-      ["zhujiechong", "咕咕嘎嘎"],
-      ["最新文章", "Doro"],
-      ["精选作品", "菲比啾比"],
+      ["写下做过的事，也写下仍在思考的事。", "咕咕嘎嘎"],
+      ["最近写下", "Doro"],
+      ["做过的东西", "菲比啾比"],
       ["视觉灵感", "弗糯糯"],
     ] as const;
     for (const [regionName, name] of placements) {
-      const region = page.getByRole("region", { name: regionName });
+      const region = page.getByRole("region", { name: regionName === "写下做过的事，也写下仍在思考的事。" ? /写下做过的事/ : regionName });
       const image = region.getByRole("img", { name });
       await expect(image).toBeVisible();
       await expect.poll(() => image.evaluate((element) =>
@@ -121,7 +121,7 @@ for (const viewport of viewports) {
       await expect(image).toHaveAttribute("src", /four-companions-v2\.png/);
       await expect(region.getByRole("link", { name: new RegExp(name) })).toHaveCount(0);
     }
-    const latest = page.getByRole("region", { name: "最新文章" });
+    const latest = page.getByRole("region", { name: "最近写下" });
     await expect(latest.getByRole("button", { name: /Doro 动画/ })).toHaveCount(0);
 
     const hasHorizontalOverflow = await page.evaluate(
@@ -146,11 +146,19 @@ test("keyboard users can reveal the skip link", async ({ page }) => {
   await expect(skipLink).toBeVisible();
 });
 
+test("a featured project card opens from its padding area", async ({ page }) => {
+  await page.goto("/");
+  const card = page.getByRole("region", { name: "做过的东西" })
+    .getByRole("article").first();
+  await card.click({ position: { x: 10, y: 10 } });
+  await expect(page).toHaveURL(/\/projects\/campus-mirror$/);
+});
+
 test("character accents honor reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  const latest = page.getByRole("region", { name: "最新文章" });
+  const latest = page.getByRole("region", { name: "最近写下" });
   const doro = latest.getByRole("img", { name: "Doro" });
   await expect(doro).toHaveAttribute("src", /four-companions-v2\.png/);
   await expect.poll(() => doro.evaluate((element) =>
