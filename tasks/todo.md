@@ -6,7 +6,7 @@
 
 - [x] 测试先确认生产默认站点根地址不应指向 localhost，随后修正并更新部署说明；生产构建实测 canonical、RSS、sitemap 均使用 `www` 域名
 - [x] 更新存在高危审计项的生产依赖，检查提交文件与公开内容；typecheck、lint、82 个单测、build 和 29 个浏览器测试通过，生产依赖审计 0 漏洞
-- [ ] 提交、推送、发 GitHub 版本并等待 Vercel 部署成功；核对线上页面和链接
+- [x] 提交 `bd67669` 并推送定制分支，发布 GitHub `v0.1.0`；Vercel 生产与预览部署均成功，公开域名、四只角色、文章、作品、瞬间、RSS、sitemap 和 canonical 已核对
 
 ## Task 58: 统一四只角色的纸感画风
 

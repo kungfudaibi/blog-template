@@ -18,6 +18,8 @@ npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high
 
 2026-10-06 发布检查：生产依赖审计为 0 漏洞。完整审计仍报告 5 项来自 ESLint → `fast-glob` → `micromatch` → `braces` 的开发工具链高危项；当前兼容版本没有补丁，未纳入生产运行依赖。
 
+`v0.1.0` 已从提交 `bd67669` 创建，Vercel `blog` 生产与 `blog-template` 预览部署均成功。公开域名检查：首页、文章、作品、能力、瞬间、关于、RSS、sitemap 和 robots 均返回 200；首页四只角色素材返回 200，旧 `/api/agent` 返回 404，canonical 与内容索引使用 `https://www.zhujiechong.org`。
+
 ## Vercel 与域名
 
 1. 推送 `feature/disco-customization` 后查看 GitHub 上 `Vercel – blog` 的生产部署状态和 `Vercel – blog-template` 的预览部署状态。

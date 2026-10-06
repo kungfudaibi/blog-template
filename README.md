@@ -4,6 +4,8 @@
 
 当前定制分支使用公开笔名 **zhujiechong**，展示文章、校园开源镜像站与 FPGA 小车两个作品、能力档案、关于页和“那些打动我的瞬间”。访客问答功能已移除。模板使用者须先替换身份、内容与链接，并重新确认公开边界。
 
+已发布站点：[www.zhujiechong.org](https://www.zhujiechong.org)。首次版本：[v0.1.0](https://github.com/kungfudaibi/blog-template/releases/tag/v0.1.0)。
+
 ## 本地运行
 
 需要 Node.js 22 或更高版本。
