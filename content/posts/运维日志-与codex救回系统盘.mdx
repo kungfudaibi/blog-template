@@ -1,0 +1,214 @@
+---
+title: "一次系统 SSD 损坏后的恢复：从 BMC 控制台到 ddrescue"
+summary: "记录一次物理服务器系统盘出现介质错误后的止损、克隆、文件系统修复与服务恢复，也整理老旧 iMana BMC 远程控制的 Java 兼容方案。"
+publishedAt: 2026-08-12
+tags: [系统运维, 数据恢复, Debian, IPMI, BMC, ddrescue]
+cover: /images/posts/agent-boundaries.webp
+draft: false
+aiCreatedWith: Codex（基于 GPT-6）
+---
+
+
+## 故障从 SSH 登录后立刻断开开始
+
+一台运行 Debian 的物理服务器重启后，SSH 能完成认证，刚显示上次登录信息就断开连接。BMC 仍可访问，IPMI 查询显示主机处于开机状态。
+
+最初容易把问题归咎于 SSH、用户 shell 或配置文件。实际排查中，BMC 截图和本地控制台都持续出现：
+
+~~~text
+critical medium error, dev sdX, sector ... op 0x0:(READ)
+I/O error, dev sdX
+Bus error
+~~~
+
+这才是根因：系统 SSD 有不可恢复的读错误。登录过程会读取用户目录、shell、动态库、日志或配置；只要恰好读到坏扇区，shell 就可能异常退出，于是表现成 SSH 一闪而过。
+
+一个很实用的判断方法是从受控环境中逐层验证：
+
+~~~sh
+getent passwd <user>
+ls -l /usr/bin/zsh /bin/bash /bin/sh
+/usr/bin/zsh -f -c 'id'
+su <user> -s /bin/sh -c id
+~~~
+
+其中 -f 可跳过 zsh 的用户启动文件。若 shell 二进制、用户家目录或读取命令本身触发 I/O 错误，应立即停止把原系统盘当作正常盘使用。
+
+## 先保数据，再谈修复
+
+这类故障的优先级不是 fsck，而是：**尽量减少对源盘的读取次数，先做块级副本。**
+
+我先把尚能启动时的重要目录备份到独立存储，包括系统配置、用户目录、服务数据、容器卷与软件包数据库。rsync 出现退出码 23 时，不应把它理解成整个备份失败：它表示有部分文件无法读取，应该保留错误日志、继续复制其他数据，并记录缺失项。
+
+随后换入一块容量不小于源盘的新 SSD，用 SystemRescue 启动，并用 GNU ddrescue 克隆整块系统盘。核心是使用稳定的 /dev/disk/by-id/ 名称，而不是会随重启或插槽变化的 /dev/sdX：
+
+~~~sh
+# 再三核对 model、serial、容量后执行；目标盘内容会被覆盖
+ddrescue -f -n -v \
+  /dev/disk/by-id/<source-ssd> \
+  /dev/disk/by-id/<target-ssd> \
+  /path/on-persistent-media/system-ssd.map
+~~~
+
+第一轮 -n 会跳过顽固坏区，以最快速度复制可读数据；之后再针对失败区域重试：
+
+~~~sh
+ddrescue -d -r3 -v \
+  /dev/disk/by-id/<source-ssd> \
+  /dev/disk/by-id/<target-ssd> \
+  /path/on-persistent-media/system-ssd.map
+~~~
+
+map 文件是恢复进度的关键资产。它记录哪些区域已成功、哪些仍失败，使中断后的 ddrescue 能从原处继续，而不会重新扫整块源盘。它必须写入**持久化且不是源盘/目标盘**的介质，例如额外挂载的 U 盘数据分区或网络存储。
+
+完成后用 ddrescue -t mapfile 查看摘要。一次实际克隆中，99.99% 数据被读出，但仍有数十个坏区、约数百 KiB 无法恢复。这个结果通常足以启动系统，却不等于文件系统一定完好。
+
+## SystemRescue、Ventoy 与 copytoram
+
+救援 U 盘使用 Ventoy 启动 SystemRescue。一个容易踩的坑是：Live 系统启动后，Ventoy 的数据分区可能已被 device-mapper 占用，直接执行：
+
+~~~sh
+mount /dev/sda1 /mnt/ventoy
+~~~
+
+会报 Can't open blockdev。这是因为当前系统正在从该 U 盘运行，并不表示 U 盘损坏。
+
+SystemRescue 的启动菜单已经提供 **Boot SystemRescue and copy system to RAM (copytoram)**。选择它后，系统镜像会复制进内存；可用下面的方式核验：
+
+~~~sh
+cat /proc/cmdline
+findmnt | grep -E 'copytoram|archiso|ventoy'
+~~~
+
+确认进入 copytoram 后，原来的 Ventoy 数据分区才能作为普通存储重新挂载，用来保存 map 文件、e2fsck 日志等。内存必须足够容纳 Live 系统；不确定时不要盲目选择。
+
+## 克隆盘上的文件系统修复
+
+块级克隆会连同 ext4 元数据的损坏一起复制到新盘。必须对**新 SSD 的分区**做文件系统检查，绝不能对坏源盘写入修复：
+
+~~~sh
+# 先只读检查并保存输出
+e2fsck -f -n /dev/<target-partition> | tee e2fsck-dry-run.txt
+
+# 确认目标确为新盘后，执行修复
+e2fsck -f /dev/<target-partition>
+~~~
+
+实际检查中出现了非法 block、inode 引用和 group summary 计数不一致。回答修复提示后，e2fsck 报告文件系统已修改。之后只读挂载验证关键文件：
+
+~~~sh
+mount -o ro,noload /dev/<target-partition> /mnt/newroot
+ls -l /mnt/newroot/bin/bash /mnt/newroot/bin/sh /mnt/newroot/usr/bin/zsh
+grep '^<user>:' /mnt/newroot/etc/passwd
+ls /mnt/newroot/boot
+~~~
+
+核对 shell、内核和 initrd 还在，才拔掉旧盘并从新 SSD 启动。保留旧盘，不要把它重新加入生产用途；它仍是未来进一步取证或恢复个别文件的唯一来源。
+
+## RH2288H V2：老 iMana BMC 远程控制为什么打不开
+
+这台 Huawei RH2288H V2 的 BMC 是老版本 iMana，远程控制页面使用 Java Applet，而不是现代 HTML5 KVM。浏览器能打开管理页，并不意味着 KVM 会工作：现代 Chrome/Edge 默认已不再支持 NPAPI Java 插件。
+
+### 能用的进入路径
+
+1. BMC Web 管理页打开 KVM 链接；
+2. 在 Windows Edge 中选择 **Internet Explorer 模式** 打开该页；
+3. 安装与 IE 模式匹配的 **32 位 Java 8 JRE**，并打开 32 位 Java 控制面板；
+4. 在 Java 控制面板的安全页，把 BMC HTTPS 地址加入 Exception Site List；
+5. 如证书是自签名，先在浏览器中接受证书告警；
+6. 在兼容模式窗口中启动 Remote Virtual Console。
+
+我遇到的错误是：
+
+~~~text
+ClassNotFoundException: com.kvm.KVMApplet.class
+SSLHandshakeException: Received fatal alert: handshake_failure
+~~~
+
+前者并不一定意味着 BMC 少了 class 文件。Java 插件在下载 vconsole.jar 时 TLS 握手失败，jar 未下载成功，后续自然会报找不到 applet 类。它是下载失败后的症状，不是根因。
+
+### TLS 兼容处理
+
+老 iMana 的 HTTPS 协商能力远早于当代 Java 的默认策略。新版 Java 8 更新也可能拒绝旧版 TLS/密码套件。因此需要在**隔离、可信的管理网**里，为该旧 BMC 使用兼容 Java 运行时：
+
+- 优先使用 32 位 Java 8，因为 IE 模式与老 applet 通常是 32 位；
+- Java 控制面板启用 Console，并把 trace level 提到 5，可看到 jar 的实际下载错误；
+- 仅对 BMC 的管理地址放宽兼容策略；不要为了一个旧 BMC 全局降低日常浏览器或系统 TLS 安全性；
+- 刷新 Java 缓存后重试，避免继续加载失败的 jar 缓存。
+
+能加载后，Java 控制台会显示成功请求 https://&lt;bmc&gt;/vconsole.jar。此时 KVM 可显示 BIOS、RAID 卡枚举、GRUB、内核及早期启动信息——这是 SSH 和 SOL 都未必能完整覆盖的阶段。
+
+### BMC 的替代通道：IPMI 与 SOL
+
+图形 KVM 不可用时，IPMI 仍非常重要：
+
+~~~sh
+ipmitool -I lanplus -H <bmc-address> -U <user> -a chassis status
+ipmitool -I lanplus -H <bmc-address> -U <user> -a sol info
+ipmitool -I lanplus -H <bmc-address> -U <user> -a sol activate
+~~~
+
+SOL 成功激活只说明 BMC 串口通道可用。还要检查服务器串口重定向方向；iMana CLI 中可查看：
+
+~~~text
+ipmcget -d serialdir
+~~~
+
+若显示 BMC COM，SOL 不会自然得到主机控制台。不同固件命令略有差异，应先用 ipmcset --help 确认可用项。即使无法获得可交互的 SOL，KVM 截图和本地显示器仍足以诊断 RAID 卡是否识别磁盘、GRUB 是否加载、内核是否卡在设备发现。
+
+## 网络恢复与远程接管
+
+新克隆系统的网络配置由 NetworkManager 保存，而非传统 /etc/network/interfaces。在 Live 环境里查看旧系统配置时，别只看 interfaces；还应检查：
+
+~~~sh
+grep -R '<old-address>' /mnt/newroot/etc 2>/dev/null
+ls /mnt/newroot/etc/NetworkManager/system-connections/
+~~~
+
+若救援系统中网卡名称不同，先用 ip -br link 找到唯一 UP, LOWER_UP 的接口，再临时配置地址和路由：
+
+~~~sh
+ip addr add <address>/<prefix> dev <interface>
+ip route add default via <gateway> dev <interface>
+~~~
+
+若提示 Nexthop has invalid gateway，不要继续猜网关；先检查该接口是否真的拥有 IP、是否有 LOWER_UP，再查 VLAN/物理跳线。网络恢复后，可从外部 SSH 接管，极大降低只能在机房手打长命令的风险。
+
+系统盘克隆会改变 SSH host key。客户端出现 REMOTE HOST IDENTIFICATION HAS CHANGED 是预期的安全提示，应该在控制台确认服务器身份后，删除本地 known_hosts 中该旧条目再连接，而不是关闭 SSH 的 host key 检查。
+
+## 服务恢复：从系统可启动到业务可用
+
+系统启动不代表服务恢复完成。我的恢复清单按依赖关系执行：
+
+1. 确认磁盘、网络、SSH、Docker 和 systemd 用户服务正常；
+2. 恢复 Nginx 和静态镜像站的站点配置，验证首页与文件目录均返回 HTTP 200；
+3. 确认容器服务（应用、数据库、Redis）均已运行且数据卷仍在；
+4. 恢复 OpenClaw 用户服务；
+5. 用 NapCat Docker Framework 登录 QQ，并设置 OneBot 11 WebSocket，令 OpenClaw 连接到本机端口；
+6. 不只检查端口正在监听，还要用真实私聊消息验证：NapCat 收到事件 → OpenClaw 收到事件 → 模型产出 → NapCat 回包。
+
+这里还有一个很细的陷阱：模型对测试回复 NO_REPLY 时，QQ 不会回包。这时如果仅看 QQ 表面，会误以为通道坏了。应检查 OpenClaw session/log，区分消息没有到达、模型未处理、模型决定静默、回包失败四种情况。
+
+## 这次最有价值的工具与习惯
+
+| 工具 / 方法 | 在这次恢复中的作用 | 经验 |
+| --- | --- | --- |
+| BMC KVM | 查看 BIOS、RAID、GRUB、内核早期输出 | 老 iMana 需要 IE 模式 + 32 位 Java 8；先看 Java Console 的 jar/TLS 报错。 |
+| ipmitool / SOL | 机房外确认电源与串口能力 | SOL 依赖 BIOS、串口方向和 OS 配置，不能替代 KVM。 |
+| smartctl | 确认新旧盘健康状态 | SMART PASSED 不是绝对安全保证，但 I/O/medium error 已足以停止继续使用源盘。 |
+| ddrescue | 对失败 SSD 进行最小伤害的块级恢复 | map 文件与源/目标的稳定标识同等重要。 |
+| e2fsck | 修复克隆盘上的 ext4 元数据 | 先 -n，后修复；只对克隆盘写入。 |
+| lsblk, findmnt, fdisk -l | 区分 U 盘、源盘、目标盘及挂载状态 | 任何破坏性命令前至少核对型号、容量、序列号和挂载点。 |
+| journalctl, 服务日志 | 恢复后验证业务链路 | service active 与功能可用是两件事。 |
+
+## 给未来自己的清单
+
+- 有介质错误时，先备份/克隆，后修复；
+- 所有涉及写盘的命令使用 /dev/disk/by-id/，并在执行前读回确认；
+- ddrescue 的 map 文件放到第三块持久介质；
+- 救援系统需要网络时，先看 LOWER_UP，再配 IP 和路由；
+- 老 BMC 的 Java/IE 兼容环境应单独保留一台管理 Windows 或虚拟机；
+- 业务服务恢复必须做端到端验证，而不是只看 systemd、Docker 或端口；
+- BMC、IPMI、系统 SSH、存储池与外部备份不能共享同一个单点故障。
+
+这次恢复最幸运的地方，是坏区规模很小、关键文件大多位于可读区域，且还有 BMC、本地显示器、新 SSD、救援 U 盘和独立数据盘可用。真正可靠的方案依旧不是擅长救盘，而是定期验证的备份、可演练的恢复流程，以及能在旧硬件上工作的带外管理路径。

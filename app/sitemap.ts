@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
 
-import { loadPosts, loadProjects } from "@/lib/content";
+import { loadMoments, loadPosts, loadProjects } from "@/lib/content";
 import { getAbsoluteUrl } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [posts, projects] = await Promise.all([
+  const [posts, projects, moments] = await Promise.all([
     loadPosts({ includeDrafts: false }),
     loadProjects(),
+    loadMoments(),
   ]);
   const staticPages: MetadataRoute.Sitemap = [
     { url: getAbsoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
@@ -28,6 +29,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: getAbsoluteUrl(`/projects/${project.slug}`),
       changeFrequency: "monthly" as const,
       priority: 0.7,
+    })),
+    ...moments.map((moment) => ({
+      url: getAbsoluteUrl(`/moments/${moment.slug}`),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 }

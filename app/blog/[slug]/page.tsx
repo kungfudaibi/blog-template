@@ -54,9 +54,9 @@ export async function generateMetadata({
 
 async function findPublishedPost(slug: string) {
   try {
-    return await getPostBySlug(slug, { includeDrafts: false });
+    return await getPostBySlug(decodeURIComponent(slug), { includeDrafts: false });
   } catch (error) {
-    if (error instanceof ContentSecurityError) {
+    if (error instanceof ContentSecurityError || error instanceof URIError) {
       return undefined;
     }
 

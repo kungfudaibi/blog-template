@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const SLUG_PATTERN = /^[a-z0-9\p{Script=Han}]+(?:-[a-z0-9\p{Script=Han}]+)*$/u;
 
 export const safeSlugSchema = z
   .string()
   .trim()
   .min(1, "slug 不能为空")
   .max(100, "slug 不能超过 100 个字符")
-  .regex(SLUG_PATTERN, "slug 只能包含小写字母、数字和单个连字符");
+  .regex(SLUG_PATTERN, "slug 只能包含汉字、小写字母、数字和单个连字符");
 
 const contentTitleSchema = z.string().trim().min(1).max(120);
 const displaySummarySchema = z.string().trim().max(240);
@@ -59,6 +59,7 @@ export const postMetadataSchema = z
     tags: tagListSchema,
     cover: localPathSchema,
     draft: z.boolean().default(false),
+    aiCreatedWith: z.string().trim().min(1).max(120).optional(),
   })
   .strict();
 
@@ -75,6 +76,7 @@ export const projectMetadataSchema = z
     tech: tagListSchema,
     cover: localPathSchema,
     featured: z.boolean().default(false),
+    published: z.boolean().optional(),
     links: z
       .object({
         demo: httpsUrlSchema.optional(),
@@ -83,6 +85,18 @@ export const projectMetadataSchema = z
       .strict()
       .refine((links) => Boolean(links.demo || links.source), "至少提供一个作品链接")
       .optional(),
+  })
+  .strict();
+
+export const momentMetadataSchema = z
+  .object({
+    ...optionalSlug,
+    title: contentTitleSchema,
+    image: localPathSchema,
+    alt: z.string().trim().min(1).max(220),
+    width: z.number().int().positive().max(10000),
+    height: z.number().int().positive().max(10000),
+    credit: z.string().trim().min(1).max(400),
   })
   .strict();
 
@@ -97,4 +111,5 @@ export const profileMetadataSchema = z
 
 export type PostMetadata = z.infer<typeof postMetadataSchema>;
 export type ProjectMetadata = z.infer<typeof projectMetadataSchema>;
+export type MomentMetadata = z.infer<typeof momentMetadataSchema>;
 export type ProfileMetadata = z.infer<typeof profileMetadataSchema>;

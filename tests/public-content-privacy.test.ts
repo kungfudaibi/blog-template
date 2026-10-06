@@ -16,17 +16,13 @@ describe("public content privacy", () => {
 
     expect(projectLinks).toEqual(
       [
-        "https://github.com/kungfudaibi/OctodayMenu",
-        "https://github.com/kungfudaibi/blog-template",
         "https://github.com/kungfudaibi/fpga_smart_car_tank",
-        "https://github.com/kungfudaibi/kungfudaibi.github.io",
         "https://github.com/kungfudaibi/sxu-mirror",
-        "https://kungfudaibi.github.io/",
       ].sort(),
     );
   });
 
-  it("contains no demo markers or unapproved GitHub identity links in public narrative", async () => {
+  it("limits account links to the two approved contact profiles", async () => {
     const [capabilities, posts, profiles, projects] = await Promise.all([
       loadCapabilities(),
       loadPosts({ includeDrafts: false }),
@@ -40,11 +36,18 @@ describe("public content privacy", () => {
     const publicNarrative = JSON.stringify({
       capabilities,
       posts,
-      profiles,
       projects: projectsWithoutLinks,
     });
 
     expect(publicNarrative).not.toMatch(/【示例】|【待填写】|示例模板/);
     expect(publicNarrative).not.toMatch(/kungfudaibi|github\.com/i);
+    expect(profiles.map((profile) => profile.slug)).toEqual(["contact"]);
+    const profileLinks = [
+      ...(profiles[0]?.content.matchAll(/\]\((https:\/\/[^)]+)\)/g) ?? []),
+    ].map((match) => match[1]).sort();
+    expect(profileLinks).toEqual([
+      "https://github.com/kungfudaibi",
+      "https://space.bilibili.com/240822507?spm_id_from=333.1007.0.0",
+    ]);
   });
 });

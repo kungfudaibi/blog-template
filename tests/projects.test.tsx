@@ -26,79 +26,42 @@ const linkedProjectFixture: LoadedProject = {
 };
 
 describe("project index", () => {
-  it("loads five verified projects and exposes their roles and approved links", async () => {
+  it("publishes only the mirror and FPGA projects with approved links", async () => {
     render(await ProjectsPage());
 
     expect(screen.getByRole("heading", { level: 1, name: "作品" }))
       .toBeInTheDocument();
+    expect(screen.queryByText("SELECTED / BUILDS")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "校园开源镜像站" })).toHaveAttribute(
       "href",
       "/projects/campus-mirror",
     );
-    expect(screen.getByRole("link", { name: "开源自学文档" })).toHaveAttribute(
-      "href",
-      "/projects/open-learning-docs",
-    );
-    expect(screen.getByRole("link", { name: "blog-template" })).toHaveAttribute(
-      "href",
-      "/projects/blog-template",
-    );
     expect(
       screen.getByRole("link", { name: "FPGA Verilog 智能小车" }),
     ).toHaveAttribute("href", "/projects/fpga-smart-car");
-    expect(
-      screen.getByRole("link", { name: "第八日餐厅（OctodayMenu）" }),
-    ).toHaveAttribute("href", "/projects/octoday-menu");
+    for (const title of ["开源自学文档", "blog-template", "第八日餐厅（OctodayMenu）"]) {
+      expect(screen.queryByRole("link", { name: title })).not.toBeInTheDocument();
+    }
     expect(screen.getByText("参与建设与维护（团队项目）")).toBeInTheDocument();
     expect(
       screen.getByText("FPGA 逻辑设计与整机联调（团队项目）"),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText("前后端开发（开源团队 fork）"),
-    ).toBeInTheDocument();
-    expect(screen.getAllByText("精选作品")).toHaveLength(2);
-    expect(screen.getAllByRole("article")).toHaveLength(5);
+    expect(screen.queryByText("精选作品")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("article")).toHaveLength(2);
     expect(screen.queryByText(/【示例】/)).not.toBeInTheDocument();
     const campusMirrorCard = screen
       .getByRole("link", { name: "校园开源镜像站" })
       .closest("article");
-    const learningDocsCard = screen
-      .getByRole("link", { name: "开源自学文档" })
-      .closest("article");
-    const blogTemplateCard = screen
-      .getByRole("link", { name: "blog-template" })
-      .closest("article");
     const fpgaCarCard = screen
       .getByRole("link", { name: "FPGA Verilog 智能小车" })
       .closest("article");
-    const octodayMenuCard = screen
-      .getByRole("link", { name: "第八日餐厅（OctodayMenu）" })
-      .closest("article");
 
-    expect(screen.getAllByLabelText("作品外部链接")).toHaveLength(5);
+    expect(screen.getAllByLabelText("作品外部链接")).toHaveLength(2);
     expect(
       within(campusMirrorCard!).getByRole("link", {
         name: "查看源代码（新窗口）",
       }),
     ).toHaveAttribute("href", "https://github.com/kungfudaibi/sxu-mirror");
-    expect(
-      within(learningDocsCard!).getByRole("link", {
-        name: "查看演示（新窗口）",
-      }),
-    ).toHaveAttribute("href", "https://kungfudaibi.github.io/");
-    expect(
-      within(learningDocsCard!).getByRole("link", {
-        name: "查看源代码（新窗口）",
-      }),
-    ).toHaveAttribute(
-      "href",
-      "https://github.com/kungfudaibi/kungfudaibi.github.io",
-    );
-    expect(
-      within(blogTemplateCard!).getByRole("link", {
-        name: "查看源代码（新窗口）",
-      }),
-    ).toHaveAttribute("href", "https://github.com/kungfudaibi/blog-template");
     expect(
       within(fpgaCarCard!).getByRole("link", {
         name: "查看源代码（新窗口）",
@@ -106,14 +69,6 @@ describe("project index", () => {
     ).toHaveAttribute(
       "href",
       "https://github.com/kungfudaibi/fpga_smart_car_tank",
-    );
-    expect(
-      within(octodayMenuCard!).getByRole("link", {
-        name: "查看源代码（新窗口）",
-      }),
-    ).toHaveAttribute(
-      "href",
-      "https://github.com/kungfudaibi/OctodayMenu",
     );
   });
 

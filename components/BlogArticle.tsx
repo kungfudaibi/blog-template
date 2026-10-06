@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import type { LoadedPost } from "@/lib/content";
 
+import { AiCreationCredit } from "./AiCreationCredit";
 import { formatPublishedDate } from "./PostCard";
 
 type BlogArticleProps = {
@@ -20,7 +21,6 @@ export function BlogArticle({ post, children }: BlogArticleProps) {
       </Link>
       <article className="blog-article">
         <header className="blog-article__header">
-          <p className="eyebrow">POST / {post.slug}</p>
           <h1>{metadata.title}</h1>
           {metadata.summary ? (
             <p className="blog-article__summary">{metadata.summary}</p>
@@ -29,6 +29,7 @@ export function BlogArticle({ post, children }: BlogArticleProps) {
             <time dateTime={metadata.publishedAt}>
               {formatPublishedDate(metadata.publishedAt)}
             </time>
+            <AiCreationCredit model={metadata.aiCreatedWith} />
             <ul aria-label="文章标签">
               {metadata.tags.map((tag) => (
                 <li key={tag}>{tag}</li>

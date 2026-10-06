@@ -1,16 +1,17 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
-import matter from "gray-matter";
 import { CORE_SCHEMA, load as loadYaml } from "js-yaml";
 import type { z } from "zod";
 
 import {
   postMetadataSchema,
+  momentMetadataSchema,
   profileMetadataSchema,
   projectMetadataSchema,
   safeSlugSchema,
   type PostMetadata,
+  type MomentMetadata,
   type ProfileMetadata,
   type ProjectMetadata,
 } from "./schema";
@@ -31,6 +32,7 @@ export type LoadedContent<Metadata> = {
 };
 
 export type LoadedPost = LoadedContent<Omit<PostMetadata, "slug">>;
+export type LoadedMoment = LoadedContent<Omit<MomentMetadata, "slug">>;
 export type LoadedProject = LoadedContent<Omit<ProjectMetadata, "slug">>;
 export type LoadedProfile = LoadedContent<Omit<ProfileMetadata, "slug">>;
 
@@ -42,7 +44,7 @@ type ProfileLoaderOptions = {
   includePrivate?: boolean;
 };
 
-export type ContentDirectory = "capabilities" | "posts" | "profile" | "projects";
+export type ContentDirectory = "capabilities" | "moments" | "posts" | "profile" | "projects";
 
 type SchemaWithSlug<Metadata> = z.ZodType<Metadata & { slug?: string }>;
 
@@ -60,12 +62,31 @@ function yamlEngine(source: string): object {
     : { invalidFrontmatterValue: parsed };
 }
 
+function parseFrontmatter(raw: string) {
+  const source = raw.replace(/^\uFEFF/, "");
+  const opening = /^---[ \t]*\r?\n/.exec(source);
+
+  if (!opening) return { data: {}, content: source };
+
+  const remaining = source.slice(opening[0].length);
+  const closing = /(?:^|\r?\n)---[ \t]*(?:\r?\n|$)/.exec(remaining);
+
+  if (!closing) throw new Error("Missing frontmatter closing fence");
+
+  return {
+    data: yamlEngine(remaining.slice(0, closing.index)),
+    content: remaining.slice(closing.index + closing[0].length),
+  };
+}
+
 function getContentDirectory(directory: ContentDirectory) {
   const contentRoot = path.join(process.cwd(), "content");
 
   switch (directory) {
     case "capabilities":
       return path.join(contentRoot, "capabilities");
+    case "moments":
+      return path.join(contentRoot, "moments");
     case "posts":
       return path.join(contentRoot, "posts");
     case "profile":
@@ -132,7 +153,7 @@ export async function readContentDirectory<Metadata>(
     );
     const parsed = (() => {
       try {
-        return matter(raw, { engines: { yaml: yamlEngine } });
+        return parseFrontmatter(raw);
       } catch {
         throw new ContentValidationError(`Invalid content syntax in ${sourcePath}`);
       }
@@ -184,6 +205,17 @@ export async function getPostBySlug(slug: string, options: PostLoaderOptions = {
   return posts.find((post) => post.slug === safeSlug);
 }
 
+export async function loadMoments() {
+  const moments = await readContentDirectory("moments", ".mdx", momentMetadataSchema);
+  return moments.sort((left, right) => left.slug.localeCompare(right.slug, "zh-CN"));
+}
+
+export async function getMomentBySlug(slug: string) {
+  const safeSlug = assertSafeContentSlug(slug);
+  const moments = await loadMoments();
+  return moments.find((moment) => moment.slug === safeSlug);
+}
+
 export async function loadProjects() {
   const projects = await readContentDirectory(
     "projects",
@@ -191,7 +223,7 @@ export async function loadProjects() {
     projectMetadataSchema,
   );
 
-  return projects.sort(
+  return projects.filter((project) => project.metadata.published !== false).sort(
     (left, right) =>
       Number(right.metadata.featured) - Number(left.metadata.featured) ||
       right.metadata.period.localeCompare(left.metadata.period, "zh-CN") ||

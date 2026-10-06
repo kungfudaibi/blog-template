@@ -3,12 +3,21 @@ import { expect, test } from "@playwright/test";
 const publicRoutes = [
   "/",
   "/blog",
-  "/blog/building-this-site",
+  "/blog/运维日志-与codex救回系统盘",
+  "/moments/disco-elysium",
   "/capabilities",
   "/projects",
   "/projects/campus-mirror",
   "/about",
 ] as const;
+
+test("removed question API returns 404", async ({ request }) => {
+  const response = await request.post("/api/agent", {
+    data: { question: "你好" },
+  });
+
+  expect(response.status()).toBe(404);
+});
 
 for (const viewport of [
   { name: "mobile", width: 375, height: 812 },
@@ -30,7 +39,7 @@ for (const viewport of [
       expect(response?.status(), route).toBe(200);
       await expect(page.locator("main#main-content"), route).toBeVisible();
       await expect(page.getByRole("heading", { level: 1 }), route).toHaveCount(1);
-      await expect(page.getByRole("button", { name: "询问阿竹" }), route).toBeVisible();
+      await expect(page.getByRole("button", { name: "询问咕咕嘎嘎" }), route).toHaveCount(0);
 
       const hasHorizontalOverflow = await page.evaluate(
         () => document.documentElement.scrollWidth > window.innerWidth,
@@ -84,7 +93,8 @@ test("discovery endpoints, recovery page, and security headers work in-browser",
   const sitemap = await request.get("/sitemap.xml");
   const robots = await request.get("/robots.txt");
   expect(sitemap.status()).toBe(200);
-  expect(await sitemap.text()).toContain("/blog/building-this-site");
+  expect(await sitemap.text()).toContain("/moments/disco-elysium");
+  expect(await sitemap.text()).not.toContain("/blog/building-this-site");
   expect(await sitemap.text()).toContain("/capabilities");
   expect(robots.status()).toBe(200);
   expect(await robots.text()).toContain("Disallow: /api/");

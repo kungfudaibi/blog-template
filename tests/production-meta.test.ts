@@ -6,6 +6,7 @@ import ErrorPage from "@/app/error";
 import NotFoundPage from "@/app/not-found";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
+import { getSiteUrl } from "@/lib/site";
 import {
   createSecurityHeaderRules,
   createSecurityHeaders,
@@ -16,6 +17,20 @@ afterEach(() => {
 });
 
 describe("public discovery metadata", () => {
+  it("uses the public domain for a production build without SITE_URL", () => {
+    vi.stubEnv("SITE_URL", "");
+    vi.stubEnv("NODE_ENV", "production");
+
+    expect(getSiteUrl().origin).toBe("https://www.zhujiechong.org");
+  });
+
+  it("does not publish a localhost canonical when local settings reach production", () => {
+    vi.stubEnv("SITE_URL", "http://localhost:3000");
+    vi.stubEnv("NODE_ENV", "production");
+
+    expect(getSiteUrl().origin).toBe("https://www.zhujiechong.org");
+  });
+
   it("lists only public pages in the sitemap", async () => {
     vi.stubEnv("SITE_URL", "https://zhujiechong.example");
 
@@ -29,12 +44,18 @@ describe("public discovery metadata", () => {
         "https://zhujiechong.example/blog",
         "https://zhujiechong.example/capabilities",
         "https://zhujiechong.example/projects",
-        "https://zhujiechong.example/blog/building-this-site",
+        encodeURI("https://zhujiechong.example/blog/运维日志-与codex救回系统盘"),
+        "https://zhujiechong.example/moments/disco-elysium",
         "https://zhujiechong.example/projects/campus-mirror",
         "https://zhujiechong.example/projects/fpga-smart-car",
-        "https://zhujiechong.example/projects/octoday-menu",
       ]),
     );
+    expect(urls.filter((url) => url.includes("/projects/"))).toEqual([
+      "https://zhujiechong.example/projects/campus-mirror",
+      "https://zhujiechong.example/projects/fpga-smart-car",
+    ]);
+    expect(urls.some((url) => url.includes("building-this-site") || url.includes("content-is-a-contract")))
+      .toBe(false);
     expect(urls.every((url) => !url.includes("/api/") && !url.includes("/profile/"))).toBe(
       true,
     );

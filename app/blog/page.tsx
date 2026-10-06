@@ -17,7 +17,6 @@ export function BlogIndex({ posts }: BlogIndexProps) {
   return (
     <main id="main-content" className="content-page" tabIndex={-1}>
       <header className="page-intro">
-        <p className="eyebrow">NOTES / LOGS</p>
         <h1>文章</h1>
         <p>记录做项目时的判断、踩过的坑，以及还没有标准答案的问题。</p>
       </header>

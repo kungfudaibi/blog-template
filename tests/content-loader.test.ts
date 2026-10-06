@@ -8,8 +8,10 @@ import {
   ContentSecurityError,
   ContentValidationError,
   getPostBySlug,
+  getMomentBySlug,
   getProjectBySlug,
   loadPosts,
+  loadMoments,
   loadProfiles,
   loadProjects,
 } from "@/lib/content";
@@ -40,6 +42,81 @@ afterEach(async () => {
 });
 
 describe("content loader", () => {
+  it("keeps body separators when parsing BOM and CRLF frontmatter", async () => {
+    const root = await createContentRoot();
+    await writeFixture(root, "posts/markers.mdx", `\uFEFF---\r\ntitle: 分隔线\r\nsummary: 测试正文\r\npublishedAt: 2026-08-12\r\ntags: [测试]\r\ncover: /images/posts/markers.webp\r\n---\r\n第一段\r\n---\r\n第二段\r\n`);
+
+    expect((await loadPosts())[0].content).toBe("第一段\r\n---\r\n第二段");
+  });
+
+  it("loads future moment reflections from MDX and protects their slugs", async () => {
+    const root = await createContentRoot();
+    await writeFixture(root, "moments/first-moment.mdx", `---
+title: 第一张展览卡片
+image: /images/inspiration/first.png
+alt: 一幅画的画面
+width: 1200
+height: 800
+credit: 由站主提供的图片。
+---
+
+## 当时的感受
+
+这是站主以后可写的文字。
+`);
+
+    expect(await getMomentBySlug("first-moment")).toMatchObject({
+      content: "## 当时的感受\n\n这是站主以后可写的文字。",
+      metadata: { title: "第一张展览卡片" },
+    });
+    expect((await loadMoments()).map((moment) => moment.slug)).toEqual(["first-moment"]);
+    await expect(getMomentBySlug("../first-moment"))
+      .rejects.toBeInstanceOf(ContentSecurityError);
+  });
+
+  it("keeps an unwritten moment valid without a daily quote", async () => {
+    const root = await createContentRoot();
+    await writeFixture(root, "moments/unwritten.mdx", `---
+title: 尚未写完
+image: /images/inspiration/first.png
+alt: 一幅画
+width: 1200
+height: 800
+credit: 由站主提供的图片。
+---
+`);
+
+    expect((await loadMoments())[0].content).toBe("");
+  });
+
+  it("loads a Chinese-named post without weakening path validation", async () => {
+    const root = await createContentRoot();
+    await writeFixture(root, "posts/运维日志-与codex救回系统盘.mdx", `---
+title: 运维日志
+summary: 一次系统盘恢复记录
+publishedAt: 2026-08-12
+tags: [运维]
+cover: /images/posts/recovery.webp
+---
+
+恢复过程。
+`);
+
+    expect((await loadPosts({ includeDrafts: false })).map((post) => post.slug))
+      .toEqual(["运维日志-与codex救回系统盘"]);
+    expect(await getPostBySlug("运维日志-与codex救回系统盘"))
+      .toMatchObject({ content: "恢复过程。" });
+    await expect(getPostBySlug("../运维日志")).rejects.toBeInstanceOf(
+      ContentSecurityError,
+    );
+  });
+
+  it("records the confirmed AI model for the published recovery article", async () => {
+    const posts = await loadPosts({ includeDrafts: false });
+    expect(posts.find((post) => post.slug === "运维日志-与codex救回系统盘")?.metadata)
+      .toMatchObject({ aiCreatedWith: "Codex（基于 GPT-6）" });
+  });
+
   it("validates, sorts, and filters posts deterministically", async () => {
     const root = await createContentRoot();
 

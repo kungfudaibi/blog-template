@@ -20,10 +20,6 @@ export function ProjectArticle({ project, children }: ProjectArticleProps) {
       </Link>
       <article className="project-article">
         <header className="project-article__header">
-          <div className="project-article__topline">
-            <p className="eyebrow">PROJECT / {project.slug}</p>
-            {metadata.featured ? <strong>精选作品</strong> : null}
-          </div>
           <h1>{metadata.title}</h1>
           {metadata.summary ? (
             <p className="project-article__summary">{metadata.summary}</p>

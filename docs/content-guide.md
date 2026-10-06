@@ -4,7 +4,7 @@
 
 ## 通用规则
 
-- 文件名或显式 `slug` 只使用小写字母、数字和单个连字符，例如 `my-first-post`。
+- 文件名或显式 `slug` 只使用汉字、小写字母、数字和单个连字符，例如 `my-first-post` 或 `运维日志-救回系统盘`。
 - 同一内容类型的 slug 不得重复。
 - 日期使用真实的 `YYYY-MM-DD` 日历日期。
 - 外部链接只允许 `https://`。
@@ -40,6 +40,15 @@ draft: true
 | `tags` | 1–12 个不重复标签，每个最多 30 字 |
 | `cover` | `public/` 下对应资源的站点路径 |
 | `draft` | `true` 不进入公开页面、RSS 或 sitemap；发布时改为 `false` |
+| `aiCreatedWith` | 可选；文章确由 AI 创作且模型身份已确认时，填写公开署名，例如 `Codex（基于 GPT-6）`。首页、列表和正文页会显示“AI 创作 · …”；其他文章不要填写或推断。 |
+
+## 那些打动我的瞬间
+
+首页展览卡片来自 `content/moments/*.mdx`。点击卡片会打开对应详情页；在文件的第二个 `---` 之后直接写 Markdown/MDX 正文，保存后即可预览。现有 `content/moments/disco-elysium.mdx` 的正文刻意留空，等站主写自己的感受。
+
+新增卡片时，复制一份文件并填写 `title`、`image`、`alt`、`width`、`height` 和 `credit`。`image` 是 `public/` 内图片对应的站点路径；宽高填写图片的原始像素，确保完整显示。`alt` 描述画面内容，`credit` 如实说明素材来源与使用性质。文件名就是详情页 slug；卡片和站点地图会自动更新。不要把未获授权的素材或私人信息放入此目录。
+
+首页“每日一言”来自 `content/daily-quotes.json` 中的作品短句，与你在瞬间详情页写的感受相互独立。你新增喜欢的作品后，可以告诉 Codex 去搜索几句有代表性的原文；核对作品归属与出处后，填写 `text`、`sourceTitle`、`sourceUrl`（HTTPS 核对链接）和对应的 `momentSlug`。首页显示作品名与“核对出处”，按北京时间每天轮换。你无需提供 API 或 MCP；访客打开页面时也不会调用搜索或模型。
 
 ## 作品
 
@@ -68,20 +77,20 @@ links:
 - 只填写可公开、可核实的结果。
 ```
 
-`links` 整体可省略；提供时，`links.demo` 和 `links.source` 至少填写一个，且必须使用 HTTPS。没有经过隐私审计与站主再次批准时，不添加 GitHub 账号、组织或仓库链接，也不用占位网址代替。当前分支只批准 `docs/spec.md` 隐私口径中列出的六个项目 URL；新增或更换链接时先更新该白名单及 `tests/public-content-privacy.test.ts`。`featured: true` 的作品可进入首页精选区，首页最多展示两个。当前没有作品草稿字段，不准备公开的作品不要提交到此目录。
+`links` 整体可省略；提供时，`links.demo` 和 `links.source` 至少填写一个，且必须使用 HTTPS。没有经过隐私审计与站主再次批准时，不添加其他 GitHub 账号、组织或仓库链接，也不用占位网址代替。关于页已获批准的 GitHub 与 Bilibili 主页，以及当前两个已发布作品的精确外链，均须见 `docs/spec.md` 与 `tests/public-content-privacy.test.ts`。`featured: true` 的已发布作品可进入首页精选区，首页最多展示两个。作品默认发布；暂不展示时设置 `published: false`，文件保留在仓库，但不会进入站点列表、详情或站点地图。未发布文件仍是仓库中的公开材料，不能存放秘密。
 
 ## 常用修改位置
 
 | 内容 | 文件或目录 |
 |---|---|
 | 文章 | `content/posts/*.mdx` |
+| 瞬间卡片与感受 | `content/moments/*.mdx` |
 | 作品及演示/源码链接 | `content/projects/*.mdx` 的 frontmatter 与正文 |
 | 能力状态与经历 | `content/capabilities/*.mdx` |
-| 关于页公开资料、联系方式、FAQ | `content/profile/*.md` |
+| 关于页联系方式 | `content/profile/contact.md` |
 | 首页固定文案 | `app/page.tsx` |
 | 关于页开场文案 | `app/about/page.tsx` |
 | 站名与全站元数据 | `app/layout.tsx`，随后全仓搜索旧站名 |
-| Agent 图片 | `public/agent/azhu.png` |
 | 项目、文章和灵感图片 | `public/images/` |
 
 修改标题、链接或固定文案后，相关测试可能会提示旧值；同步修改 `tests/` 中对应断言，不要通过删除隐私或安全测试来绕过失败。
@@ -112,7 +121,7 @@ branches: [分支一, 分支二]
 
 `status` 只能使用 `exploring`（正在了解）、`learning`（做过练习）、`practiced`（做过完整实践）或 `independent`（能独立承担）。`order` 必须为正整数，`updatedAt` 使用有效日期。正文标题和结构完全由站主决定，可以删改示例中的四个二级标题；系统不会为空白或未完成内容补写事实。`featured: true` 的档案进入首页重点能力区，首版最多展示三个。
 
-文章、作品和能力的 `summary` 可以暂时写成空字符串 `""`；页面会省略空摘要。公开 profile 文件正文为空时会被视为未完成草稿，不出现在关于页或阿竹来源中。用于路由和安全的标题、日期、slug、状态与链接字段仍不能留空。
+文章、作品和能力的 `summary` 可以暂时写成空字符串 `""`；页面会省略空摘要。公开 profile 文件正文为空时会被视为未完成草稿，不出现在关于页。用于路由和安全的标题、日期、slug、状态与链接字段仍不能留空。
 
 ## 公开个人资料
 
@@ -125,12 +134,10 @@ visibility: public
 relatedPath: /about
 ---
 
-这里写愿意同时展示给访客、并允许阿竹引用的事实。
+这里写愿意向访客公开的事实。
 ```
 
-只有 `visibility: public` 的资料会进入关于页和阿竹来源。即使加载器能过滤 `private`，仓库和部署产物也不是私人资料保险箱；真正敏感的内容不要创建或提交。
-
-阿竹会同时检索公开个人资料、已发布文章、作品和能力档案。个人问题找不到依据时会拒绝猜测；真实姓名、学校和实习单位等受保护身份问题会在读取资料或调用模型前直接拒答。
+只有 `visibility: public` 的资料会进入关于页。即使加载器能过滤 `private`，仓库和部署产物也不是私人资料保险箱；真正敏感的内容不要创建或提交。
 
 ## 派生站定制
 

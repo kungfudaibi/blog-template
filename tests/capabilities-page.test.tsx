@@ -13,23 +13,28 @@ describe("capability page", () => {
 
     expect(screen.getByRole("heading", { level: 1, name: "能力地图" }))
       .toBeInTheDocument();
+    expect(screen.queryByText("CAPABILITY / EVIDENCE")).not.toBeInTheDocument();
+    expect(screen.queryByText("FIELD INDEX")).not.toBeInTheDocument();
 
     const navigation = screen.getByRole("navigation", { name: "能力领域索引" });
+    expect(within(navigation).getAllByRole("link")).toHaveLength(6);
     expect(
       within(navigation).getByRole("link", { name: "超算与 AI Infra" }),
     ).toHaveAttribute("href", "#hpc-ai-infra");
 
     const article = screen.getByRole("article", { name: "超算与 AI Infra" });
-    expect(within(article).getByText("做过完整实践")).toBeInTheDocument();
+    expect(within(article).queryByText("做过完整实践")).not.toBeInTheDocument();
+    expect(within(article).queryByText("01")).not.toBeInTheDocument();
+    expect(within(article).queryByText(/从体系结构、并行模型和真实工作负载出发/))
+      .not.toBeInTheDocument();
     expect(within(article).getByText("2026年8月1日")).toHaveAttribute(
       "datetime",
       "2026-08-01",
     );
     expect(within(article).getByText("并行计算")).toBeInTheDocument();
     expect(within(article).getByText(/竞赛经历/)).toBeInTheDocument();
-    expect(
-      within(article).getByRole("link", { name: "查看相关作品与实践" }),
-    ).toHaveAttribute("href", "/projects");
+    expect(within(article).queryByRole("link", { name: "查看相关作品与实践" }))
+      .not.toBeInTheDocument();
     expect(screen.getAllByRole("article")).toHaveLength(6);
     expect(
       within(navigation).getByRole("link", { name: "算法与数据结构" }),

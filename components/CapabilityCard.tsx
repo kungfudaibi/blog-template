@@ -1,8 +1,5 @@
-import Link from "next/link";
-
 import type { LoadedCapability } from "@/lib/content";
 
-import { CapabilityStatus } from "./CapabilityStatus";
 import { MdxContent } from "./MdxContent";
 import styles from "./CapabilityMap.module.css";
 
@@ -29,16 +26,7 @@ export function CapabilityCard({ capability }: CapabilityCardProps) {
       tabIndex={-1}
     >
       <header className={styles.cardHeader}>
-        <div className={styles.cardTopline}>
-          <p className={styles.index} aria-hidden="true">
-            {String(metadata.order).padStart(2, "0")}
-          </p>
-          <CapabilityStatus status={metadata.status} />
-        </div>
         <h2 id={titleId}>{metadata.title}</h2>
-        {metadata.summary ? (
-          <p className={styles.summary}>{metadata.summary}</p>
-        ) : null}
         <div className={styles.meta}>
           <p>
             <span>更新：</span>
@@ -57,10 +45,6 @@ export function CapabilityCard({ capability }: CapabilityCardProps) {
       <div className={`prose ${styles.body}`}>
         <MdxContent source={capability.content} />
       </div>
-
-      <footer className={styles.cardFooter}>
-        <Link href="/projects">查看相关作品与实践</Link>
-      </footer>
     </article>
   );
 }

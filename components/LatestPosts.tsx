@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import type { LoadedPost } from "@/lib/content";
 
+import { AiCreationCredit } from "./AiCreationCredit";
+import { CharacterAccent } from "./CharacterAccent";
 import { formatPublishedDate } from "./PostCard";
 
 type LatestPostsProps = {
@@ -13,8 +15,10 @@ export function LatestPosts({ posts }: LatestPostsProps) {
     <section className="home-section" aria-labelledby="latest-posts-title">
       <div className="home-section__heading">
         <div>
-          <p className="eyebrow">05 / WRITING</p>
-          <h2 id="latest-posts-title">最新文章</h2>
+          <span className="home-section__title">
+            <h2 id="latest-posts-title">最新文章</h2>
+            <CharacterAccent character="doro" />
+          </span>
         </div>
         <Link href="/blog">查看全部文章</Link>
       </div>
@@ -23,9 +27,12 @@ export function LatestPosts({ posts }: LatestPostsProps) {
         <div className="latest-posts">
           {posts.map((post) => (
             <article key={post.slug}>
-              <time dateTime={post.metadata.publishedAt}>
-                {formatPublishedDate(post.metadata.publishedAt)}
-              </time>
+              <div className="latest-posts__meta">
+                <time dateTime={post.metadata.publishedAt}>
+                  {formatPublishedDate(post.metadata.publishedAt)}
+                </time>
+                <AiCreationCredit model={post.metadata.aiCreatedWith} />
+              </div>
               <h3>
                 <Link href={`/blog/${post.slug}`}>{post.metadata.title}</Link>
               </h3>

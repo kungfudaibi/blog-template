@@ -1,112 +1,77 @@
 import Link from "next/link";
 
-import { AgentPreview } from "@/components/AgentPreview";
+import { DailyQuote } from "@/components/DailyQuote";
+import { CharacterAccent } from "@/components/CharacterAccent";
 import { FeaturedCapabilities } from "@/components/FeaturedCapabilities";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { InspirationFeature } from "@/components/InspirationFeature";
 import { LatestPosts } from "@/components/LatestPosts";
 import {
   loadCapabilities,
+  loadMoments,
   loadPosts,
   loadProjects,
   type LoadedCapability,
+  type LoadedMoment,
   type LoadedPost,
   type LoadedProject,
 } from "@/lib/content";
+import { loadDailyQuotes, selectDailyQuote, type SelectedDailyQuote } from "@/lib/daily-quote";
+
+export const dynamic = "force-dynamic";
 
 type HomeContentProps = {
   featuredCapabilities: LoadedCapability[];
   featuredProjects: LoadedProject[];
   recentPosts: LoadedPost[];
+  moments?: LoadedMoment[];
+  dailyQuote?: SelectedDailyQuote | null;
 };
 
 export function HomeContent({
   featuredCapabilities,
   featuredProjects,
   recentPosts,
+  moments = [],
+  dailyQuote = null,
 }: HomeContentProps) {
   return (
     <main id="main-content" className="home-page" tabIndex={-1}>
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero__copy">
-          <p className="eyebrow" aria-hidden="true">
-            $ whoami
-          </p>
-          <h1 id="hero-title">zhujiechong</h1>
-          <p className="hero__tagline">程序员的作品与思考</p>
-          <p className="hero__intro">
-            我在这里整理做过的项目、写下技术实践，也记录那些值得反复推敲的问题。
-          </p>
-          <div className="hero__actions" aria-label="快速入口">
-            <Link className="button button--primary" href="/projects">
-              浏览作品
-            </Link>
-            <Link className="button button--secondary" href="/blog">
-              阅读文章
-            </Link>
+          <div className="hero__main">
+            <h1 id="hero-title">zhujiechong</h1>
+            <p className="hero__tagline">写下做过的事，也写下仍在思考的事。</p>
+            <div className="hero__actions" aria-label="快速入口">
+              <Link className="button button--primary" href="/blog">
+                阅读文章
+              </Link>
+              <Link className="button button--secondary" href="/projects">
+                浏览作品
+              </Link>
+            </div>
           </div>
-        </div>
-
-        <aside className="terminal-card" aria-label="开发者状态">
-          <div className="terminal-card__bar" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+          <div className="hero__aside">
+            <span className="hero__character"><CharacterAccent character="gugugaga" /></span>
+            <DailyQuote quote={dailyQuote} />
           </div>
-          <div className="terminal-card__body">
-            <p>
-              <span className="terminal-card__prompt">visitor@zhujiechong</span>
-              <span aria-hidden="true">:~$ </span>
-              status
-            </p>
-            <dl className="terminal-card__status">
-              <div>
-                <dt>role</dt>
-                <dd>programmer</dd>
-              </div>
-              <div>
-                <dt>mode</dt>
-                <dd>open_to_build</dd>
-              </div>
-              <div>
-                <dt>agent</dt>
-                <dd>阿竹 · preparing</dd>
-              </div>
-            </dl>
-            <p className="terminal-card__cursor">
-              <span aria-hidden="true">▸</span> 资料将在这里持续更新
-              <span className="terminal-card__caret" aria-hidden="true" />
-            </p>
-          </div>
-        </aside>
-      </section>
-
-      <section className="home-note" aria-labelledby="home-note-title">
-        <p className="home-note__index" aria-hidden="true">
-          01 / README
-        </p>
-        <div>
-          <h2 id="home-note-title">一座正在搭建的数字工作台</h2>
-          <p>
-            Wubba lubba dub dub!
-          </p>
         </div>
       </section>
 
-      <InspirationFeature />
-      <FeaturedCapabilities capabilities={featuredCapabilities} />
-      <FeaturedProjects projects={featuredProjects} />
       <LatestPosts posts={recentPosts} />
-      <AgentPreview />
+      <FeaturedProjects projects={featuredProjects} />
+      <FeaturedCapabilities capabilities={featuredCapabilities} />
+      <InspirationFeature moments={moments} />
     </main>
   );
 }
 
 export default async function HomePage() {
-  const [capabilities, projects, posts] = await Promise.all([
+  const [capabilities, projects, posts, moments] = await Promise.all([
     loadCapabilities({ featuredOnly: true }),
     loadProjects(),
     loadPosts({ includeDrafts: false }),
+    loadMoments(),
   ]);
 
   return (
@@ -116,6 +81,8 @@ export default async function HomePage() {
         .filter((project) => project.metadata.featured)
         .slice(0, 2)}
       recentPosts={posts.slice(0, 3)}
+      moments={moments}
+      dailyQuote={selectDailyQuote(loadDailyQuotes())}
     />
   );
 }

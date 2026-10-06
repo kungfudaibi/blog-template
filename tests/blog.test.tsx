@@ -21,21 +21,19 @@ const examplePost: LoadedPost = {
 };
 
 describe("blog index", () => {
-  it("loads the repository sample post without page-level hardcoding", async () => {
+  it("loads only the author's written post", async () => {
     render(await BlogPage());
 
     expect(
       screen.getByRole("heading", { level: 1, name: "文章" }),
     ).toBeInTheDocument();
+    expect(screen.queryByText("NOTES / LOGS")).not.toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "黎明悄悄划过天边" }),
-    ).toHaveAttribute("href", "/blog/building-this-site");
-    expect(
-      screen.getByRole("link", { name: "黎明悄悄划过天边" }).closest("article"),
-    ).toHaveTextContent("。");
-    expect(
-      screen.getByRole("link", { name: "充满信心期盼着明天" }).closest("article"),
-    ).not.toContainHTML("<p>");
+      screen.getByRole("link", { name: "一次系统 SSD 损坏后的恢复：从 BMC 控制台到 ddrescue" }),
+    ).toHaveAttribute("href", "/blog/运维日志-与codex救回系统盘");
+    expect(screen.getAllByRole("article")).toHaveLength(1);
+    expect(screen.getByText("AI 创作 · Codex（基于 GPT-6）"))
+      .toBeInTheDocument();
   });
 
   it("renders an honest empty state when no posts are available", () => {
@@ -62,6 +60,7 @@ describe("PostCard", () => {
     );
     expect(within(article).getByText("Next.js")).toBeInTheDocument();
     expect(within(article).getByText("工程实践")).toBeInTheDocument();
+    expect(within(article).queryByText(/AI 创作/)).not.toBeInTheDocument();
   });
 
   it("does not render a paragraph placeholder for an undecided summary", () => {
@@ -79,6 +78,23 @@ describe("PostCard", () => {
 });
 
 describe("BlogArticle", () => {
+  it("shows the model credit only when the post declares AI creation", () => {
+    render(
+      <BlogArticle
+        post={{
+          ...examplePost,
+          metadata: { ...examplePost.metadata, aiCreatedWith: "Codex（基于 GPT-6）" },
+        }}
+      >
+        <p>正文。</p>
+      </BlogArticle>,
+    );
+
+    expect(screen.getByText("AI 创作 · Codex（基于 GPT-6）"))
+      .toBeInTheDocument();
+    expect(screen.queryByText("POST / building-this-site")).not.toBeInTheDocument();
+  });
+
   it("provides article landmarks and a route back to the index", () => {
     render(
       <BlogArticle post={examplePost}>

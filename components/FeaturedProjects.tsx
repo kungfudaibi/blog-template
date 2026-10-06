@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import type { LoadedProject } from "@/lib/content";
+import { CharacterAccent } from "./CharacterAccent";
 
 type FeaturedProjectsProps = {
   projects: LoadedProject[];
@@ -11,8 +12,10 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
     <section className="home-section" aria-labelledby="featured-projects-title">
       <div className="home-section__heading">
         <div>
-          <p className="eyebrow">04 / FEATURED</p>
-          <h2 id="featured-projects-title">精选作品</h2>
+          <span className="home-section__title">
+            <h2 id="featured-projects-title">精选作品</h2>
+            <CharacterAccent character="phoebe" />
+          </span>
         </div>
         <Link href="/projects">查看全部作品</Link>
       </div>

@@ -1,0 +1,50 @@
+.accent {
+  display: inline-block;
+  width: 4.25rem;
+  height: 4.25rem;
+  flex: none;
+  vertical-align: middle;
+}
+
+.art {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 240ms ease;
+}
+
+.art img {
+  position: absolute;
+  top: 50%;
+  left: var(--sprite-left);
+  display: block;
+  width: 309%;
+  max-width: none;
+  height: auto;
+  transform: translateY(-50%);
+}
+
+.accent:hover .art {
+  transform: translateY(-0.2rem) scale(1.04);
+}
+
+.gugugaga { --sprite-left: 3%; }
+.doro { --sprite-left: -54%; }
+.phoebe { --sprite-left: -137%; }
+.phrolova { --sprite-left: -213%; }
+
+.gugugaga img { clip-path: inset(0 76.4% 0 0); }
+.doro img { clip-path: inset(0 52% 0 23.6%); }
+.phoebe img { clip-path: inset(0 28.5% 0 48%); }
+.phrolova img { clip-path: inset(0 0 0 71.5%); }
+
+@media (max-width: 42rem) {
+  .accent { width: 3.5rem; height: 3.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art { transition: none; }
+  .accent:hover .art { transform: none; }
+}

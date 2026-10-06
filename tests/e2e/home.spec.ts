@@ -28,8 +28,15 @@ for (const viewport of viewports) {
     await expect(
       page.getByRole("heading", { level: 1, name: "zhujiechong" }),
     ).toBeVisible();
-    await expect(page.getByRole("link", { name: "浏览作品" })).toBeVisible();
-    await expect(page.getByLabel("开发者状态")).toContainText("open_to_build");
+    await expect(page.getByRole("link", { name: "阅读文章" })).toBeVisible();
+    const dailyQuote = page.getByRole("region", { name: "每日一言" });
+    await expect(dailyQuote.getByText(/In dark times|Something beautiful/)).toBeVisible();
+    await expect(dailyQuote.getByRole("link", { name: "极乐迪斯科" }))
+      .toHaveAttribute("href", "/moments/disco-elysium");
+    await expect(dailyQuote.getByRole("link", { name: "出处" }))
+      .toHaveAttribute("href", /^https:\/\//);
+    await expect(page.getByText(/我在这里整理做过的项目/)).toHaveCount(0);
+    await expect(page.getByLabel("开发者状态")).toHaveCount(0);
 
     const inspiration = page.getByRole("region", { name: "视觉灵感" });
     const inspirationImage = inspiration.getByRole("img", {
@@ -39,11 +46,16 @@ for (const viewport of viewports) {
     await expect(
       inspiration.getByRole("heading", {
         level: 2,
-        name: "最近让我着迷的世界",
+        name: "那些打动我的瞬间",
       }),
     ).toBeVisible();
     await expect(inspirationImage).toBeVisible();
-    await expect(inspiration).toContainText("《极乐迪斯科》游戏画面截图");
+    await expect(inspiration.getByRole("article", { name: "极乐迪斯科" })).toBeVisible();
+    await expect(inspiration.getByRole("heading", { level: 3, name: "极乐迪斯科" })).toBeVisible();
+    await expect(inspiration.getByRole("link", { name: "查看极乐迪斯科的感受" }))
+      .toHaveAttribute("href", "/moments/disco-elysium");
+    await expect(page.getByText("写作 · 项目 · 一些还没想完的问题")).toHaveCount(0);
+    await expect(inspiration.getByText(/VISUAL LOG|灵感档案/)).toHaveCount(0);
     await expect
       .poll(() =>
         inspirationImage.evaluate(
@@ -83,11 +95,34 @@ for (const viewport of viewports) {
 
     const featuredProjects = page.getByRole("region", { name: "精选作品" });
     await expect(featuredProjects.getByRole("article")).toHaveCount(2);
+    await expect(featuredProjects.getByRole("link", { name: "校园开源镜像站" })).toBeVisible();
+    await expect(featuredProjects.getByRole("link", { name: "FPGA Verilog 智能小车" })).toBeVisible();
     await expect(
       page.getByRole("region", { name: "最新文章" }).getByRole("article"),
-    ).toHaveCount(3);
-    await expect(page.getByText("阿竹正在准备中")).toBeVisible();
-    await expect(page.getByText("尚未连接模型")).toBeVisible();
+    ).toHaveCount(1);
+    await expect(page.getByRole("region", { name: "最新文章" })
+      .getByText("AI 创作 · Codex（基于 GPT-6）")).toBeVisible();
+    await expect(page.getByText("咕咕嘎嘎正在准备中")).toHaveCount(0);
+    await expect(page.getByText("尚未连接模型")).toHaveCount(0);
+
+    await expect(page.getByRole("region", { name: "可爱小队" })).toHaveCount(0);
+    const placements = [
+      ["zhujiechong", "咕咕嘎嘎"],
+      ["最新文章", "Doro"],
+      ["精选作品", "菲比啾比"],
+      ["视觉灵感", "弗糯糯"],
+    ] as const;
+    for (const [regionName, name] of placements) {
+      const region = page.getByRole("region", { name: regionName });
+      const image = region.getByRole("img", { name });
+      await expect(image).toBeVisible();
+      await expect.poll(() => image.evaluate((element) =>
+        (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+      await expect(image).toHaveAttribute("src", /four-companions-v2\.png/);
+      await expect(region.getByRole("link", { name: new RegExp(name) })).toHaveCount(0);
+    }
+    const latest = page.getByRole("region", { name: "最新文章" });
+    await expect(latest.getByRole("button", { name: /Doro 动画/ })).toHaveCount(0);
 
     const hasHorizontalOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth,
@@ -109,4 +144,16 @@ test("keyboard users can reveal the skip link", async ({ page }) => {
   const skipLink = page.getByRole("link", { name: "跳到主要内容" });
   await expect(skipLink).toBeFocused();
   await expect(skipLink).toBeVisible();
+});
+
+test("character accents honor reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const latest = page.getByRole("region", { name: "最新文章" });
+  const doro = latest.getByRole("img", { name: "Doro" });
+  await expect(doro).toHaveAttribute("src", /four-companions-v2\.png/);
+  await expect.poll(() => doro.evaluate((element) =>
+    Number.parseFloat(getComputedStyle(element.parentElement as Element).transitionDuration)))
+    .toBeLessThan(0.001);
 });

@@ -16,19 +16,17 @@ type CapabilityIndexProps = {
 
 export function CapabilityIndex({ capabilities }: CapabilityIndexProps) {
   return (
-    <main id="main-content" className="content-page content-page--wide" tabIndex={-1}>
-      <header className="page-intro">
-        <p className="eyebrow">CAPABILITY / EVIDENCE</p>
+    <main id="main-content" className={`content-page ${styles.page}`} tabIndex={-1}>
+      <header className={styles.intro}>
         <h1>能力地图</h1>
         <p>
-          不用百分比给自己打分，只记录当前判断、做过的事、失败边界和下一步。
+          记录我感兴趣的，尝试做的，做过的所有~
         </p>
       </header>
 
       {capabilities.length > 0 ? (
         <div className={styles.layout}>
           <nav className={styles.navigation} aria-label="能力领域索引">
-            <p aria-hidden="true">FIELD INDEX</p>
             <ol>
               {capabilities.map((capability) => (
                 <li key={capability.slug}>

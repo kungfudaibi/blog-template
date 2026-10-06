@@ -15,7 +15,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <article className="project-card">
       <div className="project-card__topline">
         <span>{metadata.period}</span>
-        {metadata.featured ? <strong>精选作品</strong> : null}
       </div>
       <h2>
         <Link href={`/projects/${slug}`}>{metadata.title}</Link>

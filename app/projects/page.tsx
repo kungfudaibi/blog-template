@@ -15,9 +15,8 @@ type ProjectIndexProps = {
 
 export function ProjectIndex({ projects }: ProjectIndexProps) {
   return (
-    <main id="main-content" className="content-page content-page--wide" tabIndex={-1}>
+    <main id="main-content" className="content-page" tabIndex={-1}>
       <header className="page-intro">
-        <p className="eyebrow">SELECTED / BUILDS</p>
         <h1>作品</h1>
         <p>这里会放我参与构建的产品、工具与实验，以及每个项目里的具体职责。</p>
       </header>

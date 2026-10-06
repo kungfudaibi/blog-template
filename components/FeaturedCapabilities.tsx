@@ -2,8 +2,6 @@ import Link from "next/link";
 
 import type { LoadedCapability } from "@/lib/content";
 
-import { CapabilityStatus } from "./CapabilityStatus";
-
 type FeaturedCapabilitiesProps = {
   capabilities: LoadedCapability[];
 };
@@ -13,7 +11,6 @@ export function FeaturedCapabilities({ capabilities }: FeaturedCapabilitiesProps
     <section className="home-section" aria-labelledby="featured-capabilities-title">
       <div className="home-section__heading">
         <div>
-          <p className="eyebrow">03 / CAPABILITY</p>
           <h2 id="featured-capabilities-title">重点能力</h2>
         </div>
         <Link href="/capabilities">查看完整能力地图</Link>
@@ -23,9 +20,6 @@ export function FeaturedCapabilities({ capabilities }: FeaturedCapabilitiesProps
         <div className="featured-capabilities">
           {capabilities.map((capability) => (
             <article className="featured-capability" key={capability.slug}>
-              <div className="featured-capability__status">
-                <CapabilityStatus status={capability.metadata.status} />
-              </div>
               <h3>
                 <Link href={`/capabilities#${capability.slug}`}>
                   {capability.metadata.title}

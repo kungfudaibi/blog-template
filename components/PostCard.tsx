@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import type { LoadedPost } from "@/lib/content";
 
+import { AiCreationCredit } from "./AiCreationCredit";
+
 type PostCardProps = {
   post: LoadedPost;
 };
@@ -22,7 +24,7 @@ export function PostCard({ post }: PostCardProps) {
         <time dateTime={metadata.publishedAt}>
           {formatPublishedDate(metadata.publishedAt)}
         </time>
-        <span aria-hidden="true">/</span>
+        <AiCreationCredit model={metadata.aiCreatedWith} />
         <ul aria-label="文章标签">
           {metadata.tags.map((tag) => (
             <li key={tag}>{tag}</li>
