@@ -22,6 +22,8 @@ npm audit --registry=https://registry.npmjs.org --omit=dev --audit-level=high
 
 `v0.2.0` 记录已验收视觉改版：统一首页和内页风格，更新关于页联系卡片与能力地图。发布从 `feature/disco-customization` 推送触发既有 Vercel 项目，不修改 DNS 或环境变量。设计原型、原始角色参考图和旧动图留在本地；若生产验收失败，回退到上一已验证部署。
 
+`v0.2.0` 标签指向提交 `4903007`；GitHub 版本已发布，Vercel `blog` 生产与 `blog-template` 预览状态均为成功。公开域名的首页、作品、能力、文章、瞬间、关于、RSS、sitemap、robots 均返回 200；新首页文案、联系卡片、能力地图、角色图和联系图标已核对。两项公开作品与联系链接保持，旧 `/api/agent` 和未发布作品返回 404。生产依赖审计为 0 漏洞。上一已验证版本为 `v0.1.0`。
+
 ## Vercel 与域名
 
 1. 推送 `feature/disco-customization` 后查看 GitHub 上 `Vercel – blog` 的生产部署状态和 `Vercel – blog-template` 的预览部署状态。
